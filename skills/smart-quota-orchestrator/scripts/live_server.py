@@ -57,7 +57,7 @@ def build_api_snapshot(workspace: Path, roi_db: Path | None = None) -> Dict[str,
     memories = mem_mod.list_facts(mem_db, limit=25)
 
     return {
-        "version": "9.0.0",
+        "version": "10.0.0",
         "workspace": str(workspace).replace("\\", "/"),
         "roi": roi,
         "prompt_tax": {

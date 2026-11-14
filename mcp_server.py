@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v9.0 Omniscient Edition).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v10.0 Apex Edition).
 
-Exposes 31 native, token-saving engineering & code-intelligence tools directly to
+Exposes 38 native, token-saving & Superpowers engineering tools directly to
 Google Antigravity, Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over
 JSON-RPC 2.0 `stdio` transport.
 
@@ -21,7 +21,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "9.0.0"
+SERVER_VERSION = "10.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -423,6 +423,102 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
             "required": ["action"],
         },
     },
+    {
+        "name": "sqo_edit_symbol",
+        "description": "Serena-Class Surgical Symbol-Level AST Mutator (v10.0): edits exact functions, classes, or Class.method symbols by name (-85% Output Tokens!) with automatic Time-Machine backup and <8ms syntax auto-rollback.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "file_path": {"type": "string", "description": "Target source file path."},
+                "symbol": {"type": "string", "description": "Symbol or Class.method name to mutate."},
+                "action": {"type": "string", "enum": ["replace", "insert_after", "insert_before", "delete"], "description": "Mutation operation."},
+                "code": {"type": "string", "description": "Replacement or inserted source block."},
+            },
+            "required": ["workspace", "file_path", "symbol", "action"],
+        },
+    },
+    {
+        "name": "sqo_find_callers",
+        "description": "Fast Cross-Repo Symbol Call-Site Locator (v10.0): finds all call sites and definitions of a function or method before changing its signature.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "symbol": {"type": "string", "description": "Function or method name."},
+                "max_hits": {"type": "integer", "description": "Max call sites to return (default: 25)."},
+            },
+            "required": ["workspace", "symbol"],
+        },
+    },
+    {
+        "name": "sqo_spec_engine",
+        "description": "Spec-Kit + Taskmaster Autonomous Spec-Driven DAG Engine (v10.0): manages `.sqo/specs.db` atomic task graphs with file-ownership locks, <220-token `next` task briefs, and mandatory verification command gates.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["init", "next", "complete", "status"], "description": "Spec DAG action."},
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "slug": {"type": "string", "description": "Spec slug (optional for next/status)."},
+                "title": {"type": "string", "description": "Feature title when action='init'."},
+                "goal": {"type": "string", "description": "Feature goal when action='init'."},
+                "step_key": {"type": "string", "description": "Task step_key (e.g. 'T1') when action='complete'."},
+                "tasks": {"type": "array", "items": {"type": "object"}, "description": "Optional task objects for action='init'."},
+            },
+            "required": ["action", "workspace"],
+        },
+    },
+    {
+        "name": "sqo_memory_graph",
+        "description": "Claude-Mem + Graphiti Auto-Captured Temporal Knowledge Graph (v10.0): queries `.sqo/memory_graph.db` co-edit & bugfix relationships per file or exports Mermaid architecture memory diagrams.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["summary", "file_history", "record"], "description": "Knowledge graph operation."},
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "file": {"type": "string", "description": "Relative file path for file_history or record."},
+                "note": {"type": "string", "description": "Architectural or bugfix note when action='record'."},
+            },
+            "required": ["action", "workspace"],
+        },
+    },
+    {
+        "name": "sqo_verify_work",
+        "description": "Executable Andrej Karpathy + Superpowers Diff Gatekeeper (v10.0): audits git diffs for TODO/placeholder laziness, silent public symbol deletions, out-of-scope file creep, and bloat, returning a 0-100 Surgical Discipline Score.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "diff_text": {"type": "string", "description": "Optional unified diff override."},
+                "allowed_files": {"type": "array", "items": {"type": "string"}, "description": "Optional list of allowed file/folder scopes."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_sdk_radar",
+        "description": "Context7-Class Live Version-Pinned SDK Idioms & Deprecation Radar (v10.0): reads installed package versions (`package.json`, `pubspec.yaml`, `pyproject.toml`) and detects deprecated 2023/2024 API hallucinations with modern fixes.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_worktree_sandbox",
+        "description": "Superpowers Isolated Experiment Sandbox (v10.0): creates zero-risk Git worktree / snapshot sandboxes under `.sqo/sandboxes/<name>`, diffs changes, promotes verified files, or cleans up cleanly.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["create", "diff", "promote", "cleanup", "list"], "description": "Sandbox operation."},
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "name": {"type": "string", "description": "Sandbox name (e.g. 'exp-auth')."},
+            },
+            "required": ["action", "workspace"],
+        },
+    },
 ]
 
 
@@ -647,6 +743,77 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
             res = mod.publish_hub_rule(st, str(args.get("title", "")), str(args.get("rule", "")))
         else:
             res = mod.fetch_hub_presets("" if st in ("auto", "all") else st)
+        return json.dumps(res, indent=2, ensure_ascii=False)
+
+    if name == "sqo_edit_symbol":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/edit_symbol.py")
+        ws = Path(args["workspace"]).resolve()
+        fp = Path(args["file_path"])
+        fpath = fp if fp.is_absolute() else (ws / fp)
+        res = mod.mutate_symbol(ws, fpath, str(args["symbol"]), str(args["action"]), str(args.get("code", "")))
+        return mod.render_markdown(res)
+
+    if name == "sqo_find_callers":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/edit_symbol.py")
+        res = mod.find_callers(Path(args["workspace"]).resolve(), str(args["symbol"]), max_hits=int(args.get("max_hits", 25)))
+        return mod.render_markdown(res)
+
+    if name == "sqo_spec_engine":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/spec_engine.py")
+        ws = Path(args["workspace"]).resolve()
+        act = str(args["action"])
+        slug = str(args.get("slug", ""))
+        if act == "init":
+            res = mod.init_spec(ws, str(args.get("title", "Feature")), str(args.get("goal", "")), tasks=args.get("tasks"))
+        elif act == "next":
+            res = mod.get_next_task(ws, slug)
+        elif act == "complete":
+            res = mod.complete_task(ws, slug, str(args.get("step_key", "T1")))
+        else:
+            res = mod.spec_status(ws, slug)
+        return mod.render_markdown(res)
+
+    if name == "sqo_memory_graph":
+        mod = _load_tool_mod("project-memory-vault/scripts/memory_graph.py")
+        ws = Path(args["workspace"]).resolve()
+        act = str(args["action"])
+        if act == "file_history":
+            res = mod.query_file_history(ws, str(args.get("file", "")))
+        elif act == "record":
+            res = mod.record_auto_observation(ws, "rule", file_rel=str(args.get("file", "")), note=str(args.get("note", "")))
+            return json.dumps(res, indent=2, ensure_ascii=False)
+        else:
+            res = mod.graph_summary(ws)
+        return mod.render_markdown(res)
+
+    if name == "sqo_verify_work":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/verify_karpathy.py")
+        res = mod.verify_workspace_work(
+            Path(args["workspace"]).resolve(),
+            diff_override=str(args.get("diff_text", "")),
+            allowed_files=args.get("allowed_files"),
+        )
+        return mod.render_markdown(res)
+
+    if name == "sqo_sdk_radar":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/sdk_radar.py")
+        return mod.render_markdown(mod.scan_sdk_deprecations(Path(args["workspace"]).resolve()))
+
+    if name == "sqo_worktree_sandbox":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/worktree_sandbox.py")
+        ws = Path(args["workspace"]).resolve()
+        act = str(args["action"])
+        sb_name = str(args.get("name", "exp-1"))
+        if act == "create":
+            res = mod.create_sandbox(ws, sb_name)
+        elif act == "diff":
+            res = mod.diff_sandbox(ws, sb_name)
+        elif act == "promote":
+            res = mod.promote_sandbox(ws, sb_name)
+        elif act == "cleanup":
+            res = mod.cleanup_sandbox(ws, sb_name)
+        else:
+            res = mod.list_sandboxes(ws)
         return json.dumps(res, indent=2, ensure_ascii=False)
 
     raise ValueError(f"Unknown MCP tool: {name}")

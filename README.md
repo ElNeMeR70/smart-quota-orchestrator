@@ -9,18 +9,33 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v9.0` Omniscient Global Agent OS)
+# ⚡ Smart Quota & Superpowers OS (`v10.0` Apex God-Mode Edition)
 
-### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, **31 Native MCP Tools**, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Semantic Memo Cache, Cross-Repo Hive-Mind, 6-Stack DB Schema Distiller & Cloud Golden-Rule Hub
+### Uniting the Top 6 Highest-Starred AI Engineering Paradigms in 1 Zero-Dependency Engine: **38 Native MCP Tools**, **52 CLI Commands**, Surgical AST Symbol Editing (`-85%` Output Tokens), Karpathy Diff Gatekeeper, Spec-Driven DAG, Auto-Captured Memory Graph, Live SDK Deprecation Radar & 3-Stage Quota Firewall
 
 [![Live Site](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
-[![Release](https://img.shields.io/badge/Release-v9.0.0_Omniscient-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![MCP Tools](https://img.shields.io/badge/MCP_Server-31_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
-[![Token Savings](https://img.shields.io/badge/Verified_Compression-96.8%25-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
+[![Release](https://img.shields.io/badge/Release-v10.0.0_Apex-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![MCP Tools](https://img.shields.io/badge/MCP_Server-38_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![Token Savings](https://img.shields.io/badge/Verified_Compression-96.8%25_In_%7C_85%25_Out-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-A855F7?style=for-the-badge)](./LICENSE)
 
 **Works seamlessly with:** `Google Antigravity` • `Claude Code` • `Cursor` • `VS Code Copilot` • `Gemini CLI` • `Windsurf`
+
+> **Want the 1-File Standalone Karpathy + Superpowers + Quota Guard (`CLAUDE.md` / `AGENTS.md`)?** Grab [`docs/apex-skill.md`](./docs/apex-skill.md) (`https://sqo.elnemer-ai.com/apex-skill.md`) — or run `npx -y smart-quota-orchestrator init --workspace .` for the full 38-tool Autonomous OS!
+
+---
+
+## 🏆 New in `v10.0 Apex`: 6 Viral Superpowers Re-Engineered in Pure Python (`0` Dependencies)
+
+| `v10.0` Engine | Inspired By | MCP Tool / CLI | What It Unlocks |
+| :--- | :--- | :--- | :--- |
+| **1. Surgical Symbol AST Mutator** | `oraios/serena` | `sqo_edit_symbol` / `sqo symbol-edit` | Mutates exact `Class.method` by name (**-85% Output Tokens!**) with Time-Machine backup & `<8ms` syntax auto-rollback |
+| **2. Executable Karpathy Diff Gate** | `andrej-karpathy-skills` | `sqo_verify_work` / `sqo verify-work` | Catches `TODO` laziness stubs, silent public symbol deletions & out-of-scope file creep (`0–100` Grade `A+`) |
+| **3. Spec-Driven DAG & Gatekeeper** | `github/spec-kit` + `taskmaster` | `sqo_spec_engine` / `sqo spec` | Persistent `.sqo/specs.db` task DAG, `<220-token` `next` task briefs & executable `verify_cmd` acceptance gates |
+| **4. Auto-Captured Memory Graph** | `claude-mem` + `Graphiti` | `sqo_memory_graph` / `sqo graph-mem` | `PostToolUse` hook silently records file co-edits & `test failed -> edit -> passed` bugfix edges + Mermaid export |
+| **5. Live SDK Deprecation Radar** | `upstash/context7` | `sqo_sdk_radar` / `sqo sdk-radar` | Reads pinned versions & flags deprecated calls (`WillPopScope`, `.withOpacity`, legacy `google-generativeai`, Next 15 sync `params`) |
+| **6. Worktree Experiment Sandbox** | `obra/superpowers` | `sqo_worktree_sandbox` / `sqo sandbox` | Zero-risk isolated Git worktree / snapshot sandboxes with 1-click diff, promote & cleanup |
 
 [**Why v5.0?**](#-the-7-silent-quota-killers-and-how-v50-eliminates-them) • [**Visual Architecture**](#️-system-architecture-v50) • [**Real-World Dialogues**](#-real-world-developer--agent-dialogues-before-vs-after) • [**16 MCP Tools**](#-16-native-mcp-tools-sqo-engine) • [**Quick Install**](#-1-minute-installation) • [**الملخص بالعربية**](#-الملخص-العربي-السريع)
 

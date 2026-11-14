@@ -8,7 +8,7 @@ if [[ -n "${BASH_SOURCE[0]:-}" && -f "${BASH_SOURCE[0]}" ]]; then
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
 
-echo "==> Installing Smart Quota & Swarm Orchestrator v9.0 Omniscient..."
+echo "==> Installing Smart Quota & Swarm Orchestrator v10.0 Apex..."
 mkdir -p "$(dirname "${AGY_PLUGIN_DIR}")"
 
 if [[ -n "${SCRIPT_DIR}" && -f "${SCRIPT_DIR}/plugin.json" ]]; then
@@ -31,6 +31,6 @@ else
   fi
 fi
 
-echo "[OK] Installed v9.0 Omniscient Suite at: ${AGY_PLUGIN_DIR}"
-echo "     Active: 31 MCP Tools + 45 CLI Commands + Anti-Hallucination + i18n Matrix + Memo Cache + Hive-Mind!"
+echo "[OK] Installed v10.0 Apex Suite at: ${AGY_PLUGIN_DIR}"
+echo "     Active: 38 MCP Tools + 52 CLI Commands + Anti-Hallucination + i18n Matrix + Memo Cache + Hive-Mind!"
 echo "     Live Platform & Playground: https://sqo.elnemer-ai.com"

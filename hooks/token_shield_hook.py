@@ -325,9 +325,33 @@ def evaluate_post_tool(payload: Dict[str, Any], state_root: Optional[Path] = Non
     elif tool_name in WRITE_TOOLS:
         raw_path = str(args.get("Path") or args.get("TargetFile") or args.get("file_path") or "")
         if raw_path:
-            norm_key = str(Path(raw_path).resolve()).lower()
+            p_res = Path(raw_path).resolve()
+            norm_key = str(p_res).lower()
             state.get("reads", {}).pop(norm_key, None)
+            prev_edited = str(state.get("last_edited_rel") or "")
+            # Silent Auto-Captured Temporal Knowledge Graph (<4ms, Claude-Mem style)
+            try:
+                ws_root = p_res.parent
+                for anc in (p_res.parent, *p_res.parents):
+                    if (anc / ".sqo").is_dir() or (anc / ".git").exists():
+                        ws_root = anc
+                        break
+                rel_p = str(p_res.relative_to(ws_root)).replace("\\", "/") if p_res.is_relative_to(ws_root) else p_res.name
+                state["last_edited_rel"] = rel_p
+                state["last_ws_root"] = str(ws_root)
+                mg_script = Path(__file__).resolve().parent.parent / "skills" / "project-memory-vault" / "scripts" / "memory_graph.py"
+                if mg_script.is_file():
+                    import importlib.util as _ilu
+                    _sp = _ilu.spec_from_file_location("sqo_mg_auto", mg_script)
+                    if _sp and _sp.loader:
+                        _mg = _ilu.module_from_spec(_sp)
+                        _sp.loader.exec_module(_mg)
+                        _mg.record_auto_observation(ws_root, "edit", file_rel=rel_p, co_edited_file=prev_edited)
+            except Exception:
+                pass
         # Reset command retry-loop lock whenever code is edited!
+        if state.get("cmd_fail_cmd"):
+            state["pending_bugfix_cmd"] = str(state.get("last_failed_cmd_raw") or "")
         state["cmd_fail_cmd"] = ""
         state["cmd_fail_streak"] = 0
         changed = True
@@ -336,12 +360,33 @@ def evaluate_post_tool(payload: Dict[str, Any], state_root: Optional[Path] = Non
         cmd = str(args.get("CommandLine") or args.get("command") or "").strip()
         cmd_hash = hashlib.sha1(cmd.encode("utf-8", errors="ignore")).hexdigest()[:16] if cmd else ""
         if err and cmd_hash:
+            state["last_failed_cmd_raw"] = cmd[:80]
             if state.get("cmd_fail_cmd") == cmd_hash:
                 state["cmd_fail_streak"] = int(state.get("cmd_fail_streak", 0)) + 1
             else:
                 state["cmd_fail_cmd"] = cmd_hash
                 state["cmd_fail_streak"] = 1
         else:
+            # If a previously failing command just succeeded after a file edit -> record BugFix edge!
+            if state.get("pending_bugfix_cmd") and state.get("last_edited_rel") and state.get("last_ws_root"):
+                try:
+                    mg_script = Path(__file__).resolve().parent.parent / "skills" / "project-memory-vault" / "scripts" / "memory_graph.py"
+                    if mg_script.is_file():
+                        import importlib.util as _ilu
+                        _sp = _ilu.spec_from_file_location("sqo_mg_auto", mg_script)
+                        if _sp and _sp.loader:
+                            _mg = _ilu.module_from_spec(_sp)
+                            _sp.loader.exec_module(_mg)
+                            _mg.record_auto_observation(
+                                Path(state["last_ws_root"]),
+                                "bugfix_resolved",
+                                file_rel=str(state["last_edited_rel"]),
+                                command=str(state["pending_bugfix_cmd"]),
+                                note="Command succeeded after surgical edit",
+                            )
+                except Exception:
+                    pass
+                state["pending_bugfix_cmd"] = ""
             state["cmd_fail_cmd"] = ""
             state["cmd_fail_streak"] = 0
         changed = True

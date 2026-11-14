@@ -53,6 +53,13 @@ contracts_mod = _load_module("extract_contracts", "skills/context-compactor/scri
 swarm_plan_mod = _load_module("plan_swarm", "skills/parallel-slice-architect/scripts/plan_swarm.py")
 hub_mod = _load_module("cloud_hub", "skills/smart-quota-orchestrator/scripts/cloud_hub.py")
 
+sym_mod = _load_module("edit_symbol", "skills/apex-spec-surgeon/scripts/edit_symbol.py")
+spec_mod = _load_module("spec_engine", "skills/apex-spec-surgeon/scripts/spec_engine.py")
+mgraph_mod = _load_module("memory_graph", "skills/project-memory-vault/scripts/memory_graph.py")
+karp_mod = _load_module("verify_karpathy", "skills/apex-spec-surgeon/scripts/verify_karpathy.py")
+sdk_mod = _load_module("sdk_radar", "skills/apex-spec-surgeon/scripts/sdk_radar.py")
+sandbox_mod = _load_module("worktree_sandbox", "skills/apex-spec-surgeon/scripts/worktree_sandbox.py")
+
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
 pack_mod = _load_module("pack_context_bundle", "skills/context-compactor/scripts/pack_context_bundle.py")
@@ -309,16 +316,23 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertEqual(len(res["synced_files"]), 7)
             self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
 
-    def test_18_mcp_stdio_server_31_tools(self) -> None:
+    def test_18_mcp_stdio_server_38_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "9.0.0")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "10.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
         tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
-        self.assertEqual(len(tool_names), 31)
+        self.assertEqual(len(tool_names), 38)
         for expected in (
+            "sqo_edit_symbol",
+            "sqo_find_callers",
+            "sqo_spec_engine",
+            "sqo_memory_graph",
+            "sqo_verify_work",
+            "sqo_sdk_radar",
+            "sqo_worktree_sandbox",
             "sqo_verify_deps",
             "sqo_i18n_audit",
             "sqo_memo_cache",
@@ -427,7 +441,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             try:
                 with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/overview", timeout=4) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(data["version"], "9.0.0")
+                self.assertEqual(data["version"], "10.0.0")
                 self.assertEqual(data["routes"][0]["path"], "/health")
 
                 req = urllib.request.Request(
@@ -443,18 +457,19 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
                 srv.shutdown()
                 srv.server_close()
 
-    def test_29_manifests_v9_complete(self) -> None:
+    def test_29_manifests_v10_complete(self) -> None:
         for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json", "package.json", "vscode-extension/package.json"):
             data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
-            self.assertEqual(data["version"], "9.0.0")
+            self.assertEqual(data["version"], "10.0.0")
         self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
         self.assertTrue((REPO_ROOT / "bin" / "sqo.js").is_file())
         self.assertTrue((REPO_ROOT / "vscode-extension" / "extension.js").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "telemetry.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "card.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "presets.php").is_file())
+        self.assertTrue((REPO_ROOT / "docs" / "apex-skill.md").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
-        self.assertEqual(len(tax["skills"]), 6)
+        self.assertEqual(len(tax["skills"]), 7)
 
     def test_30_prompt_json_and_log_compressor(self) -> None:
         big_items = [{"id": i, "email": f"u{i}@test.dev", "status": "ACTIVE"} for i in range(40)]
@@ -617,6 +632,158 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             pulled = hub_mod.pull_into_workspace(ws, stack="auto", online=False)
             self.assertEqual(pulled["stack"], "flutter")
             self.assertGreaterEqual(pulled["imported_rules"], 1)
+
+    def test_43_surgical_symbol_editor_and_syntax_auto_rollback(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            py_f = ws / "billing.py"
+            py_f.write_text(
+                "# Header padding\n" * 40
+                + "class BillingService:\n"
+                + "    def calc_total(self, price: float) -> float:\n"
+                + "        return price * 1.0\n\n"
+                + "    def keep_me(self) -> str:\n"
+                + "        return BillingService().calc_total(10.0)\n",
+                encoding="utf-8",
+            )
+            callers = sym_mod.find_callers(ws, "calc_total")
+            self.assertGreaterEqual(callers["total_hits"], 2)
+
+            res = sym_mod.mutate_symbol(
+                ws,
+                py_f,
+                "BillingService.calc_total",
+                "replace",
+                "def calc_total(self, price: float, tax: float = 0.14) -> float:\n    return round(price * (1.0 + tax), 2)",
+            )
+            self.assertTrue(res["ok"])
+            self.assertGreater(res["output_token_savings_pct"], 50.0)
+            self.assertIn("tax: float = 0.14", py_f.read_text(encoding="utf-8"))
+
+            # Inject broken syntax -> must auto-rollback!
+            bad = sym_mod.mutate_symbol(ws, py_f, "BillingService.calc_total", "replace", "def calc_total(self:\n    return 0")
+            self.assertFalse(bad["ok"])
+            self.assertTrue(bad.get("rolled_back"))
+            self.assertIn("tax: float = 0.14", py_f.read_text(encoding="utf-8"))
+
+    def test_44_spec_driven_dag_engine_and_acceptance_gate(self) -> None:
+        import sys
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            sp = spec_mod.init_spec(
+                ws,
+                "Stripe Webhook Auth",
+                "Verify webhook signatures safely",
+                tasks=[
+                    {"step_key": "T1", "title": "Write signature verifier", "owned_files": ["auth.py"], "depends_on": [], "verify_cmd": f'"{sys.executable}" -c "import sys; sys.exit(1)"'},
+                    {"step_key": "T2", "title": "Wire endpoint", "owned_files": ["api.py"], "depends_on": ["T1"], "verify_cmd": f'"{sys.executable}" -c "import sys; sys.exit(0)"'},
+                ],
+            )
+            self.assertTrue(sp["ok"])
+            nxt = spec_mod.get_next_task(ws, sp["slug"])
+            self.assertEqual(nxt["task"]["step_key"], "T1")
+
+            blocked = spec_mod.complete_task(ws, sp["slug"], "T1", run_verify=True)
+            self.assertFalse(blocked["ok"])
+            self.assertTrue(blocked.get("gate_blocked"))
+
+            done1 = spec_mod.complete_task(ws, sp["slug"], "T1", run_verify=False)
+            self.assertTrue(done1["ok"])
+            self.assertEqual(done1["next_task"]["step_key"], "T2")
+
+    def test_45_auto_captured_temporal_memory_graph_and_hook(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / ".sqo").mkdir()
+            f1 = ws / "auth.py"
+            f2 = ws / "jwt.py"
+            f1.write_text("x = 1\n", encoding="utf-8")
+            f2.write_text("y = 2\n", encoding="utf-8")
+
+            state_dir = ws / "state"
+            hook_mod.evaluate_post_tool(
+                {"conversationId": "c-graph", "toolCall": {"name": "run_command", "args": {"CommandLine": "pytest tests/test_auth.py"}}, "error": "exit 1"},
+                state_root=state_dir,
+            )
+            hook_mod.evaluate_post_tool(
+                {"conversationId": "c-graph", "toolCall": {"name": "edit_file", "args": {"Path": str(f1)}}},
+                state_root=state_dir,
+            )
+            hook_mod.evaluate_post_tool(
+                {"conversationId": "c-graph", "toolCall": {"name": "edit_file", "args": {"Path": str(f2)}}},
+                state_root=state_dir,
+            )
+            hook_mod.evaluate_post_tool(
+                {"conversationId": "c-graph", "toolCall": {"name": "run_command", "args": {"CommandLine": "pytest tests/test_auth.py"}}, "error": ""},
+                state_root=state_dir,
+            )
+
+            hist = mgraph_mod.query_file_history(ws, "jwt.py")
+            self.assertGreaterEqual(hist["touch_count"], 1)
+            rels = {r["rel"] for r in hist["relations"]}
+            self.assertIn("CO_EDITED_WITH", rels)
+            self.assertIn("RESOLVED_FAILURE", rels)
+
+    def test_46_karpathy_diff_laziness_deletion_and_scope_auditor(self) -> None:
+        bad_diff = (
+            "diff --git a/src/unrequested.py b/src/unrequested.py\n"
+            "--- a/src/unrequested.py\n"
+            "+++ b/src/unrequested.py\n"
+            "@@ -1,4 +1,3 @@\n"
+            "-def important_existing_feature():\n"
+            "-    return True\n"
+            "+def half_baked():\n"
+            "+    # TODO: implement rest of logic\n"
+        )
+        rep = karp_mod.audit_diff_text(bad_diff, allowed_files=["src/auth.py"])
+        self.assertFalse(rep["passed"])
+        kinds = {f["kind"] for f in rep["findings"]}
+        self.assertIn("laziness_placeholder", kinds)
+        self.assertIn("silent_feature_deletion", kinds)
+        self.assertIn("scope_creep", kinds)
+
+        clean_diff = (
+            "diff --git a/src/auth.py b/src/auth.py\n"
+            "--- a/src/auth.py\n"
+            "+++ b/src/auth.py\n"
+            "@@ -1,2 +1,3 @@\n"
+            " def verify_token(tok: str) -> bool:\n"
+            "+    if not tok: return False\n"
+            "     return len(tok) > 10\n"
+        )
+        ok_rep = karp_mod.audit_diff_text(clean_diff, allowed_files=["src/auth.py"])
+        self.assertTrue(ok_rep["passed"])
+        self.assertEqual(ok_rep["grade"], "A+")
+
+    def test_47_live_sdk_version_and_deprecation_radar(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "pubspec.yaml").write_text("name: app\ndependencies:\n  go_router: ^14.0.0\n", encoding="utf-8")
+            (ws / "screen.dart").write_text(
+                "Widget build(ctx) => WillPopScope(child: Container(color: Colors.blue.withOpacity(0.5)));\n",
+                encoding="utf-8",
+            )
+            rep = sdk_mod.scan_sdk_deprecations(ws)
+            self.assertFalse(rep["clean"])
+            self.assertGreaterEqual(rep["deprecation_count"], 2)
+
+    def test_48_isolated_worktree_sandbox_diff_and_promote(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "core.py").write_text("VAL = 1\n", encoding="utf-8")
+            sb = sandbox_mod.create_sandbox(ws, "exp-refactor")
+            self.assertTrue(sb["ok"])
+            sb_file = Path(sb["path"]) / "core.py"
+            sb_file.write_text("VAL = 2\n", encoding="utf-8")
+            # Main workspace untouched!
+            self.assertEqual((ws / "core.py").read_text(encoding="utf-8"), "VAL = 1\n")
+
+            d = sandbox_mod.diff_sandbox(ws, "exp-refactor")
+            self.assertIn("core.py", d["modified"])
+
+            sandbox_mod.promote_sandbox(ws, "exp-refactor")
+            self.assertEqual((ws / "core.py").read_text(encoding="utf-8"), "VAL = 2\n")
+            sandbox_mod.cleanup_sandbox(ws, "exp-refactor")
 
 
 if __name__ == "__main__":

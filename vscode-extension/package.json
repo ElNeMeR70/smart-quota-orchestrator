@@ -2,7 +2,7 @@
   "name": "smart-quota-orchestrator-vscode",
   "displayName": "Smart Quota & Swarm Orchestrator — Status Bar & Agent OS",
   "description": "Live status-bar token/$USD ROI counter, 1-click Live Command Center launcher, Context-Rot monitor, and framework shield bootstrapper for VS Code, Cursor, Antigravity & Windsurf.",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "publisher": "elnemer",
   "homepage": "https://sqo.elnemer-ai.com",
   "repository": {
@@ -12,15 +12,33 @@
   "engines": {
     "vscode": "^1.80.0"
   },
-  "categories": ["AI", "Other", "Programming Languages"],
-  "activationEvents": ["onStartupFinished"],
+  "categories": [
+    "AI",
+    "Other",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
-      { "command": "sqo.openLiveCenter", "title": "Smart Quota: Open Live Web Command Center (sqo serve)" },
-      { "command": "sqo.runDoctor", "title": "Smart Quota: Run Full Workspace Doctor Check" },
-      { "command": "sqo.initWorkspace", "title": "Smart Quota: Auto-Bootstrap Framework Shields & MCP (sqo init)" },
-      { "command": "sqo.checkContextRot", "title": "Smart Quota: Check Session Context-Rot & Copy Handoff Brief" }
+      {
+        "command": "sqo.openLiveCenter",
+        "title": "Smart Quota: Open Live Web Command Center (sqo serve)"
+      },
+      {
+        "command": "sqo.runDoctor",
+        "title": "Smart Quota: Run Full Workspace Doctor Check"
+      },
+      {
+        "command": "sqo.initWorkspace",
+        "title": "Smart Quota: Auto-Bootstrap Framework Shields & MCP (sqo init)"
+      },
+      {
+        "command": "sqo.checkContextRot",
+        "title": "Smart Quota: Check Session Context-Rot & Copy Handoff Brief"
+      }
     ]
   }
 }

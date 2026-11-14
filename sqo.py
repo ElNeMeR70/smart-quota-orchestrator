@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
-"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v9.0 Omniscient Edition.
+"""Unified Master CLI (`sqo`) for Smart Quota & Superpowers OS v10.0 Apex Edition.
 
-Provides 45 deterministic, zero-dependency commands for AI coding agents and developers:
+Provides 52 deterministic, zero-dependency commands for AI coding agents and developers:
+  - symbol-edit     : Serena-Class Surgical Symbol-Level AST Mutator (-85% Output Tokens!)
+  - callers         : Fast Cross-Repo Function/Method Call-Site Locator before signature edits
+  - spec            : Spec-Kit + Taskmaster Autonomous Spec-Driven DAG & Gatekeeper
+  - graph-mem       : Claude-Mem Auto-Captured Temporal Knowledge Graph & Mermaid Exporter
+  - verify-work     : Executable Karpathy + Superpowers Diff, Laziness & Scope Auditor
+  - sdk-radar       : Context7-Class Live Version-Pinned SDK Idioms & Deprecation Scanner
+  - sandbox         : Superpowers Isolated Git Worktree / Snapshot Experiment Runner
   - serve           : Launch the Real-Time Localhost Web Command Center (http://127.0.0.1:7890)
   - init            : Auto-detect stack (Flutter/Next.js/Laravel/Python/Go/Rust) & bootstrap shields
   - verify-deps     : Anti-Hallucination Dependency & Phantom Import Verifier (Python/JS/TS/Dart)
@@ -62,6 +69,13 @@ SKILLS_DIR = ROOT_DIR / "skills"
 
 COMMAND_MAP: Dict[str, Tuple[Path, List[str]]] = {
     "serve": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "live_server.py", []),
+    "symbol-edit": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "edit_symbol.py", []),
+    "callers": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "edit_symbol.py", ["--action", "callers"]),
+    "spec": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "spec_engine.py", []),
+    "graph-mem": (SKILLS_DIR / "project-memory-vault" / "scripts" / "memory_graph.py", []),
+    "verify-work": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "verify_karpathy.py", []),
+    "sdk-radar": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "sdk_radar.py", []),
+    "sandbox": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "worktree_sandbox.py", []),
     "init": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "init_workspace_preset.py", []),
     "verify-deps": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "verify_hallucinations.py", []),
     "i18n": (SKILLS_DIR / "context-compactor" / "scripts" / "audit_i18n.py", []),
