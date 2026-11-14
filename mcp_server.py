@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v7.0).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v8.0 Singularity Edition).
 
-Exposes 20 native, token-saving engineering & code-intelligence tools directly to
+Exposes 25 native, token-saving engineering & code-intelligence tools directly to
 Google Antigravity, Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over
 JSON-RPC 2.0 `stdio` transport.
 
@@ -21,7 +21,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "7.0.0"
+SERVER_VERSION = "8.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -282,6 +282,71 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
             "required": ["workspace"],
         },
     },
+    {
+        "name": "sqo_hive_mind",
+        "description": "Cross-Project Federated Brain (`~/.sqo/hive_mind.db`): promote architectural wisdom/gotchas across repos, recall stack-specific lessons (`flutter`, `nextjs`, `laravel`, `python`), or inject global lessons into a new project.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["promote", "recall", "inject", "stats"], "description": "Hive-Mind operation."},
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "stack": {"type": "string", "description": "Optional stack filter ('auto', 'flutter', 'nextjs', 'laravel', 'python', 'universal')."},
+                "query": {"type": "string", "description": "BM25 search query when action='recall'."},
+                "title": {"type": "string", "description": "Direct lesson title when promoting a new gotcha."},
+                "detail": {"type": "string", "description": "Direct lesson detail when promoting a new gotcha."},
+            },
+            "required": ["action"],
+        },
+    },
+    {
+        "name": "sqo_schema_distill",
+        "description": "Universal 6-Stack Database & GraphQL Schema Distiller: compresses 30k-90k tokens of SQL DDL, Prisma, Laravel migrations, Flutter Drift/Sqflite, SQLAlchemy, or GraphQL schemas into a <350-token Entity-Relationship DSL + Mermaid diagram.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory or schema file path."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_shadow_check",
+        "description": "Speculative <12ms Pre-Flight Syntax, Balanced Delimiter, Broken Relative Import & Merge-Conflict Guard across Python, JSON, TS/JS, Dart, PHP, Go, and Rust BEFORE running expensive builds/tests.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "targets": {"type": "array", "items": {"type": "string"}, "description": "Optional file/folder paths (defaults to git dirty files)."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_checkpoint",
+        "description": "Zero-Git-Conflict Session Time-Machine: create instant zlib-compressed source snapshots, diff live edits against a checkpoint, or surgically roll back files without touching Git history.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["create", "list", "diff", "restore"], "description": "Checkpoint action."},
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "label": {"type": "string", "description": "Checkpoint label when action='create'."},
+                "checkpoint_id": {"type": "string", "description": "Checkpoint ID (or 'latest') for diff/restore."},
+                "files": {"type": "array", "items": {"type": "string"}, "description": "Optional relative file subset to snapshot or restore."},
+            },
+            "required": ["action", "workspace"],
+        },
+    },
+    {
+        "name": "sqo_ci_shield",
+        "description": "Generate `.github/workflows/sqo-shield.yml` GitHub Actions Pull Request Shield to enforce zero secret leaks, pre-flight syntax checks, KV-cache stability, and vision media budgets on every PR.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
 ]
 
 
@@ -419,6 +484,52 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
         out = Path(args["output_path"]) if args.get("output_path") else (ws / "sqo-badge.svg")
         out.write_text(svg, encoding="utf-8")
         return f"[OK] Generated SVG badge (`-{meta['reduction_pct']}% Tokens | Grade {meta['grade']}`) at `{out}`"
+
+    if name == "sqo_hive_mind":
+        mod = _load_tool_mod("project-memory-vault/scripts/hive_mind.py")
+        hive_db = mod.default_hive_path()
+        act = str(args.get("action", "stats"))
+        ws = Path(args.get("workspace", ".")).resolve()
+        stack = str(args.get("stack", "auto"))
+        if act == "promote":
+            if args.get("title") and args.get("detail"):
+                st = mod.detect_stack(ws) if stack == "auto" else stack
+                res = mod.store_hive_lesson(hive_db, st, "architecture", str(args["title"]), str(args["detail"]), source_repo=ws.name)
+            else:
+                res = mod.promote_from_workspace(ws, hive_db, stack=stack)
+            return json.dumps(res, indent=2, ensure_ascii=False)
+        if act == "inject":
+            return json.dumps(mod.inject_into_workspace(ws, hive_db, stack=stack), indent=2, ensure_ascii=False)
+        st_filter = "" if stack in ("auto", "all") else stack
+        items = mod.recall_hive(hive_db, query=str(args.get("query", "")), stack=st_filter, limit=10)
+        return mod.render_markdown(items, mod.hive_stats(hive_db))
+
+    if name == "sqo_schema_distill":
+        mod = _load_tool_mod("context-compactor/scripts/distill_schema.py")
+        return mod.render_markdown(mod.distill_workspace_schema(Path(args["workspace"]).resolve()))
+
+    if name == "sqo_shadow_check":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/shadow_dry_run.py")
+        return mod.render_markdown(mod.run_shadow_check(Path(args["workspace"]).resolve(), args.get("targets")))
+
+    if name == "sqo_checkpoint":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/time_machine.py")
+        ws = Path(args["workspace"]).resolve()
+        act = str(args["action"])
+        cp_id = str(args.get("checkpoint_id", "latest"))
+        if act == "create":
+            res = mod.create_checkpoint(ws, label=str(args.get("label", "agent-step")), files_filter=args.get("files"))
+        elif act == "diff":
+            res = mod.diff_checkpoint(ws, cp_id=cp_id)
+        elif act == "restore":
+            res = mod.restore_checkpoint(ws, cp_id=cp_id, files_filter=args.get("files"))
+        else:
+            res = {"checkpoints": mod.list_checkpoints(ws)}
+        return json.dumps(res, indent=2, ensure_ascii=False)
+
+    if name == "sqo_ci_shield":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/generate_ci_shield.py")
+        return json.dumps(mod.install_ci_shield(Path(args["workspace"]).resolve()), indent=2, ensure_ascii=False)
 
     raise ValueError(f"Unknown MCP tool: {name}")
 

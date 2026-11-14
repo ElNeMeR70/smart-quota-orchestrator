@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v7.0 Global Edition.
+"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v8.0 Singularity Edition.
 
-Provides 33 deterministic, zero-dependency commands for AI coding agents and developers:
+Provides 39 deterministic, zero-dependency commands for AI coding agents and developers:
   - serve           : Launch the Real-Time Localhost Web Command Center (http://127.0.0.1:7890)
   - init            : Auto-detect stack (Flutter/Next.js/Laravel/Python/Go/Rust) & bootstrap shields
+  - hive            : Cross-Project Federated Hive-Mind Brain (`~/.sqo/hive_mind.db`) across all repos!
+  - schema          : Universal 6-Stack DB & GraphQL Schema Distiller (94%-98% token compression!)
+  - dry-run         : <12ms Pre-Flight Syntax, Delimiter, Import & Conflict Guard before builds
+  - checkpoint      : Zero-Git-Conflict Session Time-Machine & Surgical File Rollback
+  - ci-shield       : Generate GitHub Actions Pull Request Token & Secret Shield workflow
+  - share           : Generate Live GitHub Profile Trophy SVG Card & sync to sqo.elnemer-ai.com
   - context-health  : Score quadratic Context-Rot risk (0-100) & emit <350-token handoff snapshot
   - compress-prompt : Compress verbose raw prompts, repetitive JSON arrays & logs (-55% to -85%)
   - badge           : Generate verified SVG token-efficiency shield badge (`sqo-badge.svg`)
@@ -34,7 +40,7 @@ Provides 33 deterministic, zero-dependency commands for AI coding agents and dev
   - audit           : Inspect active JSONL session transcripts for token leaks
   - handoff         : Generate a <400-token zero-loss state brief before /compact
   - dashboard       : Render a standalone dark-glassmorphism HTML telemetry dashboard
-  - mcp             : Start the native JSON-RPC 2.0 Stdio MCP Server (20 live tools)
+  - mcp             : Start the native JSON-RPC 2.0 Stdio MCP Server (25 live tools)
 """
 
 from __future__ import annotations
@@ -51,6 +57,12 @@ SKILLS_DIR = ROOT_DIR / "skills"
 COMMAND_MAP: Dict[str, Tuple[Path, List[str]]] = {
     "serve": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "live_server.py", []),
     "init": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "init_workspace_preset.py", []),
+    "hive": (SKILLS_DIR / "project-memory-vault" / "scripts" / "hive_mind.py", []),
+    "schema": (SKILLS_DIR / "context-compactor" / "scripts" / "distill_schema.py", []),
+    "dry-run": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "shadow_dry_run.py", []),
+    "checkpoint": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "time_machine.py", []),
+    "ci-shield": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "generate_ci_shield.py", []),
+    "share": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "cloud_share.py", []),
     "context-health": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "check_context_rot.py", []),
     "badge": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "generate_repo_badge.py", []),
     "pools": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "parse_quota_pools.py", []),
@@ -105,7 +117,7 @@ def _run_doctor(workspace_args: List[str]) -> int:
     for i, tok in enumerate(workspace_args):
         if tok in ("-w", "--workspace") and i + 1 < len(workspace_args):
             ws = workspace_args[i + 1]
-    print("# ⚡ Smart Quota & Swarm Orchestrator v7.0 — Autonomous Agent OS Doctor\n", flush=True)
+    print("# ⚡ Smart Quota & Swarm Orchestrator v8.0 — Singularity Agent OS Doctor\n", flush=True)
     steps = [
         ("roi", []),
         ("prompt-tax", ["--workspace", ws]),

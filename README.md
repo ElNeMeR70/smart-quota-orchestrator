@@ -9,13 +9,13 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v7.0` Global Ecosystem Edition)
+# ⚡ Smart Quota & Swarm Orchestrator (`v8.0` Singularity & Global Network Edition)
 
-### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, **20 Native MCP Tools**, `npx smart-quota-orchestrator` CLI, Live Localhost Web Command Center (`sqo serve`), Native VS Code / Cursor Extension & Live `$USD` ROI Ledger
+### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, **25 Native MCP Tools**, Cross-Repo Hive-Mind Brain, 6-Stack DB Schema Distiller, Session Time-Machine, Pre-Flight Syntax Guard & Live Global Network
 
 [![Live Site](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
-[![Release](https://img.shields.io/badge/Release-v7.0.0_Global_Ecosystem-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![MCP Tools](https://img.shields.io/badge/MCP_Server-20_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![Release](https://img.shields.io/badge/Release-v8.0.0_Singularity-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![MCP Tools](https://img.shields.io/badge/MCP_Server-25_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
 [![Token Savings](https://img.shields.io/badge/Verified_Compression-96.8%25-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-A855F7?style=for-the-badge)](./LICENSE)
@@ -193,26 +193,32 @@ uv tool install git+https://github.com/ElNeMeR70/smart-quota-orchestrator.git
 
 ---
 
-## 💻 Unified `sqo` Master CLI (33 Zero-Dependency Commands)
+## 💻 Unified `sqo` Master CLI (39 Zero-Dependency Commands)
 
 ```bash
-python sqo.py init --workspace .                # v7.0: Auto-detect stack (Flutter/Next.js/Laravel/etc.) & bootstrap all shields!
-python sqo.py serve --workspace . --open        # v7.0: Launch Live Localhost Bilingual Web Command Center (http://127.0.0.1:7890)
-python sqo.py compress-prompt -f noisy.json     # NEW v7.0: Compact >4-item JSON arrays, collapse duplicate logs & scrub secrets
-python sqo.py badge -w . -o badge.svg           # NEW v7.0: Generate embeddable SVG shield badge with verified compression %
+python sqo.py init --workspace .                # Auto-detect stack (Flutter/Next.js/Laravel/etc.) & bootstrap all shields!
+python sqo.py hive promote --workspace .        # NEW v8.0: Federate project wisdom into ~/.sqo/hive_mind.db across ALL your repos!
+python sqo.py schema --workspace .              # NEW v8.0: Distill SQL/Prisma/Laravel/Drift/GraphQL schemas (-96% tokens!)
+python sqo.py dry-run --workspace .             # NEW v8.0: <12ms Pre-Flight Syntax, Brace, Import & Conflict Guard before builds
+python sqo.py checkpoint create -l "pre-auth"   # NEW v8.0: Zero-Git-Conflict Session Time-Machine & surgical rollback
+python sqo.py ci-shield --workspace .           # NEW v8.0: Generate GitHub Actions PR Token, Secret & KV-Cache Shield workflow
+python sqo.py share --handle ElNeMeR --publish  # NEW v8.0: Generate Live GitHub Profile Trophy SVG Card & sync global leaderboard!
+python sqo.py serve --workspace . --open        # Launch Live Localhost Bilingual Web Command Center (http://127.0.0.1:7890)
+python sqo.py compress-prompt -f noisy.json     # Compact >4-item JSON arrays, collapse duplicate logs & scrub secrets
+python sqo.py badge -w . -o badge.svg           # Generate embeddable SVG shield badge with verified compression %
 python sqo.py context-health --workspace .      # Score session Context-Rot risk & emit <350-tok handoff snapshot
 python sqo.py doctor --workspace .              # Full 8-in-1 health, ROI, KV-cache, secret & graph check
 python sqo.py roi                               # View cumulative tokens & $USD saved by autonomous shields
 python sqo.py media --workspace .               # Audit PNG/JPEG/WebP/PDF multimodal vision token costs
-python sqo.py git-guard --workspace .           # Install <40ms Git pre-commit secret & prompt-bloat hook
 python sqo.py hotspots --workspace . --top-k 10 # Incremental SQLite Complexity × Coupling bug hotspots
 python sqo.py routes --workspace .              # Extract complete Backend & Frontend route table
 python sqo.py pinpoint -w . -f crash.log        # 1-step multi-file crash stack-trace code window extractor
 python sqo.py search "verifyWebhook" -w .       # SQLite FTS5 BM25 symbol-chunk search (<250 tokens)
-python sqo.py blast-radius src/auth.ts -w .     # Reverse-import impact graph & minimal unit tests to run
-python sqo.py pack -w . --max-tokens 3000       # Budgeted multi-file context bundle (Full + AST skeletons)
-python sqo.py slice -w . --emit-workflow        # Collision-free parallel swarm slices + workflow script
-python sqo.py dashboard -w . -o report.html     # Standalone dark-glassmorphism HTML telemetry center
+```
+
+🏆 **Live Dynamic GitHub Profile Trophy Card (`v8.0`):**
+```markdown
+[![Smart Quota OS Trophy](https://sqo.elnemer-ai.com/api/card.php?handle=ElNeMeR)](https://sqo.elnemer-ai.com)
 ```
 
 🌐 **Official Live Interactive Web App (4 Languages + Live Context Compressor Playground)**: **[https://sqo.elnemer-ai.com](https://sqo.elnemer-ai.com)** • **Launch Kit**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)

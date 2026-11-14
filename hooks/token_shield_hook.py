@@ -361,14 +361,21 @@ def evaluate_hook(payload: Dict[str, Any], state_root: Optional[Path] = None) ->
 
 
 def main() -> int:
+    for stream in (sys.stdin, sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except Exception:
+                pass
     try:
         raw = sys.stdin.read()
         payload = json.loads(raw) if raw.strip() else {}
         result = evaluate_hook(payload)
-    except Exception:
-        result = {"decision": "allow"}
+        out = json.dumps(result, ensure_ascii=True)
+    except BaseException:
+        out = '{"decision": "allow"}'
 
-    sys.stdout.write(json.dumps(result, ensure_ascii=False) + "\n")
+    sys.stdout.write(out + "\n")
     sys.stdout.flush()
     return 0
 

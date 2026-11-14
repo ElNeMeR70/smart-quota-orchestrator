@@ -9,12 +9,12 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v7.0` Global Ecosystem)
-### المنظومة العالمية المتكاملة لحماية الكوتا، `20` أداة MCP أصلية، مثبت `npx` عالمي، إضافة VS Code / Cursor، مركز القيادة المحلي الحي (`sqo serve`)، وضغط السياق بنسبة 96.8%
+# ⚡ Smart Quota & Swarm Orchestrator (`v8.0` Singularity Edition)
+### المنظومة العالمية الفائقة لحماية الكوتا: `25` أداة MCP، العقل الجماعي العابر للمشاريع (`Hive-Mind`)، مقطّر قواعد البيانات (`Schema Distiller`)، آلة الزمن (`Time-Machine`)، ولوحة المتصدرين العالمية الحية!
 
 [![المنصة الحية](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
-[![الإصدار](https://img.shields.io/badge/Release-v7.0.0_Global_Ecosystem-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![أدوات MCP](https://img.shields.io/badge/MCP_Server-20_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![الإصدار](https://img.shields.io/badge/Release-v8.0.0_Singularity-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![أدوات MCP](https://img.shields.io/badge/MCP_Server-25_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
 [![التوفير الفعلي](https://img.shields.io/badge/Verified_Savings-96.8%25_Tokens-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![بدون مكتبات خارجية](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 
@@ -165,23 +165,19 @@ curl -fsSL https://sqo.elnemer-ai.com/install.sh | bash
 
 ---
 
-## 💻 أهم أوامر سطر الأوامر الموحد (`33` أداة في `sqo.py`)
+## 💻 أهم أوامر سطر الأوامر الموحد (`39` أداة في `sqo.py`)
 
 ```bash
 python sqo.py init --workspace .                # كشف تلقائي لإطار العمل (Flutter/Laravel/Next.js...) وتهيئة كل الدروع!
+python sqo.py hive promote --workspace .        # (جديد v8.0) نقل خبرات وحلول المشروع إلى العقل الجماعي ~/.sqo/hive_mind.db لكل مشاريعك!
+python sqo.py schema --workspace .              # (جديد v8.0) تقطير جداول SQL و Prisma و Laravel و Drift بتوفير 96% من التوكنز!
+python sqo.py dry-run --workspace .             # (جديد v8.0) فحص استباقي في 12ms لأخطاء Syntax والأقواس والـ Imports قبل البناء
+python sqo.py checkpoint create -l "pre-edit"   # (جديد v8.0) آلة الزمن: حفظ نقطة استرجاع فورية واستعادة الملفات جراحياً بدون تعارض Git
+python sqo.py ci-shield --workspace .           # (جديد v8.0) توليد درع GitHub Actions لفحص كل Pull Request تلقائياً
+python sqo.py share --handle ElNeMeR --publish  # (جديد v8.0) نشر نتيجتك في لوحة المتصدرين العالمية وتوليد بطاقة GitHub الحية!
 python sqo.py serve --workspace . --open        # تشغيل مركز القيادة الحي في المتصفح على http://127.0.0.1:7890
-python sqo.py compress-prompt -f noisy.json     # (جديد v7.0) ضغط مصفوفات JSON وسجلات الأخطاء المتكررة وحذف المفاتيح السرية
-python sqo.py badge -w . -o badge.svg           # (جديد v7.0) توليد شارة SVG حية بنسبة ضغط التوكنز لمستودعك على GitHub
-python sqo.py context-health --workspace .      # فحص تضخم السياق التربيعي وتجهيز ملخص التسليم الذكي
+python sqo.py compress-prompt -f noisy.json     # ضغط مصفوفات JSON وسجلات الأخطاء المتكررة وحذف المفاتيح السرية
 python sqo.py doctor --workspace .              # فحص شامل 8 في 1 للمشروع والـ KV-Cache والأمان والتوفير
-python sqo.py roi                               # عرض إجمالي التوكنز والدولارات ($USD) التي تم توفيرها
-python sqo.py media --workspace .               # حساب تكلفة الصور وملفات PDF بالتوكنز واكتشاف الصور الضخمة
-python sqo.py git-guard --workspace .           # تثبيت حارس Git لمنع رفع أي مفتاح سري قبل الـ Commit
-python sqo.py hotspots --workspace .            # كشف أعقد ملفات الكود وأكثرها ارتباطاً في أجزاء من الثانية
-python sqo.py routes --workspace .              # طباعة جدول كافة مسارات الـ API وصفحات الواجهة
-python sqo.py pinpoint -w . -f crash.log        # استخراج أسطر الخطأ بدقة من أي Stack Trace
-python sqo.py search "verifyToken" -w .         # بحث دلالي فائق السرعة بخوارزمية BM25
-python sqo.py dashboard -w . -o report.html     # توليد لوحة تحكم تفاعلية فخمة بصيغة HTML
 ```
 
 🌐 **المنصة التفاعلية العالمية الحية (بـ 4 لغات + مختبر ضغط السياق الفوري في المتصفح)**: **[https://sqo.elnemer-ai.com](https://sqo.elnemer-ai.com)** • **حقيبة الإطلاق والنشر العالمي**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)

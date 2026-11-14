@@ -40,6 +40,12 @@ live_srv_mod = _load_module("live_server", "skills/smart-quota-orchestrator/scri
 preset_mod = _load_module("init_workspace_preset", "skills/smart-quota-orchestrator/scripts/init_workspace_preset.py")
 rot_mod = _load_module("check_context_rot", "skills/smart-quota-orchestrator/scripts/check_context_rot.py")
 badge_mod = _load_module("generate_repo_badge", "skills/smart-quota-orchestrator/scripts/generate_repo_badge.py")
+shadow_mod = _load_module("shadow_dry_run", "skills/smart-quota-orchestrator/scripts/shadow_dry_run.py")
+tm_mod = _load_module("time_machine", "skills/smart-quota-orchestrator/scripts/time_machine.py")
+ci_mod = _load_module("generate_ci_shield", "skills/smart-quota-orchestrator/scripts/generate_ci_shield.py")
+share_mod = _load_module("cloud_share", "skills/smart-quota-orchestrator/scripts/cloud_share.py")
+hive_mod = _load_module("hive_mind", "skills/project-memory-vault/scripts/hive_mind.py")
+schema_mod = _load_module("distill_schema", "skills/context-compactor/scripts/distill_schema.py")
 
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
@@ -297,26 +303,26 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertEqual(len(res["synced_files"]), 7)
             self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
 
-    def test_18_mcp_stdio_server_20_tools(self) -> None:
+    def test_18_mcp_stdio_server_25_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "7.0.0")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "8.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
         tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
-        self.assertEqual(len(tool_names), 20)
+        self.assertEqual(len(tool_names), 25)
         for expected in (
+            "sqo_hive_mind",
+            "sqo_schema_distill",
+            "sqo_shadow_check",
+            "sqo_checkpoint",
+            "sqo_ci_shield",
             "sqo_compress_prompt",
             "sqo_repo_badge",
             "sqo_init_preset",
             "sqo_context_health",
             "sqo_roi_ledger",
-            "sqo_media_budget",
-            "sqo_pinpoint_error",
-            "sqo_code_hotspots",
-            "sqo_api_routes",
-            "sqo_cache_audit",
         ):
             self.assertIn(expected, tool_names)
 
@@ -415,7 +421,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             try:
                 with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/overview", timeout=4) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(data["version"], "7.0.0")
+                self.assertEqual(data["version"], "8.0.0")
                 self.assertEqual(data["routes"][0]["path"], "/health")
 
                 req = urllib.request.Request(
@@ -431,13 +437,15 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
                 srv.shutdown()
                 srv.server_close()
 
-    def test_29_manifests_v7_complete(self) -> None:
+    def test_29_manifests_v8_complete(self) -> None:
         for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json", "package.json", "vscode-extension/package.json"):
             data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
-            self.assertEqual(data["version"], "7.0.0")
+            self.assertEqual(data["version"], "8.0.0")
         self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
         self.assertTrue((REPO_ROOT / "bin" / "sqo.js").is_file())
         self.assertTrue((REPO_ROOT / "vscode-extension" / "extension.js").is_file())
+        self.assertTrue((REPO_ROOT / "docs" / "api" / "telemetry.php").is_file())
+        self.assertTrue((REPO_ROOT / "docs" / "api" / "card.php").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
         self.assertEqual(len(tax["skills"]), 6)
 
@@ -465,6 +473,87 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertIn("<svg", svg_txt)
             self.assertIn("Smart Quota", svg_txt)
             self.assertGreater(meta["reduction_pct"], 50.0)
+
+    def test_32_cross_repo_hive_mind_federation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tpath = Path(tmp)
+            hive_db = tpath / "hive.db"
+            repo_a = tpath / "app_a"
+            repo_b = tpath / "app_b"
+            repo_a.mkdir()
+            repo_b.mkdir()
+            (repo_a / "pubspec.yaml").write_text("name: a\n", encoding="utf-8")
+            (repo_b / "pubspec.yaml").write_text("name: b\n", encoding="utf-8")
+
+            r1 = hive_mod.store_hive_lesson(hive_db, "flutter", "gotcha", "Gradle JVM Heap", "Use -Xmx4G and sk-proj-SECRET12345678901234567890", source_repo="app_a")
+            self.assertFalse(r1["deduplicated"])
+            hits = hive_mod.recall_hive(hive_db, query="Gradle Heap", stack="flutter")
+            self.assertEqual(len(hits), 1)
+            self.assertNotIn("SECRET123456", hits[0]["detail"])
+
+            inj = hive_mod.inject_into_workspace(repo_b, hive_db, stack="auto")
+            self.assertEqual(inj["injected_count"], 1)
+
+    def test_33_universal_6_stack_schema_distiller(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "schema.sql").write_text(
+                "CREATE TABLE users (id INT PRIMARY KEY, email VARCHAR(255));\n"
+                "CREATE TABLE orders (id INT PRIMARY KEY, user_id INT REFERENCES users(id), total DECIMAL(10,2));\n"
+                + ("-- migration comment padding\n" * 80),
+                encoding="utf-8",
+            )
+            (ws / "schema.prisma").write_text(
+                "model Invoice {\n  id String @id\n  amount Float\n  user User @relation(fields: [userId], references: [id])\n}\n",
+                encoding="utf-8",
+            )
+            rep = schema_mod.distill_workspace_schema(ws)
+            self.assertEqual(rep["entity_count"], 3)
+            self.assertIn("user_id->users", rep["compact_dsl"])
+            self.assertGreater(rep["token_savings_pct"], 50.0)
+
+    def test_34_shadow_preflight_syntax_brace_and_import_guard(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "broken.py").write_text("def oops(\n    return 1\n", encoding="utf-8")
+            (ws / "broken.ts").write_text("import { x } from './missing_mod';\nexport function f() {\n  if (true) {\n", encoding="utf-8")
+            (ws / "clean.py").write_text("def ok() -> int:\n    return 42\n", encoding="utf-8")
+
+            bad = shadow_mod.run_shadow_check(ws, ["broken.py", "broken.ts"])
+            self.assertFalse(bad["passed"])
+            kinds = {i["kind"] for i in bad["issues"]}
+            self.assertIn("python_syntax_error", kinds)
+            self.assertIn("unclosed_delimiter", kinds)
+            self.assertIn("broken_relative_import", kinds)
+
+            good = shadow_mod.run_shadow_check(ws, ["clean.py"])
+            self.assertTrue(good["passed"])
+
+    def test_35_session_time_machine_checkpoint_and_surgical_restore(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            f = ws / "service.py"
+            f.write_text("VERSION = 1\n", encoding="utf-8")
+            cp = tm_mod.create_checkpoint(ws, label="clean-v1")
+            self.assertEqual(cp["file_count"], 1)
+
+            f.write_text("VERSION = 999  # broken\n", encoding="utf-8")
+            diff = tm_mod.diff_checkpoint(ws, cp["id"])
+            self.assertIn("service.py", diff["modified"])
+
+            tm_mod.restore_checkpoint(ws, cp["id"])
+            self.assertEqual(f.read_text(encoding="utf-8"), "VERSION = 1\n")
+
+    def test_36_github_ci_shield_and_cloud_share_card(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            ci = ci_mod.install_ci_shield(ws)
+            self.assertTrue(ci["installed"])
+            self.assertTrue((ws / ".github" / "workflows" / "sqo-shield.yml").is_file())
+
+        card = share_mod.build_share_payload(REPO_ROOT / "skills", handle="ElNeMeR")
+        self.assertEqual(card["handle"], "ElNeMeR")
+        self.assertIn("https://sqo.elnemer-ai.com/api/card.php", card["live_card_url"])
 
 
 if __name__ == "__main__":

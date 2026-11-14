@@ -1,0 +1,44 @@
+name: ⚡ Smart Quota & Architecture PR Shield
+
+on:
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sqo-pr-shield:
+    name: 🛡️ AI Quota, Secret & Syntax Shield
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11 (Zero External Dependencies)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Fetch Smart Quota & Swarm Orchestrator Engine
+        run: |
+          git clone --depth 1 https://github.com/ElNeMeR70/smart-quota-orchestrator.git /tmp/sqo
+
+      - name: Run Pre-Flight Syntax, Secret, KV-Cache & Media Shield
+        run: |
+          {
+            echo "## ⚡ Smart Quota OS — Pull Request Shield Report"
+            echo "> Powered by [Smart Quota & Swarm Orchestrator](https://sqo.elnemer-ai.com)"
+            echo ""
+            python /tmp/sqo/sqo.py dry-run --workspace . .
+            echo ""
+            python /tmp/sqo/sqo.py cache-audit --workspace .
+            echo ""
+            python /tmp/sqo/sqo.py media --workspace .
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Enforce Zero Secret Leaks & Clean Syntax
+        run: |
+          python /tmp/sqo/sqo.py scrub --workspace .
+          python /tmp/sqo/sqo.py dry-run --workspace . .

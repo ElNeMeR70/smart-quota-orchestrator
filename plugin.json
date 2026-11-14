@@ -1,8 +1,8 @@
 {
   "name": "smart-quota-orchestrator",
   "displayName": "Smart Quota & Swarm Orchestrator",
-  "version": "7.0.0",
-  "description": "Autonomous AI Agent OS Layer (v7.0 Global Ecosystem): 20 native MCP tools, npx smart-quota-orchestrator CLI (33 commands), Live Localhost Web Command Center (`sqo serve`), VS Code/Cursor status-bar extension, prompt/log compressor, and 3-stage stateful hooks with live $USD ROI ledger.",
+  "version": "8.0.0",
+  "description": "Autonomous AI Agent OS Layer (v8.0 Singularity Edition): 25 native MCP tools, Cross-Repo Hive-Mind Brain, 6-Stack DB Schema Distiller, Pre-Flight Syntax Guard, Session Time-Machine, GitHub PR Shield, npx CLI & live $USD ROI ledger.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
     "Run sqo doctor v7.0 on this workspace and check session context-health & live $USD ROI savings",

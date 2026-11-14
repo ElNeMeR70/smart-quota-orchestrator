@@ -8,7 +8,7 @@ if [[ -n "${BASH_SOURCE[0]:-}" && -f "${BASH_SOURCE[0]}" ]]; then
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
 
-echo "==> Installing Smart Quota & Swarm Orchestrator v7.0 Global Ecosystem..."
+echo "==> Installing Smart Quota & Swarm Orchestrator v8.0 Singularity..."
 mkdir -p "$(dirname "${AGY_PLUGIN_DIR}")"
 
 if [[ -n "${SCRIPT_DIR}" && -f "${SCRIPT_DIR}/plugin.json" ]]; then
@@ -31,6 +31,6 @@ else
   fi
 fi
 
-echo "[OK] Installed v7.0 Global Ecosystem Suite at: ${AGY_PLUGIN_DIR}"
-echo "     Active: 20 MCP Tools + 33 CLI Commands + Live Web UI (sqo serve) + 3-Stage Stateful Hooks + USD ROI Ledger!"
+echo "[OK] Installed v8.0 Singularity Suite at: ${AGY_PLUGIN_DIR}"
+echo "     Active: 25 MCP Tools + 39 CLI Commands + Hive-Mind + Schema Distiller + Time-Machine + USD ROI Ledger!"
 echo "     Live Platform & Playground: https://sqo.elnemer-ai.com"
