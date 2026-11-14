@@ -1,59 +1,40 @@
 ---
 name: context-compactor
 description: >-
-  Eliminates context bloat with 5 deterministic CLI tools: AST/symbol file
-  skeletonizer (read 2,000-line files in <120 tokens), token-budgeted git diff
-  compressor, build/test CLI output denoiser, context-bomb .agentignore
-  generator, and <400-token zero-loss handoff brief builder for /compact and
-  subagents. Use when reading large files, reviewing big diffs, running noisy
-  tests, shielding repos from token bombs, or compacting long sessions.
+  Eliminates context bloat with 6 deterministic CLI tools: AST/symbol file
+  skeletonizer, adaptive Repomix-style multi-file context packer, token-budgeted
+  git diff compressor, build/test CLI output denoiser, context-bomb .agentignore
+  generator, and <400-token zero-loss handoff brief builder. Use when reading
+  large files, packing multi-file context, reviewing big diffs, running noisy
+  tests, or compacting long sessions.
 ---
 
-# Context Compactor & High-Signal Compression Toolkit
+# Context Compactor & Adaptive Compression Toolkit (`v3.0`)
 
-Prevent prompt bloat **before** it enters the conversation window using five zero-dependency Python CLI utilities located in `./scripts/`:
+Prevent prompt bloat **before** it enters the conversation window using six zero-dependency Python CLI utilities (and native `sqo-engine` MCP tools):
 
-| Tool | Script | Typical Token Savings | When to Use |
+| Tool | Script / MCP Tool | Typical Token Savings | When to Use |
 | :--- | :--- | :--- | :--- |
-| **1. Structural File Skeletonizer** | [smart_outline.py](./scripts/smart_outline.py) | **85% – 96%** | Before reading any file `> 300` lines — inspect symbol signatures + `Lstart-Lend` ranges first! |
-| **2. Token-Budgeted Git Diff** | [compress_git_diff.py](./scripts/compress_git_diff.py) | **70% – 95%** | Reviewing working-tree or branch diffs without lockfile/bundle/SVG token floods |
-| **3. CLI Test/Build Denoiser** | [compact_command_output.py](./scripts/compact_command_output.py) | **80% – 95%** | Running `pytest`, `vitest`, `jest`, `npm test`, `tsc`, `flutter test`, or verbose builds |
-| **4. Context-Bomb Ignore Guard** | [generate_agent_ignore.py](./scripts/generate_agent_ignore.py) | **Prevents 10k–200k accidents** | Scanning repos for heavy dumps/sourcemaps and generating `.agentignore` / `.cursorignore` |
-| **5. Zero-Loss Handoff Brief** | [build_handoff_brief.py](./scripts/build_handoff_brief.py) | **90%+ on resume** | Packaging branch, dirty files, and next atomic actions (<400 tokens) before `/compact` or subagent handoff |
+| **1. Structural File Skeletonizer** | [smart_outline.py](./scripts/smart_outline.py) / `sqo_smart_outline` | **85% – 96%** | Before reading any file `> 250` lines — inspect symbol signatures + `Lstart-Lend` ranges first |
+| **2. Adaptive Multi-File Context Packer** | [pack_context_bundle.py](./scripts/pack_context_bundle.py) / `sqo_context_pack` | **75% – 92%** | Pack 20–100 files into an exact `--max-tokens` budget (Full focus files + AST skeletons + index) |
+| **3. Token-Budgeted Git Diff** | [compress_git_diff.py](./scripts/compress_git_diff.py) / `sqo_budgeted_diff` | **70% – 95%** | Review working-tree or branch diffs without lockfile/bundle/SVG token floods |
+| **4. CLI Test/Build Denoiser** | [compact_command_output.py](./scripts/compact_command_output.py) | **80% – 95%** | Run `pytest`, `vitest`, `jest`, `npm test`, `tsc`, or `flutter test` cleanly |
+| **5. Context-Bomb Ignore Guard** | [generate_agent_ignore.py](./scripts/generate_agent_ignore.py) | **Prevents 10k–200k accidents** | Scan repos for heavy dumps/sourcemaps and write `.agentignore` / `.cursorignore` |
+| **6. Zero-Loss Handoff Brief** | [build_handoff_brief.py](./scripts/build_handoff_brief.py) | **90%+ on resume** | Package branch, dirty files, and next atomic actions (`<400` tokens) before `/compact` or subagents |
 
 ---
 
-## Usage Recipes
+## Quick Usage
 
-### 1. Inspect Large Files Without Reading the Whole File
 ```bash
-# Get every class/function signature + exact line numbers
+# 1. Outline a large file or extract a single method
 python "<skill_dir>/scripts/smart_outline.py" path/to/large_file.ts
-
-# Extract ONLY one target symbol's body with line numbers
 python "<skill_dir>/scripts/smart_outline.py" path/to/large_file.ts --symbol handleWebhook
-```
 
-### 2. Review Git Diffs Inside a Strict Token Budget
-```bash
+# 2. Pack an entire subsystem into <= 3,000 tokens
+python "<skill_dir>/scripts/pack_context_bundle.py" --workspace . --paths src/billing --focus stripe.ts --max-tokens 3000
+
+# 3. Compress git diff & denoise test runners
 python "<skill_dir>/scripts/compress_git_diff.py" --workspace . --max-tokens 1800
-```
-
-### 3. Run Noisy Test Suites & Keep Only Actionable Failures
-```bash
 python "<skill_dir>/scripts/compact_command_output.py" --cmd "npm test"
-```
-
-### 4. Shield Workspace from Context-Poisoning Files
-```bash
-# Scan & write .agentignore (or pass --target .cursorignore / .claudeignore)
-python "<skill_dir>/scripts/generate_agent_ignore.py" --workspace . --write
-```
-
-### 5. Build a `<400-Token` Handoff Snapshot Before `/compact`
-```bash
-python "<skill_dir>/scripts/build_handoff_brief.py" \
-  --workspace . \
-  --goal "Complete billing webhook handler" \
-  --next "Add signature unit test" "Verify staging build"
 ```

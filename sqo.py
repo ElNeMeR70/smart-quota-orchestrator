@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
-"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v2.0.
+"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v3.0.
 
-Provides 12 deterministic, zero-dependency commands for AI coding agents and developers:
-  - doctor       : Full 5-in-1 workspace & prompt-tax quota health check
+Provides 19 deterministic, zero-dependency commands for AI coding agents and developers:
+  - doctor       : Full 6-in-1 workspace, secret-safety & prompt-tax health check
+  - benchmark    : Live empirical Before-vs-After token compression benchmark
+  - search       : SQLite FTS5 BM25 instant symbol & code-chunk search
+  - pack         : Adaptive multi-file context packer (Full + AST Skeletons + Index)
+  - blast-radius : Transitive reverse-import impact & minimal affected test selector
+  - memory       : Persistent SQLite FTS5 cross-session architectural memory vault
+  - scrub        : Hardcoded secret scanner (masked) & pre-prompt secret redactor
   - pools        : Group live model quotas, reset timers & failover reserves
   - complexity   : Score task complexity (0-100) & parallelizability (0.0-1.0)
   - simulate     : Compare monolithic vs Orchestrator vs workflow quota burn
@@ -15,6 +21,7 @@ Provides 12 deterministic, zero-dependency commands for AI coding agents and dev
   - audit        : Inspect active JSONL session transcripts for token leaks
   - handoff      : Generate a <400-token zero-loss state brief before /compact
   - dashboard    : Render a standalone dark-glassmorphism HTML telemetry dashboard
+  - mcp          : Start the native JSON-RPC 2.0 Stdio MCP Server (10 live tools)
 """
 
 from __future__ import annotations
@@ -34,13 +41,20 @@ COMMAND_MAP: Dict[str, Path] = {
     "simulate": SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "simulate_workflow_cost.py",
     "audit": SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "audit_session_burn.py",
     "dashboard": SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "generate_html_dashboard.py",
+    "benchmark": SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "benchmark_suite.py",
     "handoff": SKILLS_DIR / "context-compactor" / "scripts" / "build_handoff_brief.py",
     "outline": SKILLS_DIR / "context-compactor" / "scripts" / "smart_outline.py",
+    "pack": SKILLS_DIR / "context-compactor" / "scripts" / "pack_context_bundle.py",
     "diff": SKILLS_DIR / "context-compactor" / "scripts" / "compress_git_diff.py",
     "denoise": SKILLS_DIR / "context-compactor" / "scripts" / "compact_command_output.py",
     "ignore-guard": SKILLS_DIR / "context-compactor" / "scripts" / "generate_agent_ignore.py",
+    "search": SKILLS_DIR / "semantic-code-navigator" / "scripts" / "search_code_bm25.py",
+    "blast-radius": SKILLS_DIR / "semantic-code-navigator" / "scripts" / "analyze_blast_radius.py",
+    "memory": SKILLS_DIR / "project-memory-vault" / "scripts" / "memory_vault.py",
+    "scrub": SKILLS_DIR / "project-memory-vault" / "scripts" / "scrub_secrets.py",
     "slice": SKILLS_DIR / "parallel-slice-architect" / "scripts" / "partition_parallel_slices.py",
     "prompt-tax": SKILLS_DIR / "prompt-tax-profiler" / "scripts" / "optimize_prompt_rules.py",
+    "mcp": ROOT_DIR / "mcp_server.py",
 }
 
 
@@ -65,10 +79,12 @@ def _run_doctor(workspace_args: List[str]) -> int:
     for i, tok in enumerate(workspace_args):
         if tok in ("-w", "--workspace") and i + 1 < len(workspace_args):
             ws = workspace_args[i + 1]
-    print("# ⚡ Smart Quota & Swarm Orchestrator — Full Workspace Doctor\n", flush=True)
+    print("# ⚡ Smart Quota & Swarm Orchestrator v3.0 — Full Autonomous Doctor\n", flush=True)
     steps = [
         ("prompt-tax", ["--workspace", ws]),
+        ("scrub", ["--scan-workspace", ws]),
         ("ignore-guard", ["--workspace", ws]),
+        ("benchmark", ["--workspace", ws]),
         ("complexity", ["--workspace", ws, "--task", "Workspace baseline readiness check"]),
         ("slice", ["--workspace", ws, "--max-workers", "4"]),
     ]
@@ -87,11 +103,11 @@ def _print_help() -> None:
     print("  python sqo.py <subcommand> [options]\n")
     print("Examples:")
     print("  python sqo.py doctor --workspace .")
-    print("  python sqo.py outline src/server.ts")
-    print("  python sqo.py slice --workspace . --emit-workflow")
-    print("  python sqo.py diff --max-tokens 1500")
-    print("  python sqo.py denoise --cmd \"pytest\"")
-    print("  python sqo.py dashboard --workspace . --output quota-dashboard.html")
+    print("  python sqo.py benchmark --workspace .")
+    print("  python sqo.py search \"verifyStripeWebhook jwt\" --workspace .")
+    print("  python sqo.py pack --workspace . --max-tokens 3000")
+    print("  python sqo.py blast-radius src/types/user.ts --workspace .")
+    print("  python sqo.py memory --workspace . remember -c auth -t \"JWT Guard\" -d \"Uses RS256\"")
 
 
 def main() -> int:

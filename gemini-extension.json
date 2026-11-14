@@ -1,6 +1,6 @@
 {
   "name": "smart-quota-orchestrator",
-  "version": "2.0.0",
-  "description": "12-tool AI quota, multi-agent dependency slicer, AST file skeletonizer, diff/test denoiser, and prompt-tax profiler suite.",
+  "version": "3.0.0",
+  "description": "Autonomous AI Quota & Context Engine: 10 native MCP tools, real-time PreToolUse token-bomb shield, SQLite BM25 code search, persistent memory vault, and 18 CLI engines.",
   "contextFileName": "rules/AGENTS.md"
 }

@@ -1,0 +1,17 @@
+{
+  "sqo-token-bomb-shield": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "read_file|view_file|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python hooks/token_shield_hook.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

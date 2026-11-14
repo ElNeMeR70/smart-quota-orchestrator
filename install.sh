@@ -5,13 +5,13 @@ REPO_URL="https://github.com/ElNeMeR70/smart-quota-orchestrator.git"
 AGY_PLUGIN_DIR="${HOME}/.gemini/config/plugins/smart-quota-orchestrator"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "==> Installing Smart Quota & Swarm Orchestrator v2.0..."
+echo "==> Installing Smart Quota & Swarm Orchestrator v3.0..."
 mkdir -p "$(dirname "${AGY_PLUGIN_DIR}")"
 
 if [[ -f "${SCRIPT_DIR}/plugin.json" ]]; then
   rm -rf "${AGY_PLUGIN_DIR}"
   mkdir -p "${AGY_PLUGIN_DIR}"
-  for item in plugin.json .claude-plugin gemini-extension.json README.md LICENSE sqo.py assets rules agents skills; do
+  for item in plugin.json .claude-plugin gemini-extension.json mcp_config.json mcp_server.py hooks.json hooks README.md LICENSE sqo.py assets rules agents skills; do
     if [[ -e "${SCRIPT_DIR}/${item}" ]]; then
       cp -R "${SCRIPT_DIR}/${item}" "${AGY_PLUGIN_DIR}/"
     fi
@@ -24,5 +24,5 @@ else
   fi
 fi
 
-echo "[OK] Installed v2.0 at: ${AGY_PLUGIN_DIR}"
-echo "     Restart or start a new turn in Google Antigravity to activate!"
+echo "[OK] Installed v3.0 Enterprise Suite at: ${AGY_PLUGIN_DIR}"
+echo "     Active components: 10 MCP Tools + PreToolUse Shield Hook + 6 Skills + 3 Subagents!"

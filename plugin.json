@@ -1,13 +1,13 @@
 {
   "name": "smart-quota-orchestrator",
   "displayName": "Smart Quota & Swarm Orchestrator",
-  "version": "2.0.0",
-  "description": "12-tool AI quota & context optimization suite: live model pool analytics, AST file skeletonizer, dependency-safe parallel slicer, git diff & test denoiser, prompt-tax profiler, and HTML telemetry dashboard.",
+  "version": "3.0.0",
+  "description": "Autonomous AI Quota & Context Engine: 10 native MCP tools, real-time PreToolUse token-bomb shield hook, SQLite FTS5 BM25 code search, cross-session memory vault, blast-radius analyzer, 6 skills, and 3 specialist subagents.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
-    "Run a full quota doctor check on this workspace and check my live model pools",
-    "Partition this project into collision-free parallel slices and execute with minimal quota",
-    "Audit this session's token burn, outline large files, and generate an HTML quota dashboard"
+    "Run sqo doctor and live compression benchmarks on this workspace, and check my model quota pools",
+    "Search this codebase with BM25, map the blast radius of my changes, and store architecture notes in the memory vault",
+    "Partition this project into collision-free parallel slices and generate an interactive HTML telemetry dashboard"
   ],
   "author": {
     "name": "ElNeMeR",
