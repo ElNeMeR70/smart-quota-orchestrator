@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "smart-quota-orchestrator"
-version = "5.0.0"
-description = "Autonomous AI Agent Quota, Context-Compression & Multi-Agent OS Layer (16 MCP tools, Stateful Lifecycle Shield Hooks, Live $USD ROI Ledger, Multi-Modal Vision/PDF Budgeter, Incremental SQLite Code Graph & BM25 Search)."
+version = "6.0.0"
+description = "Autonomous AI Agent Quota, Context-Compression & Multi-Agent OS Layer (18 MCP tools, Live Localhost Web Command Center, Framework Auto-Bootstrapper, Context-Rot Monitor, Stateful Lifecycle Shield Hooks & Live $USD ROI Ledger)."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }

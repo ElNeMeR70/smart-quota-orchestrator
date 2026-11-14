@@ -8,13 +8,13 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v5.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v5.0` Autonomous Agent OS)
+# ⚡ Smart Quota & Swarm Orchestrator (`v6.0` Autonomous Agent OS)
 
-### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, 16 Native MCP Tools, Live `$USD` ROI Ledger, Multimodal Vision Budgeter & Incremental SQLite Code Graph
+### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, 18 Native MCP Tools, Live Localhost Web Command Center (`sqo serve`), Auto-Framework Presets (`sqo init`) & Live `$USD` ROI Ledger
 
-[![Release](https://img.shields.io/badge/Release-v5.0.0_Global_Edition-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![MCP Tools](https://img.shields.io/badge/MCP_Server-16_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
-[![Token Savings](https://img.shields.io/badge/Verified_Compression-96.6%25-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
+[![Release](https://img.shields.io/badge/Release-v6.0.0_Global_Edition-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![MCP Tools](https://img.shields.io/badge/MCP_Server-18_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![Token Savings](https://img.shields.io/badge/Verified_Compression-96.8%25-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B-Zero_Dependencies-38BDF8?style=for-the-badge)](./pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-A855F7?style=for-the-badge)](./LICENSE)
 
@@ -125,7 +125,7 @@ Every single time [`hooks/token_shield_hook.py`](./hooks/token_shield_hook.py) b
 
 ---
 
-## 🔌 16 Native MCP Tools (`sqo-engine`)
+## 🔌 18 Native MCP Tools (`sqo-engine`)
 
 Zero `pip install`—[`mcp_server.py`](./mcp_server.py) runs pure Python stdlib JSON-RPC `2.0` over `stdio` (`0.0%` idle CPU):
 
@@ -145,8 +145,10 @@ Zero `pip install`—[`mcp_server.py`](./mcp_server.py) runs pure Python stdlib 
 | **`sqo_cache_audit`** | Audits hooks & rules for LLM Prompt KV-Cache prefix stability (`0–100` score) | **90% cache hit** |
 | **`sqo_quota_pools`** | Groups shared vs. independent model pools, reset timers & safe `%/hr` burn ceiling | **Zero lockouts** |
 | **`sqo_benchmark`** | Live empirical Before-vs-After token compression benchmark on any repo | **Verified proof** |
-| **`sqo_roi_ledger`** | **NEW `v5.0`** — Live SQLite Token & `$USD` ROI Ledger of prevented waste | **Exact `$` telemetry** |
-| **`sqo_media_budget`** | **NEW `v5.0`** — PNG/JPEG/WebP/GIF/PDF vision tile & page token calculator (Gemini/Claude/OpenAI) | **50% – 85% vision** |
+| **`sqo_roi_ledger`** | Live SQLite Token & `$USD` ROI Ledger of prevented waste | **Exact `$` telemetry** |
+| **`sqo_media_budget`** | PNG/JPEG/WebP/GIF/PDF vision tile & page token calculator (Gemini/Claude/OpenAI) | **50% – 85% vision** |
+| **`sqo_init_preset`** | **NEW `v6.0`** — Auto-detects Flutter/Next.js/Laravel/Python/Go/Rust & seeds ignores, MCP & memories | **1-step bootstrap** |
+| **`sqo_context_health`** | **NEW `v6.0`** — Quadratic Context-Rot Early-Warning (`0–100`) + `<350`-token Zero-Loss Handoff Snapshot | **Saves ~65%/turn** |
 
 ---
 
@@ -179,9 +181,12 @@ uv tool install git+https://github.com/ElNeMeR70/smart-quota-orchestrator.git
 
 ---
 
-## 💻 Unified `sqo` Master CLI (28 Zero-Dependency Commands)
+## 💻 Unified `sqo` Master CLI (31 Zero-Dependency Commands)
 
 ```bash
+python sqo.py init --workspace .                # NEW v6.0: Auto-detect stack (Flutter/Next.js/Laravel/etc.) & bootstrap all shields!
+python sqo.py serve --workspace . --open        # NEW v6.0: Launch Live Localhost Bilingual Web Command Center (http://127.0.0.1:7890)
+python sqo.py context-health --workspace .      # NEW v6.0: Score session Context-Rot risk & emit <350-tok handoff snapshot
 python sqo.py doctor --workspace .              # Full 8-in-1 health, ROI, KV-cache, secret & graph check
 python sqo.py roi                               # View cumulative tokens & $USD saved by autonomous shields
 python sqo.py media --workspace .               # Audit PNG/JPEG/WebP/PDF multimodal vision token costs
@@ -195,6 +200,8 @@ python sqo.py pack -w . --max-tokens 3000       # Budgeted multi-file context bu
 python sqo.py slice -w . --emit-workflow        # Collision-free parallel swarm slices + workflow script
 python sqo.py dashboard -w . -o report.html     # Standalone dark-glassmorphism HTML telemetry center
 ```
+
+🌐 **Interactive Bilingual Landing Page + Monthly `$USD` Calculator**: [`docs/index.html`](./docs/index.html) • **PyPI & Directory Launch Kit**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)
 
 ---
 

@@ -36,6 +36,9 @@ bench_mod = _load_module("benchmark_suite", "skills/smart-quota-orchestrator/scr
 sync_ide_mod = _load_module("sync_ide_configs", "skills/smart-quota-orchestrator/scripts/sync_ide_configs.py")
 roi_mod = _load_module("roi_ledger", "skills/smart-quota-orchestrator/scripts/roi_ledger.py")
 git_guard_mod = _load_module("install_git_guard", "skills/smart-quota-orchestrator/scripts/install_git_guard.py")
+live_srv_mod = _load_module("live_server", "skills/smart-quota-orchestrator/scripts/live_server.py")
+preset_mod = _load_module("init_workspace_preset", "skills/smart-quota-orchestrator/scripts/init_workspace_preset.py")
+rot_mod = _load_module("check_context_rot", "skills/smart-quota-orchestrator/scripts/check_context_rot.py")
 
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
@@ -292,16 +295,16 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertEqual(len(res["synced_files"]), 7)
             self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
 
-    def test_18_mcp_stdio_server_16_tools(self) -> None:
+    def test_18_mcp_stdio_server_18_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "5.0.0")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "6.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
         tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
-        self.assertEqual(len(tool_names), 16)
-        for expected in ("sqo_roi_ledger", "sqo_media_budget", "sqo_pinpoint_error", "sqo_code_hotspots", "sqo_api_routes", "sqo_cache_audit"):
+        self.assertEqual(len(tool_names), 18)
+        for expected in ("sqo_init_preset", "sqo_context_health", "sqo_roi_ledger", "sqo_media_budget", "sqo_pinpoint_error", "sqo_code_hotspots", "sqo_api_routes", "sqo_cache_audit"):
             self.assertIn(expected, tool_names)
 
     def test_19_compress_diff_and_denoise(self) -> None:
@@ -356,16 +359,69 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertTrue(res["installed"])
             self.assertTrue((ws / ".git" / "hooks" / "pre-commit").is_file())
 
-    def test_25_visual_assets_and_bilingual_playbooks_present(self) -> None:
+    def test_25_visual_assets_landing_page_and_bilingual_playbooks_present(self) -> None:
         for asset in ("logo.svg", "hero-banner.jpg", "architecture-v5.svg", "benchmark-comparison.svg", "shield-lifecycle.svg", "terminal-roi-preview.svg"):
             self.assertTrue((REPO_ROOT / "assets" / asset).is_file(), f"Missing visual asset: {asset}")
-        for doc in ("README.md", "README.ar.md", "docs/PLAYBOOK_EN.md", "docs/PLAYBOOK_AR.md"):
-            self.assertTrue((REPO_ROOT / doc).is_file(), f"Missing documentation file: {doc}")
+        for doc in ("README.md", "README.ar.md", "docs/index.html", "docs/LAUNCH_KIT.md", "docs/PLAYBOOK_EN.md", "docs/PLAYBOOK_AR.md", "smithery.yaml", "glama.json"):
+            self.assertTrue((REPO_ROOT / doc).is_file(), f"Missing documentation/registry file: {doc}")
 
-    def test_26_manifests_v5_complete(self) -> None:
-        for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json"):
+    def test_26_smart_framework_preset_auto_bootstrapper(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "pubspec.yaml").write_text("name: demo_app\n", encoding="utf-8")
+            (ws / ".git").mkdir()
+            rep = preset_mod.initialize_workspace(ws, preset="auto", with_git_guard=True)
+            self.assertEqual(rep["detected_preset"], "flutter")
+            self.assertGreaterEqual(rep["seeded_memories"], 2)
+            self.assertTrue(rep["git_guard_installed"])
+            agent_ig = (ws / ".agentignore").read_text(encoding="utf-8")
+            self.assertIn("*.g.dart", agent_ig)
+
+    def test_27_context_rot_early_warning_monitor(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            t_file = ws / "transcript.jsonl"
+            big_steps = [{"step_index": i, "tool_calls": [{"name": "read_file"}], "content": "x" * 2400} for i in range(60)]
+            t_file.write_text("\n".join(json.dumps(s) for s in big_steps), encoding="utf-8")
+            rep = rot_mod.evaluate_context_health(REPO_ROOT / "skills", transcript_path=t_file, goal="Ship v6.0")
+            self.assertGreaterEqual(rep["context_rot_score"], 50)
+            self.assertIn("Ship v6.0", rep["ready_handoff_brief"])
+
+    def test_28_live_localhost_web_command_center_api(self) -> None:
+        import threading
+        import urllib.request
+        from http.server import ThreadingHTTPServer
+
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "app.py").write_text("@app.get('/health')\ndef health():\n    return {'ok': True}\n", encoding="utf-8")
+            srv = ThreadingHTTPServer(("127.0.0.1", 0), live_srv_mod.make_handler(ws))
+            port = srv.server_address[1]
+            t = threading.Thread(target=srv.serve_forever, daemon=True)
+            t.start()
+            try:
+                with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/overview", timeout=4) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                self.assertEqual(data["version"], "6.0.0")
+                self.assertEqual(data["routes"][0]["path"], "/health")
+
+                req = urllib.request.Request(
+                    f"http://127.0.0.1:{port}/api/memories",
+                    data=json.dumps({"category": "arch", "title": "Port info", "detail": "8080"}).encode("utf-8"),
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with urllib.request.urlopen(req, timeout=4) as post_resp:
+                    saved = json.loads(post_resp.read().decode("utf-8"))
+                self.assertTrue(saved["ok"])
+            finally:
+                srv.shutdown()
+                srv.server_close()
+
+    def test_29_manifests_v6_complete(self) -> None:
+        for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json"):
             data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
-            self.assertEqual(data["version"], "5.0.0")
+            self.assertEqual(data["version"], "6.0.0")
         self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
         self.assertEqual(len(tax["skills"]), 6)

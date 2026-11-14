@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v5.0).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v6.0).
 
-Exposes 16 native, token-saving engineering & code-intelligence tools directly to
+Exposes 18 native, token-saving engineering & code-intelligence tools directly to
 Google Antigravity, Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over
 JSON-RPC 2.0 `stdio` transport.
 
@@ -21,7 +21,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "5.0.0"
+SERVER_VERSION = "6.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -235,6 +235,30 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
             "required": ["workspace"],
         },
     },
+    {
+        "name": "sqo_init_preset",
+        "description": "Auto-detect workspace framework (Flutter, Next.js, Laravel, Python/FastAPI, Node/TS, Go, Rust) and bootstrap IDE MCP configs, framework ignore shields, starter memories & Git pre-commit guard.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "preset": {"type": "string", "description": "Optional preset override ('auto', 'flutter', 'nextjs', 'laravel', 'fastapi-python', 'node-ts', 'go', 'rust')."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_context_health",
+        "description": "Measure quadratic session Context-Rot risk (0-100) on the active conversation transcript and emit a ready-to-paste <350-token Zero-Loss Handoff Snapshot.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "goal": {"type": "string", "description": "Current engineering goal for the handoff snapshot."},
+            },
+            "required": ["workspace"],
+        },
+    },
 ]
 
 
@@ -345,6 +369,16 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
     if name == "sqo_media_budget":
         mod = _load_tool_mod("context-compactor/scripts/estimate_media_tokens.py")
         rep = mod.scan_media_paths(args.get("targets") or [], Path(args["workspace"]).resolve())
+        return mod.render_markdown(rep)
+
+    if name == "sqo_init_preset":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/init_workspace_preset.py")
+        rep = mod.initialize_workspace(Path(args["workspace"]).resolve(), preset=str(args.get("preset", "auto")))
+        return mod.render_markdown(rep)
+
+    if name == "sqo_context_health":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/check_context_rot.py")
+        rep = mod.evaluate_context_health(Path(args["workspace"]).resolve(), goal=str(args.get("goal", "Continue active implementation")))
         return mod.render_markdown(rep)
 
     raise ValueError(f"Unknown MCP tool: {name}")

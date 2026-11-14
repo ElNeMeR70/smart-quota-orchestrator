@@ -1,35 +1,38 @@
 #!/usr/bin/env python3
-"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v5.0.
+"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v6.0.
 
-Provides 28 deterministic, zero-dependency commands for AI coding agents and developers:
-  - doctor       : Full 8-in-1 workspace, KV-cache, secret-safety, ROI & graph health check
-  - roi          : Live SQLite Token & Dollar ($USD) ROI Ledger of prevented waste
-  - media        : Multi-Modal Image/PDF Vision Token Cost Estimator (Gemini/Claude/OpenAI)
-  - git-guard    : Install <40ms Git pre-commit secret & prompt-tax shield
-  - benchmark    : Live empirical Before-vs-After token compression benchmark
-  - search       : SQLite FTS5 BM25 instant symbol & code-chunk search
-  - hotspots     : Incremental SQLite Code Graph (Cyclomatic × Fan-In hotspots & orphans)
-  - routes       : Multi-framework API & UI route table extractor (Next.js/Express/FastAPI/Laravel/Go/Flutter)
-  - pinpoint     : 1-shot multi-file crash stack-trace code window extractor
-  - pack         : Adaptive multi-file context packer (Full + AST Skeletons + Index)
-  - blast-radius : Transitive reverse-import impact & minimal affected test selector
-  - memory       : Persistent SQLite FTS5 cross-session architectural memory vault
-  - scrub        : Hardcoded secret scanner (masked) & pre-prompt secret redactor
-  - cache-audit  : LLM Prompt KV-Cache prefix stability & cache-busting detector
-  - sync-ide     : Wire MCP server & ignore shields across Antigravity, Cursor, Claude, VS Code & Windsurf
-  - pools        : Group live model quotas, reset timers & failover reserves
-  - complexity   : Score task complexity (0-100) & parallelizability (0.0-1.0)
-  - simulate     : Compare monolithic vs Orchestrator vs workflow quota burn
-  - slice        : Partition repo imports into collision-free parallel slices / workflow code
-  - outline      : Extract compact AST/symbol line-range skeleton from huge files
-  - diff         : Compress noisy git diffs into a strict token budget
-  - denoise      : Strip 90%+ noise from test/build/linter CLI outputs
-  - prompt-tax   : Audit AGENTS.md / CLAUDE.md / GEMINI.md / SKILL.md static token tax
-  - ignore-guard : Find context-bomb files & generate .agentignore / .cursorignore
-  - audit        : Inspect active JSONL session transcripts for token leaks
-  - handoff      : Generate a <400-token zero-loss state brief before /compact
-  - dashboard    : Render a standalone dark-glassmorphism HTML telemetry dashboard
-  - mcp          : Start the native JSON-RPC 2.0 Stdio MCP Server (16 live tools)
+Provides 31 deterministic, zero-dependency commands for AI coding agents and developers:
+  - serve          : Launch the Real-Time Localhost Web Command Center (http://127.0.0.1:7890)
+  - init           : Auto-detect stack (Flutter/Next.js/Laravel/Python/Go/Rust) & bootstrap shields
+  - context-health : Score quadratic Context-Rot risk (0-100) & emit <350-token handoff snapshot
+  - doctor         : Full 8-in-1 workspace, KV-cache, secret-safety, ROI & graph health check
+  - roi            : Live SQLite Token & Dollar ($USD) ROI Ledger of prevented waste
+  - media          : Multi-Modal Image/PDF Vision Token Cost Estimator (Gemini/Claude/OpenAI)
+  - git-guard      : Install <40ms Git pre-commit secret & prompt-tax shield
+  - benchmark      : Live empirical Before-vs-After token compression benchmark
+  - search         : SQLite FTS5 BM25 instant symbol & code-chunk search
+  - hotspots       : Incremental SQLite Code Graph (Cyclomatic × Fan-In hotspots & orphans)
+  - routes         : Multi-framework API & UI route table extractor (7 frameworks)
+  - pinpoint       : 1-shot multi-file crash stack-trace code window extractor
+  - pack           : Adaptive multi-file context packer (Full + AST Skeletons + Index)
+  - blast-radius   : Transitive reverse-import impact & minimal affected test selector
+  - memory         : Persistent SQLite FTS5 cross-session architectural memory vault
+  - scrub          : Hardcoded secret scanner (masked) & pre-prompt secret redactor
+  - cache-audit    : LLM Prompt KV-Cache prefix stability & cache-busting detector
+  - sync-ide       : Wire MCP server & ignore shields across Antigravity, Cursor, Claude, VS Code & Windsurf
+  - pools          : Group live model quotas, reset timers & failover reserves
+  - complexity     : Score task complexity (0-100) & parallelizability (0.0-1.0)
+  - simulate       : Compare monolithic vs Orchestrator vs workflow quota burn
+  - slice          : Partition repo imports into collision-free parallel slices / workflow code
+  - outline        : Extract compact AST/symbol line-range skeleton from huge files
+  - diff           : Compress noisy git diffs into a strict token budget
+  - denoise        : Strip 90%+ noise from test/build/linter CLI outputs
+  - prompt-tax     : Audit AGENTS.md / CLAUDE.md / GEMINI.md / SKILL.md static token tax
+  - ignore-guard   : Find context-bomb files & generate .agentignore / .cursorignore
+  - audit          : Inspect active JSONL session transcripts for token leaks
+  - handoff        : Generate a <400-token zero-loss state brief before /compact
+  - dashboard      : Render a standalone dark-glassmorphism HTML telemetry dashboard
+  - mcp            : Start the native JSON-RPC 2.0 Stdio MCP Server (18 live tools)
 """
 
 from __future__ import annotations
@@ -44,6 +47,9 @@ ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 
 COMMAND_MAP: Dict[str, Tuple[Path, List[str]]] = {
+    "serve": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "live_server.py", []),
+    "init": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "init_workspace_preset.py", []),
+    "context-health": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "check_context_rot.py", []),
     "pools": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "parse_quota_pools.py", []),
     "complexity": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "analyze_task_complexity.py", []),
     "simulate": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "simulate_workflow_cost.py", []),
@@ -95,7 +101,7 @@ def _run_doctor(workspace_args: List[str]) -> int:
     for i, tok in enumerate(workspace_args):
         if tok in ("-w", "--workspace") and i + 1 < len(workspace_args):
             ws = workspace_args[i + 1]
-    print("# ⚡ Smart Quota & Swarm Orchestrator v5.0 — Autonomous Agent OS Doctor\n", flush=True)
+    print("# ⚡ Smart Quota & Swarm Orchestrator v6.0 — Autonomous Agent OS Doctor\n", flush=True)
     steps = [
         ("roi", []),
         ("prompt-tax", ["--workspace", ws]),
@@ -121,13 +127,11 @@ def _print_help() -> None:
     print("\nUsage:")
     print("  python sqo.py <subcommand> [options]\n")
     print("Quick Examples:")
+    print("  python sqo.py init --workspace .")
+    print("  python sqo.py serve --workspace . --open")
+    print("  python sqo.py context-health --workspace .")
     print("  python sqo.py doctor --workspace .")
     print("  python sqo.py roi")
-    print("  python sqo.py media --workspace .")
-    print("  python sqo.py hotspots --workspace .")
-    print("  python sqo.py routes --workspace .")
-    print("  python sqo.py pinpoint --workspace . --trace-file crash.log")
-    print("  python sqo.py sync-ide --workspace . --ides all")
 
 
 def main() -> int:

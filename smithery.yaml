@@ -1,0 +1,12 @@
+# Smithery.ai Official MCP Server Manifest (`ElNeMeR70/smart-quota-orchestrator`)
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties: {}
+  commandFunction: |-
+    (config) => ({
+      command: 'python3',
+      args: ['mcp_server.py'],
+      env: { PYTHONIOENCODING: 'utf-8' }
+    })

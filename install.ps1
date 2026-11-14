@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 $RepoUrl = "https://github.com/ElNeMeR70/smart-quota-orchestrator.git"
 $AgyPluginDir = Join-Path $HOME ".gemini\config\plugins\smart-quota-orchestrator"
 
-Write-Host "==> Installing Smart Quota & Swarm Orchestrator v5.0 into Google Antigravity..." -ForegroundColor Cyan
+Write-Host "==> Installing Smart Quota & Swarm Orchestrator v6.0 into Google Antigravity..." -ForegroundColor Cyan
 
 $ParentDir = Split-Path -Parent $AgyPluginDir
 if (-not (Test-Path $ParentDir)) {
@@ -19,6 +19,8 @@ $PluginItems = @(
     ".claude-plugin",
     "gemini-extension.json",
     "pyproject.toml",
+    "smithery.yaml",
+    "glama.json",
     "mcp_config.json",
     "mcp_server.py",
     "hooks.json",
@@ -50,5 +52,5 @@ if (Test-Path (Join-Path $PSScriptRoot "plugin.json")) {
     }
 }
 
-Write-Host "[OK] Installed v5.0 Autonomous Agent OS Suite at: $AgyPluginDir" -ForegroundColor Green
-Write-Host "     Active: 16 MCP Tools + 3-Stage Stateful Hooks + Live `$USD ROI Ledger + 6 Skills + 3 Subagents!" -ForegroundColor Yellow
+Write-Host "[OK] Installed v6.0 Autonomous Agent OS Suite at: $AgyPluginDir" -ForegroundColor Green
+Write-Host "     Active: 18 MCP Tools + Live Web UI (`sqo serve`) + 3-Stage Hooks + `$USD ROI Ledger!" -ForegroundColor Yellow

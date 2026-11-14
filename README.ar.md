@@ -8,12 +8,12 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v5.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v5.0`)
-### نظام التشغيل الذاتي لحماية الكوتا، ضغط السياق بنسبة 96.6%، وتنسيق أسراب الوكلاء لـ Google Antigravity و Claude Code و Cursor و VS Code و Gemini CLI و Windsurf
+# ⚡ Smart Quota & Swarm Orchestrator (`v6.0`)
+### نظام التشغيل الذاتي لحماية الكوتا، مركز القيادة المحلي الحي (`sqo serve`)، القوالب الذكية (`sqo init`)، وضغط السياق بنسبة 96.8%
 
-[![الإصدار](https://img.shields.io/badge/Release-v5.0.0_Global_Edition-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![أدوات MCP](https://img.shields.io/badge/MCP_Server-16_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
-[![التوفير الفعلي](https://img.shields.io/badge/Verified_Savings-96.6%25_Tokens-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
+[![الإصدار](https://img.shields.io/badge/Release-v6.0.0_Global_Edition-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![أدوات MCP](https://img.shields.io/badge/MCP_Server-18_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![التوفير الفعلي](https://img.shields.io/badge/Verified_Savings-96.8%25_Tokens-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![بدون مكتبات خارجية](https://img.shields.io/badge/Python_3.8%2B-Zero_Dependencies-38BDF8?style=for-the-badge)](./pyproject.toml)
 
 </div>
@@ -121,8 +121,10 @@
 | **`sqo_cache_audit`** | فحص القواعد والـ Hooks لضمان الحفاظ على خصم الـ **KV-Cache (90%)** | **خصم 90% مدخلات** |
 | **`sqo_quota_pools`** | تجميع حصص النماذج المشتركة والاحتياطية وحساب معدل الاستهلاك الآمن بالساعة | **منع نفاد الكوتا** |
 | **`sqo_benchmark`** | قياس عملي حي لنسبة توفير التوكنز على مشروعك الحالي بالأرقام الدقيقة | **إثبات رقمي حي** |
-| **`sqo_roi_ledger`** | **(جديد `v5.0`)** عرض سجل التوكنز والدولارات (`$USD`) التي وفّرها الدرع التلقائي | **قياس العائد المالي** |
-| **`sqo_media_budget`** | **(جديد `v5.0`)** حساب تكلفة الصور (`PNG/JPEG/WebP/GIF`) وملفات `PDF` عبر Gemini وClaude وOpenAI | **50% – 85%** |
+| **`sqo_roi_ledger`** | عرض سجل التوكنز والدولارات (`$USD`) التي وفّرها الدرع التلقائي | **قياس العائد المالي** |
+| **`sqo_media_budget`** | حساب تكلفة الصور (`PNG/JPEG/WebP/GIF`) وملفات `PDF` عبر Gemini وClaude وOpenAI | **50% – 85%** |
+| **`sqo_init_preset`** | **(جديد `v6.0`)** كشف تلقائي لنوع المشروع (`Flutter/Next.js/Laravel/Python/Go/Rust`) وتهيئة الدروع والذاكرة | **تهيئة فورية بضغطة** |
+| **`sqo_context_health`** | **(جديد `v6.0`)** قياس تآكل وتضخم السياق (`Context Rot 0–100`) وتوليد ملخص تسليم فوري (`<350` توكن) | **توفير ~65% للجولة** |
 
 ---
 
@@ -155,9 +157,12 @@ npx skills add ElNeMeR70/smart-quota-orchestrator
 
 ---
 
-## 💻 أهم أوامر سطر الأوامر الموحد (`28` أداة في `sqo.py`)
+## 💻 أهم أوامر سطر الأوامر الموحد (`31` أداة في `sqo.py`)
 
 ```bash
+python sqo.py init --workspace .                # (جديد v6.0) كشف تلقائي لإطار العمل (Flutter/Laravel/Next.js...) وتهيئة كل الدروع!
+python sqo.py serve --workspace . --open        # (جديد v6.0) تشغيل مركز القيادة الحي في المتصفح على http://127.0.0.1:7890
+python sqo.py context-health --workspace .      # (جديد v6.0) فحص تضخم السياق التربيعي وتجهيز ملخص التسليم الذكي
 python sqo.py doctor --workspace .              # فحص شامل 8 في 1 للمشروع والـ KV-Cache والأمان والتوفير
 python sqo.py roi                               # عرض إجمالي التوكنز والدولارات ($USD) التي تم توفيرها
 python sqo.py media --workspace .               # حساب تكلفة الصور وملفات PDF بالتوكنز واكتشاف الصور الضخمة
@@ -168,6 +173,8 @@ python sqo.py pinpoint -w . -f crash.log        # استخراج أسطر الخ
 python sqo.py search "verifyToken" -w .         # بحث دلالي فائق السرعة بخوارزمية BM25
 python sqo.py dashboard -w . -o report.html     # توليد لوحة تحكم تفاعلية فخمة بصيغة HTML
 ```
+
+🌐 **صفحة الهبوط التفاعلية + حاسبة التوفير الشهري**: [`docs/index.html`](./docs/index.html) • **حقيبة الإطلاق والنشر العالمي**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)
 
 ---
 

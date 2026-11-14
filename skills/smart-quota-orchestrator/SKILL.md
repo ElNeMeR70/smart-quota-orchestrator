@@ -1,13 +1,12 @@
 ---
 name: smart-quota-orchestrator
 description: >-
-  Autonomous AI Agent OS (v5.0) with 16 native MCP tools, 3-stage stateful
-  lifecycle shield, live $USD & token ROI ledger, 5-IDE config sync, Git
-  pre-commit guard, quota pool analytics, complexity scoring, swarm simulation,
-  and HTML telemetry.
+  Autonomous AI Agent OS (v6.0) with 18 native MCP tools, live localhost web
+  command center (sqo serve), auto-detecting framework bootstrapper (sqo init),
+  context-rot monitor, 3-stage stateful hooks, and live $USD ROI ledger.
 ---
 
-# Smart Quota & Swarm Orchestrator (`v5.0` Autonomous Agent OS)
+# Smart Quota & Swarm Orchestrator (`v6.0` Autonomous Agent OS)
 
 Maximize engineering output per quota unit across **five active defense layers**:
 1. **3-Stage Stateful Lifecycle Engine (`hooks.json`)**:
@@ -34,6 +33,9 @@ Maximize engineering output per quota unit across **five active defense layers**
 | **7. Interactive HTML Telemetry Center** | [generate_html_dashboard.py](./scripts/generate_html_dashboard.py) | Generates a standalone dark-glassmorphism `quota-dashboard.html` report |
 | **8. Universal 5-IDE Config Synchronizer** | [sync_ide_configs.py](./scripts/sync_ide_configs.py) | Wires `sqo-engine` MCP + `.agentignore`/`.cursorignore`/`.claudeignore`/`.codeiumignore` |
 | **9. Git Pre-Commit Guard Installer** | [install_git_guard.py](./scripts/install_git_guard.py) | Installs `<40ms` `.git/hooks/pre-commit` secret scanner & prompt-tax bloat guard |
+| **10. Real-Time Localhost Web Center** | [live_server.py](./scripts/live_server.py) | Serves auto-refreshing Bilingual Web Command Center (`sqo serve` on `127.0.0.1:7890`) |
+| **11. Smart Framework Bootstrapper** | [init_workspace_preset.py](./scripts/init_workspace_preset.py) / `sqo_init_preset` | Auto-detects Flutter/Next.js/Laravel/Python/Go/Rust & seeds ignores, MCP & memories |
+| **12. Context-Rot Early-Warning Monitor** | [check_context_rot.py](./scripts/check_context_rot.py) / `sqo_context_health` | Scores quadratic session Context-Rot (`0–100`) & emits `<350`-token handoff snapshot |
 
 ---
 

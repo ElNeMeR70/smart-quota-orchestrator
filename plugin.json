@@ -1,13 +1,13 @@
 {
   "name": "smart-quota-orchestrator",
   "displayName": "Smart Quota & Swarm Orchestrator",
-  "version": "5.0.0",
-  "description": "Autonomous AI Agent OS Layer (v5.0): 3-stage stateful hooks with live $USD & Token ROI ledger, 16 native MCP tools, multimodal vision/PDF token budgeter, incremental SQLite code graph, stack-trace pinpointer, KV-cache auditor, Git pre-commit guard, 6 skills & 3 subagents.",
+  "version": "6.0.0",
+  "description": "Autonomous AI Agent OS Layer (v6.0): Live Localhost Web Command Center (`sqo serve`), auto-detecting framework bootstrapper (`sqo init`), Context-Rot early-warning monitor, 3-stage stateful hooks with live $USD ROI ledger, 18 native MCP tools, 6 skills & 3 subagents.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
-    "Run sqo doctor v5.0 on this workspace: check live ROI savings, hotspots, KV-cache stability, benchmarks & quota pools",
-    "Map all API routes and code hotspots in this repo, check multimodal image/PDF token budgets, and store key architecture notes",
-    "Sync Smart Quota MCP & ignore shields across all 5 IDEs and install the Git pre-commit secret & prompt-tax guard"
+    "Run sqo doctor v6.0 on this workspace and check session context-health & live $USD ROI savings",
+    "Auto-detect this repo's framework with sqo_init_preset and map all API routes and code hotspots",
+    "Partition this repo into collision-free parallel slices or check multimodal image/PDF vision token budgets"
   ],
   "author": {
     "name": "ElNeMeR",
