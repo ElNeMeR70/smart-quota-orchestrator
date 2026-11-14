@@ -1,13 +1,13 @@
 {
   "name": "smart-quota-orchestrator",
   "displayName": "Smart Quota & Swarm Orchestrator",
-  "version": "1.0.0",
-  "description": "Cut AI coding token & quota burn by up to 60%. Inspects live model quota pools, classifies task complexity, routes routine work to fast models, audits transcript token leaks, and generates zero-loss handoff briefs.",
+  "version": "2.0.0",
+  "description": "12-tool AI quota & context optimization suite: live model pool analytics, AST file skeletonizer, dependency-safe parallel slicer, git diff & test denoiser, prompt-tax profiler, and HTML telemetry dashboard.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
-    "Check my live model quota pools, reset timers, and recommend the best model strategy right now",
-    "Audit this session's token burn and check if we should compact context or delegate to subagents",
-    "Analyze this task's complexity and execute it with the lowest-quota parallel workflow"
+    "Run a full quota doctor check on this workspace and check my live model pools",
+    "Partition this project into collision-free parallel slices and execute with minimal quota",
+    "Audit this session's token burn, outline large files, and generate an HTML quota dashboard"
   ],
   "author": {
     "name": "ElNeMeR",

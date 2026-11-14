@@ -1,7 +1,7 @@
 {
   "name": "smart-quota-orchestrator",
-  "version": "1.0.0",
-  "description": "Smart quota pool analyzer, task complexity router, session token-leak auditor, and zero-loss context compactor for AI coding agents.",
+  "version": "2.0.0",
+  "description": "12-tool AI quota, multi-agent dependency slicer, AST file skeletonizer, diff/test denoiser, and prompt-tax profiler suite.",
   "author": {
     "name": "ElNeMeR",
     "url": "https://github.com/ElNeMeR70"

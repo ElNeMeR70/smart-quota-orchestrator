@@ -1,6 +1,6 @@
 {
   "name": "smart-quota-orchestrator",
-  "version": "1.0.0",
-  "description": "Smart quota pool analyzer, multi-agent task router, and context hygiene toolkit for Gemini CLI and Google Antigravity.",
+  "version": "2.0.0",
+  "description": "12-tool AI quota, multi-agent dependency slicer, AST file skeletonizer, diff/test denoiser, and prompt-tax profiler suite.",
   "contextFileName": "rules/AGENTS.md"
 }

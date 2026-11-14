@@ -1,25 +1,59 @@
 ---
 name: context-compactor
 description: >-
-  Generates ultra-compact (<400 token) deterministic state & git handoff briefs
-  so long conversations can be compacted (/compact), switched across models, or
-  delegated to fresh subagents and swarm workers with zero context loss and
-  minimal token overhead. Use when conversations grow long, before switching
-  models, or when briefing subagents/swarm workers.
+  Eliminates context bloat with 5 deterministic CLI tools: AST/symbol file
+  skeletonizer (read 2,000-line files in <120 tokens), token-budgeted git diff
+  compressor, build/test CLI output denoiser, context-bomb .agentignore
+  generator, and <400-token zero-loss handoff brief builder for /compact and
+  subagents. Use when reading large files, reviewing big diffs, running noisy
+  tests, shielding repos from token bombs, or compacting long sessions.
 ---
 
-# Context Compactor & Zero-Loss Handoff Builder
+# Context Compactor & High-Signal Compression Toolkit
 
-Long agent sessions silently multiply quota consumption because **every new turn re-sends the accumulated conversation history**. This skill packages the exact state of work into a tiny, deterministic Markdown brief (<400 tokens) so `/compact`, model switches, or fresh subagent handoffs start warm without re-exploring the codebase.
+Prevent prompt bloat **before** it enters the conversation window using five zero-dependency Python CLI utilities located in `./scripts/`:
 
-## Workflow
+| Tool | Script | Typical Token Savings | When to Use |
+| :--- | :--- | :--- | :--- |
+| **1. Structural File Skeletonizer** | [smart_outline.py](./scripts/smart_outline.py) | **85% – 96%** | Before reading any file `> 300` lines — inspect symbol signatures + `Lstart-Lend` ranges first! |
+| **2. Token-Budgeted Git Diff** | [compress_git_diff.py](./scripts/compress_git_diff.py) | **70% – 95%** | Reviewing working-tree or branch diffs without lockfile/bundle/SVG token floods |
+| **3. CLI Test/Build Denoiser** | [compact_command_output.py](./scripts/compact_command_output.py) | **80% – 95%** | Running `pytest`, `vitest`, `jest`, `npm test`, `tsc`, `flutter test`, or verbose builds |
+| **4. Context-Bomb Ignore Guard** | [generate_agent_ignore.py](./scripts/generate_agent_ignore.py) | **Prevents 10k–200k accidents** | Scanning repos for heavy dumps/sourcemaps and generating `.agentignore` / `.cursorignore` |
+| **5. Zero-Loss Handoff Brief** | [build_handoff_brief.py](./scripts/build_handoff_brief.py) | **90%+ on resume** | Packaging branch, dirty files, and next atomic actions (<400 tokens) before `/compact` or subagent handoff |
 
-1. **Generate the Deterministic Workspace Snapshot**:
-   Run [build_handoff_brief.py](./scripts/build_handoff_brief.py):
-   ```bash
-   python "<skill_dir>/scripts/build_handoff_brief.py" --workspace "<repo_path>" --goal "<current_objective>" --next "<remaining_steps>"
-   ```
-2. **Choose the Right Continuation Path**:
-   - **Continuing in the Same Chat**: Present the generated brief and recommend the `/compact` slash command to free up the context window immediately.
-   - **Delegating to a Subagent or Swarm Worker**: Paste the compact brief directly into `invoke_subagent(Prompt=...)` or `swarm(action="add", brief=...)` so the worker knows the exact modified files, git branch, and remaining checklist on Turn 1 without wasting 10 discovery turns.
-   - **Switching to a Reserve Model Pool**: Save the brief to `HANDOFF.md` (only if requested by the user) or keep it in the last turn before switching models.
+---
+
+## Usage Recipes
+
+### 1. Inspect Large Files Without Reading the Whole File
+```bash
+# Get every class/function signature + exact line numbers
+python "<skill_dir>/scripts/smart_outline.py" path/to/large_file.ts
+
+# Extract ONLY one target symbol's body with line numbers
+python "<skill_dir>/scripts/smart_outline.py" path/to/large_file.ts --symbol handleWebhook
+```
+
+### 2. Review Git Diffs Inside a Strict Token Budget
+```bash
+python "<skill_dir>/scripts/compress_git_diff.py" --workspace . --max-tokens 1800
+```
+
+### 3. Run Noisy Test Suites & Keep Only Actionable Failures
+```bash
+python "<skill_dir>/scripts/compact_command_output.py" --cmd "npm test"
+```
+
+### 4. Shield Workspace from Context-Poisoning Files
+```bash
+# Scan & write .agentignore (or pass --target .cursorignore / .claudeignore)
+python "<skill_dir>/scripts/generate_agent_ignore.py" --workspace . --write
+```
+
+### 5. Build a `<400-Token` Handoff Snapshot Before `/compact`
+```bash
+python "<skill_dir>/scripts/build_handoff_brief.py" \
+  --workspace . \
+  --goal "Complete billing webhook handler" \
+  --next "Add signature unit test" "Verify staging build"
+```
