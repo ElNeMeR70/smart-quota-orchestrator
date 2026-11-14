@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 320" width="100%">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A0F1E"/>
+      <stop offset="100%" stop-color="#172036"/>
+    </linearGradient>
+  </defs>
+  <rect width="1100" height="320" rx="18" fill="url(#bg3)" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="550" y="38" text-anchor="middle" fill="#F8FAFC" font-family="Segoe UI, Inter, sans-serif" font-size="19" font-weight="800">
+    HOW THE 3-STAGE STATEFUL HOOK ENGINE PROTECTS EVERY TURN AUTOMATICALLY
+  </text>
+
+  <!-- Box 1: SessionStart -->
+  <rect x="35" y="68" width="310" height="218" rx="14" fill="#111827" stroke="#38BDF8" stroke-width="1.8"/>
+  <rect x="52" y="84" width="185" height="24" rx="6" fill="#0284C7"/>
+  <text x="144" y="100" text-anchor="middle" fill="#FFFFFF" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800">STAGE 1: SessionStart</text>
+  <g font-family="Segoe UI, sans-serif" font-size="12.5" fill="#CBD5E1">
+    <text x="52" y="132" fill="#38BDF8" font-weight="700">Turn-0 Warm Memory Recall</text>
+    <text x="52" y="156">• Reads .sqo/memory.db once</text>
+    <text x="52" y="178">• Injects top 8 repo facts</text>
+    <text x="52" y="200">• Agent skips 15k+ tokens of</text>
+    <text x="52" y="218">  blind cold-start exploration</text>
+    <text x="52" y="246" fill="#34D399" font-weight="700">✔ 100% KV-Cache Prefix Safe</text>
+    <text x="52" y="266" fill="#94A3B8" font-size="11.5">(90% cached-token discount kept!)</text>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 352 177 L 386 177" stroke="#F59E0B" stroke-width="3" fill="none"/>
+  <polygon points="386,171 398,177 386,183" fill="#F59E0B"/>
+
+  <!-- Box 2: PreToolUse -->
+  <rect x="404" y="68" width="315" height="218" rx="14" fill="#111827" stroke="#F59E0B" stroke-width="1.8"/>
+  <rect x="421" y="84" width="185" height="24" rx="6" fill="#D97706"/>
+  <text x="513" y="100" text-anchor="middle" fill="#FFFFFF" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800">STAGE 2: PreToolUse (&lt;15ms)</text>
+  <g font-family="Segoe UI, sans-serif" font-size="12.5" fill="#CBD5E1">
+    <text x="421" y="132" fill="#FBBF24" font-weight="700">4-in-1 Active Firewall</text>
+    <text x="421" y="156">1. Denies &gt;50KB lockfiles &amp; .map</text>
+    <text x="421" y="178">2. Blocks duplicate unchanged reads</text>
+    <text x="421" y="200">3. Auto-clamps &gt;1,200-line files</text>
+    <text x="421" y="218">   via overwrite: {L1..L280}</text>
+    <text x="421" y="242">4. Halts 3rd identical failing cmd</text>
+    <text x="421" y="266" fill="#34D399" font-weight="700">✔ Saves tokens BEFORE billing!</text>
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 726 177 L 760 177" stroke="#10B981" stroke-width="3" fill="none"/>
+  <polygon points="760,171 772,177 760,183" fill="#10B981"/>
+
+  <!-- Box 3: PostToolUse -->
+  <rect x="778" y="68" width="287" height="218" rx="14" fill="#111827" stroke="#10B981" stroke-width="1.8"/>
+  <rect x="795" y="84" width="185" height="24" rx="6" fill="#059669"/>
+  <text x="887" y="100" text-anchor="middle" fill="#FFFFFF" font-family="Segoe UI, sans-serif" font-size="12" font-weight="800">STAGE 3: PostToolUse</text>
+  <g font-family="Segoe UI, sans-serif" font-size="12.5" fill="#CBD5E1">
+    <text x="795" y="132" fill="#34D399" font-weight="700">Live State &amp; $USD ROI Sync</text>
+    <text x="795" y="156">• Records (path, mtime_ns, range)</text>
+    <text x="795" y="178">• Unlocks file immediately when</text>
+    <text x="795" y="196">  modified by edit_file/write_file</text>
+    <text x="795" y="220">• Resets cmd fail streak on edit</text>
+    <text x="795" y="244">• Logs saved tokens + $USD into</text>
+    <text x="795" y="264" fill="#38BDF8" font-weight="700">  roi_ledger.db (`sqo roi`)</text>
+  </g>
+</svg>

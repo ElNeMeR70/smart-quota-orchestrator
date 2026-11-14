@@ -100,6 +100,41 @@ def _save_conv_state(conv_id: str, state: Dict[str, Any], state_root: Optional[P
         pass
 
 
+def _log_roi_saving(event_type: str, tokens_saved: int, target: str = "", conv_id: str = "", state_root: Optional[Path] = None) -> None:
+    if tokens_saved <= 0:
+        return
+    try:
+        if state_root is not None:
+            state_root.mkdir(parents=True, exist_ok=True)
+            db_path = state_root / "roi_ledger.db"
+        else:
+            base = os.environ.get("PLUGIN_DATA")
+            root = Path(base) if base else (Path.home() / ".gemini" / "antigravity" / "plugin_data" / "smart-quota-orchestrator")
+            root.mkdir(parents=True, exist_ok=True)
+            db_path = root / "roi_ledger.db"
+        con = sqlite3.connect(str(db_path))
+        con.execute(
+            """
+            CREATE TABLE IF NOT EXISTS savings_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ts_utc TEXT NOT NULL,
+                event_type TEXT NOT NULL,
+                target TEXT NOT NULL DEFAULT '',
+                tokens_saved INTEGER NOT NULL,
+                conv_id TEXT NOT NULL DEFAULT ''
+            )
+            """
+        )
+        con.execute(
+            "INSERT INTO savings_events(ts_utc, event_type, target, tokens_saved, conv_id) VALUES (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'), ?, ?, ?, ?)",
+            (event_type, target[:200], int(tokens_saved), conv_id[:80]),
+        )
+        con.commit()
+        con.close()
+    except Exception:
+        pass
+
+
 def _file_sig(p: Path, start_ln: Any, end_ln: Any) -> str:
     try:
         st = p.stat()
@@ -182,6 +217,7 @@ def evaluate_pre_tool(payload: Dict[str, Any], state_root: Optional[Path] = None
             except OSError:
                 sz_kb = 999.0
             if sz_kb >= 50.0:
+                _log_roi_saving("Token-Bomb Blocker", int(sz_kb * 256), p.name, conv_id, state_root)
                 return {
                     "decision": "deny",
                     "reason": (
@@ -200,6 +236,8 @@ def evaluate_pre_tool(payload: Dict[str, Any], state_root: Optional[Path] = None
                 prev = state.get("reads", {}).get(norm_key)
                 if prev and prev.get("sig") == sig:
                     prev_step = prev.get("step", "earlier")
+                    saved_tok = max(120, int(p.stat().st_size / 4))
+                    _log_roi_saving("Duplicate-Read Deduplicator", saved_tok, p.name, conv_id, state_root)
                     return {
                         "decision": "deny",
                         "reason": (
@@ -217,6 +255,8 @@ def evaluate_pre_tool(payload: Dict[str, Any], state_root: Optional[Path] = None
                         with open(p, "r", encoding="utf-8", errors="ignore") as fh:
                             line_count = sum(1 for _ in fh)
                         if line_count > 1200:
+                            saved_tok = max(1000, int((sz / 4) * ((line_count - 280) / line_count)))
+                            _log_roi_saving("Giant-File Auto-Clamper", saved_tok, p.name, conv_id, state_root)
                             return {
                                 "decision": "allow",
                                 "overwrite": {"StartLine": 1, "EndLine": 280},
@@ -229,6 +269,7 @@ def evaluate_pre_tool(payload: Dict[str, Any], state_root: Optional[Path] = None
         cmd = str(args.get("CommandLine") or args.get("command") or "").strip()
         if cmd:
             if SHELL_DUMP_RE.search(cmd) and not SHELL_BOUNDED_RE.search(cmd):
+                _log_roi_saving("Shell Lockfile Dump Blocker", 24000, cmd[:80], conv_id, state_root)
                 return {
                     "decision": "deny",
                     "reason": (
@@ -240,6 +281,7 @@ def evaluate_pre_tool(payload: Dict[str, Any], state_root: Optional[Path] = None
                 state = _load_conv_state(conv_id, state_root)
                 cmd_hash = hashlib.sha1(cmd.encode("utf-8", errors="ignore")).hexdigest()[:16]
                 if state.get("cmd_fail_cmd") == cmd_hash and int(state.get("cmd_fail_streak", 0)) >= 2:
+                    _log_roi_saving("Blind Retry-Loop Breaker", 3200, cmd[:80], conv_id, state_root)
                     return {
                         "decision": "deny",
                         "reason": (

@@ -1,13 +1,13 @@
 <#
 .SYNOPSIS
-  One-click installer for Smart Quota & Swarm Orchestrator v4.0 Autonomous Agent OS Suite.
+  One-click installer for Smart Quota & Swarm Orchestrator v5.0 Autonomous Agent OS Suite.
 #>
 $ErrorActionPreference = "Stop"
 
 $RepoUrl = "https://github.com/ElNeMeR70/smart-quota-orchestrator.git"
 $AgyPluginDir = Join-Path $HOME ".gemini\config\plugins\smart-quota-orchestrator"
 
-Write-Host "==> Installing Smart Quota & Swarm Orchestrator v4.0 into Google Antigravity..." -ForegroundColor Cyan
+Write-Host "==> Installing Smart Quota & Swarm Orchestrator v5.0 into Google Antigravity..." -ForegroundColor Cyan
 
 $ParentDir = Split-Path -Parent $AgyPluginDir
 if (-not (Test-Path $ParentDir)) {
@@ -24,6 +24,8 @@ $PluginItems = @(
     "hooks.json",
     "hooks",
     "README.md",
+    "README.ar.md",
+    "docs",
     "LICENSE",
     "sqo.py",
     "assets",
@@ -48,5 +50,5 @@ if (Test-Path (Join-Path $PSScriptRoot "plugin.json")) {
     }
 }
 
-Write-Host "[OK] Installed v4.0 Autonomous Agent OS Suite at: $AgyPluginDir" -ForegroundColor Green
-Write-Host "     Active: 14 MCP Tools + 3-Stage Stateful Hooks + Incremental Code Graph + 6 Skills + 3 Subagents!" -ForegroundColor Yellow
+Write-Host "[OK] Installed v5.0 Autonomous Agent OS Suite at: $AgyPluginDir" -ForegroundColor Green
+Write-Host "     Active: 16 MCP Tools + 3-Stage Stateful Hooks + Live `$USD ROI Ledger + 6 Skills + 3 Subagents!" -ForegroundColor Yellow

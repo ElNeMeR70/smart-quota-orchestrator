@@ -1,106 +1,158 @@
 <div align="center">
 
-<img src="./assets/logo.svg" alt="Smart Quota & Swarm Orchestrator Logo" width="115" height="115" />
+<p>
+  <a href="./README.ar.md"><img src="https://img.shields.io/badge/🇸🇦_الدليل_العربي_الكامل-اقرأ_بالعربية-10B981?style=for-the-badge" alt="الدليل العربي الكامل" /></a>
+  <a href="./docs/PLAYBOOK_EN.md"><img src="https://img.shields.io/badge/📘_Real--World_Playbook-English-2563EB?style=for-the-badge" alt="English Playbook" /></a>
+  <a href="./docs/PLAYBOOK_AR.md"><img src="https://img.shields.io/badge/📗_كتاب_الحوارات_والسيناريوهات-عربي-F59E0B?style=for-the-badge" alt="Arabic Playbook" /></a>
+</p>
 
-# Smart Quota & Swarm Orchestrator (`v4.0` Autonomous Agent OS)
+<img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v5.0 Hero Banner" width="100%" />
 
-**The Zero-Dependency Autonomous Lifecycle Shield, 14-Tool Native MCP Server, Incremental SQLite Code Graph & Multi-Agent Quota Optimizer for Google Antigravity, Claude Code, Cursor, VS Code, Gemini CLI & Windsurf**
+# ⚡ Smart Quota & Swarm Orchestrator (`v5.0` Autonomous Agent OS)
 
-[![Version](https://img.shields.io/badge/Release-v4.0.0_Autonomous_OS-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![MCP Server](https://img.shields.io/badge/MCP_Tools-14_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
-[![Lifecycle Engine](https://img.shields.io/badge/Stateful_Hooks-SessionStart_%7C_Pre_%7C_Post-F59E0B?style=for-the-badge)](./hooks/token_shield_hook.py)
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B_Zero_Deps-38BDF8?style=for-the-badge)](./pyproject.toml)
+### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, 16 Native MCP Tools, Live `$USD` ROI Ledger, Multimodal Vision Budgeter & Incremental SQLite Code Graph
+
+[![Release](https://img.shields.io/badge/Release-v5.0.0_Global_Edition-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![MCP Tools](https://img.shields.io/badge/MCP_Server-16_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![Token Savings](https://img.shields.io/badge/Verified_Compression-96.6%25-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
+[![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B-Zero_Dependencies-38BDF8?style=for-the-badge)](./pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-A855F7?style=for-the-badge)](./LICENSE)
 
-[**English Overview**](#-what-makes-v40-an-autonomous-agent-os) • [**14 Native MCP Tools**](#-14-native-mcp-tools-sqo-engine) • [**3-Stage Stateful Shield**](#️-3-stage-stateful-lifecycle-engine-hooksjson) • [**Quick Install**](#-quick-installation) • [**CLI Reference (25 Commands)**](#-unified-sqo-cli--pipx--uv-tool-25-commands) • [**الشرح بالعربية**](#-الدليل-العربي-الكامل-الإصدار-الرابع-v40)
+**Works seamlessly with:** `Google Antigravity` • `Claude Code` • `Cursor` • `VS Code Copilot` • `Gemini CLI` • `Windsurf`
+
+[**Why v5.0?**](#-the-7-silent-quota-killers-and-how-v50-eliminates-them) • [**Visual Architecture**](#️-system-architecture-v50) • [**Real-World Dialogues**](#-real-world-developer--agent-dialogues-before-vs-after) • [**16 MCP Tools**](#-16-native-mcp-tools-sqo-engine) • [**Quick Install**](#-1-minute-installation) • [**الملخص بالعربية**](#-الملخص-العربي-السريع)
 
 </div>
 
 ---
 
-## 🔥 What Makes `v4.0` an Autonomous Agent OS?
+## 🔥 The 7 Silent Quota Killers (And How `v5.0` Eliminates Them)
 
-Most "agent skills" are passive Markdown files hoping the LLM obeys them. **Smart Quota & Swarm Orchestrator `v4.0`** operates as a **self-enforcing runtime layer** between your AI coding agent and your codebase—combining **stateful `SessionStart` / `PreToolUse` / `PostToolUse` hooks**, a **14-tool zero-dependency JSON-RPC MCP server**, an **incremental `mtime_ns` SQLite Code Graph**, and **KV-Cache prefix stability auditing**:
+Whether you code with **Gemini 4 Carbon / Argon / Hydrogen**, **Claude Opus / Sonnet 4.6**, or **GPT**, your 5-hour model quota and API budget aren't burned by the 20 lines of code you actually write—they are destroyed by **7 invisible runtime leaks**.
 
-| Real-World Quota Killer | Naive Agent Cost | `v4.0` Autonomous Defense | Verified Savings |
+Unlike passive Markdown rules that hope the LLM behaves, **Smart Quota & Swarm Orchestrator `v5.0`** runs as a **deterministic `<15ms` runtime layer** with **zero external `pip` dependencies**:
+
+| Silent Quota Killer | Naive Agent Cost | `v5.0` Autonomous Defense | Verified Result |
 | :--- | :--- | :--- | :--- |
-| **Cold-start codebase re-discovery every chat** | `8,000 – 25,000` tokens | **`SessionStart` Warm Memory Hook** auto-injects recalled facts from `.sqo/memory.db` on Turn 0 | **100% zero cold-start waste** |
-| **Re-reading the exact same unchanged file 3–5×** | `5,000 – 30,000` tokens | **Stateful `PreToolUse` Deduplicator** tracks `(path, mtime_ns, range)` per session & unlocks on `edit_file` | **100% duplicate-read elimination** |
-| **Blind full-file read on a 2,500-line monolith** | `18,000+` tokens | **Giant-Source Auto-Clamper** rewrites `overwrite: {"StartLine": 1, "EndLine": 280}` on the fly | **85%–92% fewer tokens** |
-| **Reading `package-lock.json` / `.min.js` / `.map`** | `45,000 – 180,000` tokens | **Token-Bomb Blocker** denies unbounded `>50KB` lockfile/bundle reads & `cat` dumps in `<10ms` | **100% prevented** |
-| **Running the exact same failing test 5× in a row** | `15,000+` tokens | **Blind Retry-Loop Breaker** halts the 3rd identical failing command when no file was edited | **Stops runaway burn loops** |
-| **Chasing a 6-frame crash traceback file by file** | `6` turns + `14,000` tokens | **`sqo_pinpoint_error`** extracts exact `±10` line windows across every local crash frame in **1 call** | **93% fewer tokens & 1 turn** |
-| **Busting the 90% LLM Prompt KV-Cache discount** | **10×** higher input billing | **`sqo_cache_audit`** flags volatile `PreInvocation` timestamps/UUIDs & unsorted walks | **Preserves 90% KV-cache hit rate** |
+| **1. Cold-start repo re-discovery every chat** | `15,000 – 30,000` tok | **`SessionStart` Warm Memory Hook** injects top 8 facts from `.sqo/memory.db` at Turn 0 | **Zero cold-start waste** |
+| **2. Reading `package-lock.json` / `.map` / `.min.js`** | `45,000 – 180,000` tok | **`PreToolUse` Token-Bomb Blocker** denies unbounded `>50KB` lockfiles & `cat` dumps | **100% blocked pre-billing** |
+| **3. Re-reading the exact same unchanged file 3–5×** | `8,000 – 35,000` tok | **Stateful Duplicate-Read Deduplicator** locks `(path, mtime_ns, range)` & unlocks on `edit_file` | **100% duplicate elimination** |
+| **4. Blind full-file read on a 2,400-line monolith** | `22,000+` tok | **Giant-Source Auto-Clamper** rewrites `overwrite: {"StartLine": 1, "EndLine": 280}` on the fly | **85%–92% fewer tokens** |
+| **5. Running the exact same failing test 4× in a row** | `16,000+` tok | **Blind Retry-Loop Breaker** halts the 3rd identical failure if zero files were edited | **Stops runaway burn loops** |
+| **6. Attaching 4K PNG screenshots or 50-page PDFs** | `12,000 – 65,000` tok | **`sqo_media_budget`** parses binary image/PDF headers & flags oversized vision tile costs | **50%–85% vision savings** |
+| **7. Busting the 90% LLM Prompt KV-Cache discount** | **10×** higher input cost | **`sqo_cache_audit`** detects volatile `PreInvocation` timestamps/UUIDs & unsorted walks | **100/100 KV-Cache stability** |
 
 ---
 
-## 🛡️ 3-Stage Stateful Lifecycle Engine (`hooks.json`)
+## 🏗️ System Architecture (`v5.0`)
 
-Powered by [`hooks/token_shield_hook.py`](./hooks/token_shield_hook.py) (`<15ms` execution, pure Python stdlib, fail-open safety):
-
-1. **`SessionStart` (Zero-Turn Warm Recall)**: Reads up to 8 stored architectural decisions/gotchas from `.sqo/memory.db` once at Turn 0 (`injectSteps`)—preserving 100% prompt KV-cache prefix stability across subsequent turns.
-2. **`PreToolUse` (4-in-1 Active Shield)**:
-   - **Token-Bomb Hard Blocker**: Blocks unbounded reads or `cat`/`Get-Content` dumps of `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `pubspec.lock`, `Cargo.lock`, `.map`, and `.min.js` (`>= 50 KB`).
-   - **Stateful Duplicate-Read Deduplicator**: Blocks redundant `read_file` calls when `(file_path, mtime_ns, size, StartLine, EndLine)` hasn't changed since an earlier step in the same conversation.
-   - **Giant Source Auto-Clamper (`overwrite`)**: Automatically clamps blind full-file reads on `>55 KB` & `>1,200`-line code files to `StartLine: 1, EndLine: 280`.
-   - **Blind Retry-Loop Breaker**: Blocks a 3rd consecutive identical failing `run_command` if zero files were edited in between.
-3. **`PostToolUse` (Live Ledger Sync)**: Records successful read signatures, unlocks files immediately upon `edit_file`/`write_file`, and tracks command failure streaks.
+<p align="center">
+  <img src="./assets/architecture-v5.svg" alt="Smart Quota & Swarm Orchestrator v5.0 Architecture" width="100%" />
+</p>
 
 ---
 
-## 🔌 14 Native MCP Tools (`sqo-engine`)
+## 📊 Empirical Benchmark Proof (`96.6%` Verified Token Reduction)
 
-Zero `pip install` required—[`mcp_server.py`](./mcp_server.py) speaks native MCP `2025-03-26` JSON-RPC over `stdio`:
+Run `python sqo.py benchmark --workspace .` on **your own repository** anytime to verify real Before-vs-After token counts:
 
-| MCP Tool | Capability |
-| :--- | :--- |
-| **`sqo_code_search`** | SQLite FTS5 BM25 symbol-boundary code search (`<250` tokens vs `20K+` full-file reads) |
-| **`sqo_smart_outline`** | AST + multi-language structural skeletonizer & single-symbol surgical extractor |
-| **`sqo_context_pack`** | Token-budgeted multi-file context bundler (full core files + AST outlines for neighbors) |
-| **`sqo_blast_radius`** | Transitive reverse-import impact graph + **minimal affected unit test selector** |
-| **`sqo_pinpoint_error`** | **NEW `v4.0`** — 1-shot multi-file crash stack-trace code window extractor (Python, JS/TS, Dart, Go, Rust, PHP) |
-| **`sqo_code_hotspots`** | **NEW `v4.0`** — Incremental `mtime_ns` SQLite Code Graph: **Cyclomatic Complexity × Fan-In** hotspots & orphan modules |
-| **`sqo_api_routes`** | **NEW `v4.0`** — Multi-framework HTTP/UI route table mapper (Next.js, Express/Fastify, NestJS, FastAPI/Flask, Laravel, Go, Flutter) |
-| **`sqo_memory_vault`** | Persistent cross-session SQLite FTS5 architectural memory (`remember` / `recall` / `list` / `forget`) |
-| **`sqo_dependency_slices`** | Zero-conflict parallel worker file partitioning (`Stage-0` contracts + `Stage-1` slices) |
-| **`sqo_budgeted_diff`** | Lockfile-stripping, token-capped Git diff compressor for ultra-cheap PR reviews |
-| **`sqo_secret_scrub`** | 10-pattern credential, JWT, DSN, private-key & `.env` redactor/auditor |
-| **`sqo_cache_audit`** | **NEW `v4.0`** — LLM Prompt KV-Cache prefix stability auditor (`0–100` score) |
-| **`sqo_quota_pools`** | Live shared-pool detector, reset countdown & safe `%/hr` burn-rate calculator |
-| **`sqo_benchmark`** | Empirical Before-vs-After token compression benchmark on any workspace |
+<p align="center">
+  <img src="./assets/benchmark-comparison.svg" alt="Empirical Before-vs-After Token Benchmark" width="100%" />
+</p>
 
 ---
 
-## 📦 Complete Suite Architecture (6 Skills + 3 Subagents + MCP + Hooks)
+## 🛡️ Inside the 3-Stage Stateful Lifecycle Shield & Live `$USD` ROI Ledger
+
+<p align="center">
+  <img src="./assets/shield-lifecycle.svg" alt="3-Stage Stateful Lifecycle Shield Flowchart" width="100%" />
+</p>
+
+Every single time [`hooks/token_shield_hook.py`](./hooks/token_shield_hook.py) blocks a lockfile bomb, prevents a redundant unchanged file read, auto-clamps a giant monolith, or halts a blind retry loop, it **records the exact prevented tokens into a persistent SQLite ledger (`sqo roi`)**:
+
+<p align="center">
+  <img src="./assets/terminal-roi-preview.svg" alt="Live Terminal Preview of sqo roi and sqo doctor" width="100%" />
+</p>
+
+---
+
+## 🎭 Real-World Developer ↔ Agent Dialogues (Before vs. After)
+
+### 💬 Case Study 1: Fixing a Production Stripe Webhook Crash
+> **👨‍💻 Developer:** *"Users are hitting HTTP 500 on `/api/v1/stripe/webhook`. Here is the 45-line traceback—find the root cause and fix it!"*
+
+| Step | ❌ Standard AI Agent (Unprotected) | ✅ Agent Powered by Smart Quota OS `v5.0` |
+| :--- | :--- | :--- |
+| **Turn 0** | Starts completely cold—knows nothing about your repo. | **`SessionStart` Hook** injects stored memory: `[arch] Stripe requires raw Buffer before express.json() (src/server.ts:L42)`. |
+| **Turn 1** | Runs broad `grep "webhook"` (`6,400` tok) + reads full `server.ts` (`14,200` tok). | Calls **`sqo_pinpoint_error(stack_trace)`** -> skips `node_modules` and extracts exact `±10` line windows at `stripe.ts:L114` & `server.ts:L42` (**`580` tok**!). |
+| **Turn 2–4** | Reads full `stripe.ts` (`9,600` tok) + accidentally reads `server.js.map` (**`68,000` tok!**). | Applies surgical `edit_file` immediately! |
+| **Verification** | Runs entire 210-file test suite (`11,500` tok of console spam). | Calls **`sqo_blast_radius`** -> runs **only** `tests/stripe_webhook.spec.ts` via `sqo denoise` (**`95` tok**!). |
+| **Total Bill** | **5 turns • `109,700` tokens (`~38%` of 5-hr quota!)** | **2 turns • `1,120` tokens (`98.9%` saved — `<1%` quota!)** |
+
+---
+
+### 💬 Case Study 2: What Happens When an Agent Tries to Waste Tokens?
 
 ```text
-smart-quota-orchestrator/
-├── plugin.json                        # Google Antigravity Plugin v4.0.0
-├── .claude-plugin/plugin.json         # Claude Code Plugin v4.0.0
-├── gemini-extension.json              # Gemini CLI Extension v4.0.0
-├── pyproject.toml                     # pip / pipx / uv tool installable (`sqo` CLI)
-├── mcp_config.json & mcp_server.py    # Zero-Dependency 14-Tool Native MCP Server
-├── hooks.json & hooks/                # 3-Stage Stateful Lifecycle Engine (SessionStart/Pre/Post)
-├── sqo.py                             # Unified 25-Command Developer CLI
-├── rules/AGENTS.md                    # Crisp Always-On Guardrails (Grade A+: ~315 tokens/turn)
-├── agents/                            # 3 Specialist Read-Only Subagents
-│   ├── codebase-scout.md              # BM25, Code-Graph & Stack-Trace Recon Scout
-│   ├── quota-planner.md               # Parallel Slice & Budget Architect
-│   └── token-auditor.md               # Prompt-Tax, KV-Cache & Session-Leak Auditor
-└── skills/                            # 6 Progressive-Disclosure Skills (20 Engines)
-    ├── smart-quota-orchestrator/      # Pools, Complexity, Sim, Benchmark, Audit, HTML, 5-IDE Sync
-    ├── semantic-code-navigator/       # BM25 Search, Blast Radius, SQLite Code Graph, Stack Pinpoint
-    ├── context-compactor/             # AST Outline, Context Pack, Diff, Denoise, Ignore, Handoff
-    ├── project-memory-vault/          # Cross-Session SQLite FTS5 Memory + Secret Redactor
-    ├── parallel-slice-architect/      # Import-Graph Partitioner + Workflow Generator
-    └── prompt-tax-profiler/           # Static Rule Profiler + KV-Cache Stability Auditor
+🤖 Agent Tool Call #1: read_file(Path="package-lock.json")  [412 KB]
+🛡️ PreToolUse Shield (8ms): DENIED!
+   "[Smart Quota Shield] Blocked full read of generated artifact `package-lock.json` (412.0 KB).
+    Read `package.json` or pass a tight StartLine-EndLine range (<=150 lines)."
+💰 ROI Ledger: +105,472 saved tokens ($1.58 Frontier / $0.32 Balanced) logged!
+
+🤖 Agent Tool Call #2: read_file(Path="src/core/engine.ts")  [1,850 lines, no line range]
+✂️ PreToolUse Auto-Clamper (6ms): ALLOWED with overwrite -> {"StartLine": 1, "EndLine": 280}
+💰 ROI Ledger: +14,200 saved tokens logged!
+
+🤖 Agent Tool Call #3 (4 turns later): read_file(Path="src/core/engine.ts", StartLine=1, EndLine=280)
+🚫 PreToolUse Deduplicator (4ms): DENIED!
+   "[Smart Quota Deduplicator] `engine.ts` was already read at step #2 and has NOT been modified on disk.
+    Reuse the content already in your conversation context!"
 ```
 
 ---
 
-## 🚀 Quick Installation
+### 💬 Case Study 3: Building an 18-File Feature Without Context Collapse or Merge Conflicts
+> **👨‍💻 Developer:** *"Implement multi-tenant RBAC (`owner`, `admin`, `viewer`) across DB schema, API routes, UI, and tests."*
 
-### 1. Google Antigravity (Full Plugin: 14 MCP Tools + Stateful Hooks + 6 Skills + 3 Subagents)
+1. Lead planner calls **`sqo_dependency_slices(workspace=".", max_workers=4, emit_workflow=True)`**.
+2. `partition_parallel_slices.py` parses real AST/import edges across Python, TS/JS, Dart, Go & PHP:
+   - **Stage 0 (Sequential Shared Foundations)**: `schema.prisma` & `src/types/rbac.ts` (imported by 9 files) are updated **first** so shared contracts are frozen.
+   - **Stage 1 (4 Disjoint Parallel Worker Slices)**: Fan out across 4 lightweight `flash` / `Hydrogen` workers where **zero two workers ever touch the same file**!
+3. **Result**: Finished in **3.5 minutes**, zero git merge conflicts, **81% less frontier model quota**!
+
+📘 **Want more copy-paste recipes for SaaS, Flutter/Mobile, Security Recon, and Monorepos?** Read the full **[Engineering Playbook (`docs/PLAYBOOK_EN.md`)](./docs/PLAYBOOK_EN.md)**!
+
+---
+
+## 🔌 16 Native MCP Tools (`sqo-engine`)
+
+Zero `pip install`—[`mcp_server.py`](./mcp_server.py) runs pure Python stdlib JSON-RPC `2.0` over `stdio` (`0.0%` idle CPU):
+
+| MCP Tool | What It Gives Your Agent | Typical Savings |
+| :--- | :--- | :--- |
+| **`sqo_code_search`** | SQLite FTS5 BM25 function/class chunk search with exact `file:Lstart-Lend` | **90% – 98%** |
+| **`sqo_smart_outline`** | Structural AST skeletonizer & surgical single-function extractor | **85% – 96%** |
+| **`sqo_context_pack`** | Packs 20–100 files into a strict `--max-tokens` budget (Full focus + AST outlines) | **75% – 96%** |
+| **`sqo_blast_radius`** | Transitive reverse-import graph + **minimal affected unit test selector** | **80% – 95%** |
+| **`sqo_pinpoint_error`** | Extracts exact `±10` line windows from Python/TS/Dart/Go/Rust/PHP stack traces in **1 call** | **93% – 96%** |
+| **`sqo_code_hotspots`** | Incremental `mtime_ns` SQLite Code Graph: **Cyclomatic Complexity × Fan-In** & orphan modules | **`<10ms` warm** |
+| **`sqo_api_routes`** | Multi-framework HTTP & UI route mapper (Next.js, Express/Fastify, NestJS, FastAPI, Laravel, Go, Flutter) | **95%+** |
+| **`sqo_memory_vault`** | Cross-session SQLite FTS5 memory bank (`remember`/`recall`/`list`), auto-injected at `SessionStart` | **0 cold-start** |
+| **`sqo_dependency_slices`** | Collision-free parallel worker partitioning (`Stage-0` contracts + `Stage-1` slices + workflow emitter) | **65% – 81% quota** |
+| **`sqo_budgeted_diff`** | Strips lockfiles/bundles and compresses `git diff` into an exact token ceiling | **70% – 95%** |
+| **`sqo_secret_scrub`** | 10-pattern credential, PAT, JWT, DSN & private-key scanner/redactor | **100% DLP safety** |
+| **`sqo_cache_audit`** | Audits hooks & rules for LLM Prompt KV-Cache prefix stability (`0–100` score) | **90% cache hit** |
+| **`sqo_quota_pools`** | Groups shared vs. independent model pools, reset timers & safe `%/hr` burn ceiling | **Zero lockouts** |
+| **`sqo_benchmark`** | Live empirical Before-vs-After token compression benchmark on any repo | **Verified proof** |
+| **`sqo_roi_ledger`** | **NEW `v5.0`** — Live SQLite Token & `$USD` ROI Ledger of prevented waste | **Exact `$` telemetry** |
+| **`sqo_media_budget`** | **NEW `v5.0`** — PNG/JPEG/WebP/GIF/PDF vision tile & page token calculator (Gemini/Claude/OpenAI) | **50% – 85% vision** |
+
+---
+
+## 🚀 1-Minute Installation
+
+### Option A: Google Antigravity Full Plugin (`16 MCP Tools + Stateful Hooks + 6 Skills + 3 Subagents`)
 ```powershell
 git clone https://github.com/ElNeMeR70/smart-quota-orchestrator.git
 cd smart-quota-orchestrator
@@ -112,13 +164,14 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 bash ./install.sh
 ```
 
-### 2. Wire Any Workspace Across All 5 AI IDEs in One Command!
-Configures **Antigravity** (`.agentignore`), **Cursor** (`.cursor/mcp.json` + `.cursorignore`), **Claude Code** (`.mcp.json` + `.claudeignore`), **VS Code** (`.vscode/mcp.json`), and **Windsurf** (`.codeiumignore`):
+### Option B: Sync Any Project Across All 5 AI IDEs in 1 Command!
+Automatically configures **Antigravity** (`.agentignore`), **Cursor** (`.cursor/mcp.json` + `.cursorignore`), **Claude Code** (`.mcp.json` + `.claudeignore`), **VS Code** (`.vscode/mcp.json`), and **Windsurf** (`.codeiumignore`):
 ```bash
 python sqo.py sync-ide --workspace /path/to/your/project --ides all
+python sqo.py git-guard --workspace /path/to/your/project
 ```
 
-### 3. Install `sqo` Globally via `uv` or `pipx` (or `npx skills`)
+### Option C: Global CLI (`uv tool` / `pipx`) or `npx skills`
 ```bash
 uv tool install git+https://github.com/ElNeMeR70/smart-quota-orchestrator.git
 # or: npx skills add ElNeMeR70/smart-quota-orchestrator
@@ -126,49 +179,38 @@ uv tool install git+https://github.com/ElNeMeR70/smart-quota-orchestrator.git
 
 ---
 
-## 💻 Unified `sqo` CLI & `pipx` / `uv tool` (25 Commands)
+## 💻 Unified `sqo` Master CLI (28 Zero-Dependency Commands)
 
 ```bash
-# 🩺 Full Workspace Health + Prompt-Tax + KV-Cache Stability + Live Benchmark
-python sqo.py doctor --workspace .
-
-# 🔥 Incremental SQLite Code Graph: Complexity × Coupling Hotspots & API Route Table
-python sqo.py hotspots --workspace . --top-k 10
-python sqo.py routes --workspace .
-
-# 🎯 1-Step Crash Stack-Trace Code Window Pinpointer
-python sqo.py pinpoint --workspace . --trace-file crash.log
-
-# ⚡ KV-Cache Prefix Stability Audit & 5-IDE Shield Sync
-python sqo.py cache-audit --workspace .
-python sqo.py sync-ide --workspace . --ides all
-
-# 🔎 BM25 Symbol Search, Blast Radius & Persistent Memory Vault
-python sqo.py search "verifyWebhookSignature" --workspace .
-python sqo.py blast src/auth/jwt.ts --workspace .
-python sqo.py memory --workspace . remember --category arch --title "Auth flow" --detail "Uses Ed25519 JWT"
-
-# 📊 Interactive HTML Telemetry Dashboard & 22-Test Suite
-python sqo.py dashboard --workspace . --output quota-dashboard.html
-python -m unittest discover -s tests -v
+python sqo.py doctor --workspace .              # Full 8-in-1 health, ROI, KV-cache, secret & graph check
+python sqo.py roi                               # View cumulative tokens & $USD saved by autonomous shields
+python sqo.py media --workspace .               # Audit PNG/JPEG/WebP/PDF multimodal vision token costs
+python sqo.py git-guard --workspace .           # Install <40ms Git pre-commit secret & prompt-bloat hook
+python sqo.py hotspots --workspace . --top-k 10 # Incremental SQLite Complexity × Coupling bug hotspots
+python sqo.py routes --workspace .              # Extract complete Backend & Frontend route table
+python sqo.py pinpoint -w . -f crash.log        # 1-step multi-file crash stack-trace code window extractor
+python sqo.py search "verifyWebhook" -w .       # SQLite FTS5 BM25 symbol-chunk search (<250 tokens)
+python sqo.py blast-radius src/auth.ts -w .     # Reverse-import impact graph & minimal unit tests to run
+python sqo.py pack -w . --max-tokens 3000       # Budgeted multi-file context bundle (Full + AST skeletons)
+python sqo.py slice -w . --emit-workflow        # Collision-free parallel swarm slices + workflow script
+python sqo.py dashboard -w . -o report.html     # Standalone dark-glassmorphism HTML telemetry center
 ```
 
 ---
 
 <div dir="rtl">
 
-## 🌍 الدليل العربي الكامل (الإصدار الرابع `v4.0` — نظام التشغيل الذاتي للوكلاء)
+## 🌍 الملخص العربي السريع
 
-تُعد منظومة **Smart Quota & Swarm Orchestrator `v4.0`** أول نظام تشغيل ذاتي متكامل ومجاني بدون أي مكتبات خارجية (`Zero Dependencies`) يحمي الكوتا والتوكنز تلقائياً أثناء عمل الوكيل الذكي عبر **4 طبقات حماية وهندسة سياق متقدمة**:
+تُقدّم منظومة **Smart Quota & Swarm Orchestrator `v5.0`** أقوى نظام تشغيل ذاتي مفتوح المصدر في العالم لمضاعفة كوتا وكلاء الذكاء الاصطناعي (**من 10 إلى 25 ضعفاً**) وتقليص استهلاك التوكنز بنسبة موثّقة تبلغ **`96.6%`** بدون أي مكتبات خارجية (`Zero Dependencies`):
 
-### أبرز اختراقات الإصدار `v4.0` الجديد:
-1. **محرك الحماية التلقائي ثلاثي المراحل (`SessionStart` + `PreToolUse` + `PostToolUse`)**:
-   - **`SessionStart` (استدعاء الذاكرة الفوري)**: يحقن أهم الحقائق المعمارية المخزنة في `.sqo/memory.db` مرة واحدة فقط في بداية المحادثة لتوفير جولات الاستكشاف المتكررة مع الحفاظ بنسبة **100%** على خصم الـ **KV-Cache (90%)**.
-   - **`PreToolUse` (مانع التكرار + التقليم التلقائي + كاسر الحلقات المفرغة)**: يمنع إعادة قراءة أي ملف لم يتغير على القرص (`mtime_ns`)، ويقلّم تلقائياً القراءات العمياء للملفات العملاقة (`>1,200` سطر) إلى أول `280` سطر (`overwrite`)، ويمنع قراءة ملفات القفل (`package-lock.json` / `.map`)، ويوقف تكرار نفس الأمر الفاشل للمرة الثالثة دون تعديل الكود!
-   - **`PostToolUse`**: يحدّث سجل البصمات الزمنية للملفات ويفتح القفل فوراً بمجرد تعديل الملف عبر `edit_file`.
-2. **خادم MCP أصلي يضم 14 أداة ذكية (`sqo-engine`)**:
-   - أضفنا في `v4.0`: أداة **`sqo_pinpoint_error`** لاستخراج أسطر الخطأ من أي Stack Trace متعدد الملفات في خطوة واحدة، وأداة **`sqo_code_hotspots`** لبناء رسم بياني تزايدي بـ SQLite يكشف أعقد الملفات وأكثرها ارتباطاً، وأداة **`sqo_api_routes`** لاستخراج كافة مسارات الـ API والواجهات، وأداة **`sqo_cache_audit`** لفحص ثبات بادئة الـ KV-Cache.
-3. **مزامنة شاملة لـ 5 بيئات برمجة بضغطة واحدة (`sqo sync-ide`)**:
-   - يربط خادم `sqo-engine` وملفات التجاهل تلقائياً في **Antigravity** و**Cursor** و**Claude Code** و**VS Code** و**Windsurf**، بالإضافة لدعم التثبيت كأداة نظام عبر `pyproject.toml` (`uv tool` / `pipx`).
+- 🛡️ **درع تلقائي ثلاثي المراحل (`SessionStart` + `PreToolUse` + `PostToolUse`)** يمنع قراءة ملفات القفل العملاقة، ويمنع إعادة قراءة الملفات غير المعدّلة، ويقلّم الملفات الضخمة تلقائياً، ويكسر حلقات التكرار الفاشلة.
+- 💰 **دفتر التوفير المالي الحي (`sqo roi`)** يحسب لك كل توكن ودولار (`$USD`) وفّرته المنظومة تلقائياً!
+- 🖼️ **محلل ميزانية الصور والـ PDF (`sqo media`)** يحسب تكلفة الرؤية (`Vision Tiles`) عبر Gemini وClaude وOpenAI قبل إرفاق الملفات.
+- 🔌 **16 أداة MCP أصلية + 28 أداة سطر أوامر + مزامنة 5 محررات بضغطة واحدة (`sqo sync-ide`)**.
+
+👉 **لقراءة الموسوعة العربية الكاملة مع الرسوم التوضيحية والحوارات الواقعية خطوة بخطوة:**
+- **[🇸🇦 افتح الدليل العربي الشامل (`README.ar.md`)](./README.ar.md)**
+- **[📗 افتح كتاب السيناريوهات والحوارات العملية (`docs/PLAYBOOK_AR.md`)](./docs/PLAYBOOK_AR.md)**
 
 </div>

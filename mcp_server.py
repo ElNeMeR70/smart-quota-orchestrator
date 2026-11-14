@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v4.0).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v5.0).
 
-Exposes 14 native, token-saving engineering & code-intelligence tools directly to
+Exposes 16 native, token-saving engineering & code-intelligence tools directly to
 Google Antigravity, Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over
 JSON-RPC 2.0 `stdio` transport.
 
@@ -21,7 +21,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "4.0.0"
+SERVER_VERSION = "5.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -213,6 +213,28 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
             "required": ["workspace"],
         },
     },
+    {
+        "name": "sqo_roi_ledger",
+        "description": "Query the live SQLite Token & Dollar ($USD) ROI Ledger showing cumulative tokens saved by the autonomous hook shield and MCP compression engines.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "db_path": {"type": "string", "description": "Optional custom roi_ledger.db path."},
+            },
+        },
+    },
+    {
+        "name": "sqo_media_budget",
+        "description": "Estimate multimodal vision & PDF input token costs (PNG, JPEG, WebP, GIF, PDF) across Gemini, Claude, and OpenAI and flag oversized 4K screenshots.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "targets": {"type": "array", "items": {"type": "string"}, "description": "Optional media file or folder paths."},
+            },
+            "required": ["workspace"],
+        },
+    },
 ]
 
 
@@ -313,6 +335,16 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
     if name == "sqo_benchmark":
         mod = _load_tool_mod("smart-quota-orchestrator/scripts/benchmark_suite.py")
         rep = mod.run_live_benchmark(Path(args["workspace"]).resolve(), SKILLS_DIR)
+        return mod.render_markdown(rep)
+
+    if name == "sqo_roi_ledger":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/roi_ledger.py")
+        db_p = mod.default_ledger_path(args.get("db_path"))
+        return mod.render_markdown(mod.summarize_roi(db_p))
+
+    if name == "sqo_media_budget":
+        mod = _load_tool_mod("context-compactor/scripts/estimate_media_tokens.py")
+        rep = mod.scan_media_paths(args.get("targets") or [], Path(args["workspace"]).resolve())
         return mod.render_markdown(rep)
 
     raise ValueError(f"Unknown MCP tool: {name}")

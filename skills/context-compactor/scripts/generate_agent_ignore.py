@@ -18,7 +18,8 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
-DEFAULT_SKIP_WALK: Set[str] = {".git"}
+DEFAULT_SKIP_WALK: Set[str] = {".git", ".sqo"}
+BINARY_NON_TEXT_EXTS: Set[str] = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".ico", ".woff", ".woff2", ".ttf", ".mp4", ".mp3"}
 
 STANDARD_IGNORE_PATTERNS: List[str] = [
     "# Dependencies & package caches",
@@ -98,6 +99,8 @@ def scan_token_bombs(workspace: Path, size_threshold_kb: int = 80) -> Dict[str, 
                 continue
 
             ext = fpath.suffix.lower()
+            if ext in BINARY_NON_TEXT_EXTS:
+                continue
             is_minified = fname.endswith((".min.js", ".min.css", ".bundle.js"))
             if sz >= threshold_bytes or is_minified or (ext in TOKEN_BOMB_EXTS and sz >= 20 * 1024):
                 rel = str(fpath.relative_to(workspace)).replace("\\", "/")

@@ -1,7 +1,7 @@
 {
   "name": "smart-quota-orchestrator",
-  "version": "4.0.0",
-  "description": "Autonomous AI Agent OS Layer: 14 native MCP tools, 3-stage stateful hooks (duplicate-read deduplicator, loop breaker, auto-memory), incremental SQLite code graph, stack-trace pinpointer, and KV-cache auditor.",
+  "version": "5.0.0",
+  "description": "Autonomous AI Agent OS Layer (v5.0): 16 native MCP tools, 3-stage stateful hooks with live $USD ROI ledger, multimodal vision/PDF token budgeter, incremental SQLite code graph, stack-trace pinpointer, and KV-cache auditor.",
   "author": {
     "name": "ElNeMeR",
     "url": "https://github.com/ElNeMeR70"

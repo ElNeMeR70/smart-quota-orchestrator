@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v4.0.
+"""Unified Master CLI (`sqo`) for Smart Quota & Swarm Orchestrator v5.0.
 
-Provides 25 deterministic, zero-dependency commands for AI coding agents and developers:
-  - doctor       : Full 7-in-1 workspace, KV-cache, secret-safety & graph health check
+Provides 28 deterministic, zero-dependency commands for AI coding agents and developers:
+  - doctor       : Full 8-in-1 workspace, KV-cache, secret-safety, ROI & graph health check
+  - roi          : Live SQLite Token & Dollar ($USD) ROI Ledger of prevented waste
+  - media        : Multi-Modal Image/PDF Vision Token Cost Estimator (Gemini/Claude/OpenAI)
+  - git-guard    : Install <40ms Git pre-commit secret & prompt-tax shield
   - benchmark    : Live empirical Before-vs-After token compression benchmark
   - search       : SQLite FTS5 BM25 instant symbol & code-chunk search
   - hotspots     : Incremental SQLite Code Graph (Cyclomatic × Fan-In hotspots & orphans)
@@ -26,7 +29,7 @@ Provides 25 deterministic, zero-dependency commands for AI coding agents and dev
   - audit        : Inspect active JSONL session transcripts for token leaks
   - handoff      : Generate a <400-token zero-loss state brief before /compact
   - dashboard    : Render a standalone dark-glassmorphism HTML telemetry dashboard
-  - mcp          : Start the native JSON-RPC 2.0 Stdio MCP Server (14 live tools)
+  - mcp          : Start the native JSON-RPC 2.0 Stdio MCP Server (16 live tools)
 """
 
 from __future__ import annotations
@@ -48,12 +51,15 @@ COMMAND_MAP: Dict[str, Tuple[Path, List[str]]] = {
     "dashboard": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "generate_html_dashboard.py", []),
     "benchmark": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "benchmark_suite.py", []),
     "sync-ide": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "sync_ide_configs.py", []),
+    "roi": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "roi_ledger.py", []),
+    "git-guard": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "install_git_guard.py", []),
     "handoff": (SKILLS_DIR / "context-compactor" / "scripts" / "build_handoff_brief.py", []),
     "outline": (SKILLS_DIR / "context-compactor" / "scripts" / "smart_outline.py", []),
     "pack": (SKILLS_DIR / "context-compactor" / "scripts" / "pack_context_bundle.py", []),
     "diff": (SKILLS_DIR / "context-compactor" / "scripts" / "compress_git_diff.py", []),
     "denoise": (SKILLS_DIR / "context-compactor" / "scripts" / "compact_command_output.py", []),
     "ignore-guard": (SKILLS_DIR / "context-compactor" / "scripts" / "generate_agent_ignore.py", []),
+    "media": (SKILLS_DIR / "context-compactor" / "scripts" / "estimate_media_tokens.py", []),
     "search": (SKILLS_DIR / "semantic-code-navigator" / "scripts" / "search_code_bm25.py", []),
     "blast-radius": (SKILLS_DIR / "semantic-code-navigator" / "scripts" / "analyze_blast_radius.py", []),
     "hotspots": (SKILLS_DIR / "semantic-code-navigator" / "scripts" / "code_graph.py", ["hotspots"]),
@@ -89,8 +95,9 @@ def _run_doctor(workspace_args: List[str]) -> int:
     for i, tok in enumerate(workspace_args):
         if tok in ("-w", "--workspace") and i + 1 < len(workspace_args):
             ws = workspace_args[i + 1]
-    print("# ⚡ Smart Quota & Swarm Orchestrator v4.0 — Autonomous Agent OS Doctor\n", flush=True)
+    print("# ⚡ Smart Quota & Swarm Orchestrator v5.0 — Autonomous Agent OS Doctor\n", flush=True)
     steps = [
+        ("roi", []),
         ("prompt-tax", ["--workspace", ws]),
         ("cache-audit", ["--workspace", ws]),
         ("scrub", ["--scan-workspace", ws]),
@@ -115,6 +122,8 @@ def _print_help() -> None:
     print("  python sqo.py <subcommand> [options]\n")
     print("Quick Examples:")
     print("  python sqo.py doctor --workspace .")
+    print("  python sqo.py roi")
+    print("  python sqo.py media --workspace .")
     print("  python sqo.py hotspots --workspace .")
     print("  python sqo.py routes --workspace .")
     print("  python sqo.py pinpoint --workspace . --trace-file crash.log")
