@@ -1,59 +1,60 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 430" width="100%">
   <defs>
     <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#090D16"/>
-      <stop offset="100%" stop-color="#111827"/>
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#F6F8FF"/>
+      <stop offset="100%" stop-color="#ECFDF5"/>
     </linearGradient>
     <linearGradient id="redBar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#EF4444"/>
+      <stop offset="0%" stop-color="#F43F5E"/>
       <stop offset="100%" stop-color="#FB7185"/>
     </linearGradient>
     <linearGradient id="greenBar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#10B981"/>
-      <stop offset="100%" stop-color="#38BDF8"/>
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#0284C7"/>
     </linearGradient>
   </defs>
 
-  <rect width="1100" height="430" rx="20" fill="url(#bg2)" stroke="#334155" stroke-width="1.5"/>
+  <rect width="1100" height="430" rx="20" fill="url(#bg2)" stroke="#C7D2FE" stroke-width="1.8"/>
 
-  <text x="50" y="44" fill="#F8FAFC" font-family="Segoe UI, Inter, sans-serif" font-size="21" font-weight="800">
+  <text x="50" y="44" fill="#0F172A" font-family="Plus Jakarta Sans, Segoe UI, Inter, sans-serif" font-size="21" font-weight="800">
     EMPIRICAL BEFORE-VS-AFTER TOKEN BENCHMARK (MEASURED LIVE BY sqo benchmark)
   </text>
-  <text x="50" y="68" fill="#94A3B8" font-family="Segoe UI, Inter, sans-serif" font-size="13.5">
-    Average Verified Token Reduction: 96.6% — Stretching 5-Hour Model Quotas by up to 12x–25x
+  <text x="50" y="68" fill="#475569" font-family="Plus Jakarta Sans, Segoe UI, Inter, sans-serif" font-size="13.5" font-weight="600">
+    Average Verified Token Reduction: 96.8% — Stretching 5-Hour Model Quotas by up to 10x–25x
   </text>
 
   <!-- Badge -->
-  <rect x="860" y="24" width="195" height="44" rx="12" fill="#064E3B" stroke="#10B981" stroke-width="1.5"/>
-  <text x="957" y="52" text-anchor="middle" fill="#34D399" font-family="Segoe UI, Inter, sans-serif" font-size="18" font-weight="800">-96.6% TOKENS</text>
+  <rect x="855" y="24" width="200" height="44" rx="12" fill="#ECFDF5" stroke="#10B981" stroke-width="1.6"/>
+  <text x="955" y="52" text-anchor="middle" fill="#047857" font-family="Segoe UI, Inter, sans-serif" font-size="18" font-weight="800">-96.8% TOKENS</text>
 
   <!-- Benchmark Row 1 -->
   <g font-family="Segoe UI, Inter, sans-serif">
-    <text x="50" y="112" fill="#E2E8F0" font-size="14" font-weight="700">1. Unfamiliar Repo Symbol Discovery (BM25 Search vs. Sequential Grep + Full Reads)</text>
+    <text x="50" y="112" fill="#1E293B" font-size="14" font-weight="800">1. Unfamiliar Repo Symbol Discovery (BM25 Search vs. Sequential Grep + Full Reads)</text>
     <rect x="50" y="122" width="760" height="18" rx="5" fill="url(#redBar)"/>
-    <text x="822" y="136" fill="#FDA4AF" font-size="12.5" font-weight="700">Naive Agent: 65,070 tokens</text>
+    <text x="822" y="136" fill="#E11D48" font-size="12.5" font-weight="800">Naive Agent: 65,070 tokens</text>
     <rect x="50" y="145" width="18" height="18" rx="5" fill="url(#greenBar)"/>
-    <text x="80" y="159" fill="#34D399" font-size="12.5" font-weight="700">sqo_code_search: 948 tokens (-98.5%)</text>
+    <text x="80" y="159" fill="#047857" font-size="12.5" font-weight="800">sqo_code_search: 948 tokens (-98.5%)</text>
 
     <!-- Benchmark Row 2 -->
-    <text x="50" y="196" fill="#E2E8F0" font-size="14" font-weight="700">2. Multi-File Subsystem Architecture Context Packing (25 Source Files)</text>
+    <text x="50" y="196" fill="#1E293B" font-size="14" font-weight="800">2. Multi-File Subsystem Architecture Context Packing (25 Source Files)</text>
     <rect x="50" y="206" width="768" height="18" rx="5" fill="url(#redBar)"/>
-    <text x="828" y="220" fill="#FDA4AF" font-size="12.5" font-weight="700">Naive Agent: 65,755 tokens</text>
+    <text x="828" y="220" fill="#E11D48" font-size="12.5" font-weight="800">Naive Agent: 65,755 tokens</text>
     <rect x="50" y="229" width="34" height="18" rx="5" fill="url(#greenBar)"/>
-    <text x="96" y="243" fill="#34D399" font-size="12.5" font-weight="700">sqo_context_pack: 2,460 tokens (-96.3%)</text>
+    <text x="96" y="243" fill="#047857" font-size="12.5" font-weight="800">sqo_context_pack: 2,460 tokens (-96.3%)</text>
 
     <!-- Benchmark Row 3 -->
-    <text x="50" y="280" fill="#E2E8F0" font-size="14" font-weight="700">3. Inspecting 5 Large Source Modules (&gt;350 LOC each via AST Skeletonizer)</text>
+    <text x="50" y="280" fill="#1E293B" font-size="14" font-weight="800">3. Inspecting 5 Large Source Modules (&gt;350 LOC each via AST Skeletonizer)</text>
     <rect x="50" y="290" width="440" height="18" rx="5" fill="url(#redBar)"/>
-    <text x="502" y="304" fill="#FDA4AF" font-size="12.5" font-weight="700">Naive Agent: 17,524 tokens</text>
+    <text x="502" y="304" fill="#E11D48" font-size="12.5" font-weight="800">Naive Agent: 17,524 tokens</text>
     <rect x="50" y="313" width="22" height="18" rx="5" fill="url(#greenBar)"/>
-    <text x="84" y="327" fill="#34D399" font-size="12.5" font-weight="700">sqo_smart_outline: 783 tokens (-95.5%)</text>
+    <text x="84" y="327" fill="#047857" font-size="12.5" font-weight="800">sqo_smart_outline: 783 tokens (-95.5%)</text>
 
     <!-- Benchmark Row 4 -->
-    <text x="50" y="364" fill="#E2E8F0" font-size="14" font-weight="700">4. Multi-Frame Crash Stack-Trace Debugging (6 Files + node_modules Frames)</text>
+    <text x="50" y="364" fill="#1E293B" font-size="14" font-weight="800">4. Multi-Frame Crash Stack-Trace Debugging (6 Files + node_modules Frames)</text>
     <rect x="50" y="374" width="380" height="18" rx="5" fill="url(#redBar)"/>
-    <text x="442" y="388" fill="#FDA4AF" font-size="12.5" font-weight="700">Naive Agent: 14,800 tokens (6 turns)</text>
+    <text x="442" y="388" fill="#E11D48" font-size="12.5" font-weight="800">Naive Agent: 14,800 tokens (6 turns)</text>
     <rect x="50" y="397" width="24" height="18" rx="5" fill="url(#greenBar)"/>
-    <text x="86" y="411" fill="#34D399" font-size="12.5" font-weight="700">sqo_pinpoint_error: 620 tokens in 1 turn (-95.8%)</text>
+    <text x="86" y="411" fill="#047857" font-size="12.5" font-weight="800">sqo_pinpoint_error: 620 tokens in 1 turn (-95.8%)</text>
   </g>
 </svg>

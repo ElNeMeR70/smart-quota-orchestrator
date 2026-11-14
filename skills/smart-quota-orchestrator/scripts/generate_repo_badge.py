@@ -38,14 +38,14 @@ def build_badge_svg(workspace: Path) -> tuple[str, dict]:
     val = f"-{pct}% Tokens | Grade {grade}"
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="276" height="28" role="img" aria-label="{label}: {val}">
   <defs>
-    <linearGradient id="l" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+    <linearGradient id="l" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#6366f1"/></linearGradient>
     <linearGradient id="r" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#10b981"/></linearGradient>
   </defs>
   <rect width="118" height="28" rx="6" fill="url(#l)"/>
   <rect x="114" width="162" height="28" rx="6" fill="url(#r)"/>
   <rect x="114" width="6" height="28" fill="url(#r)"/>
   <g fill="#fff" font-family="Segoe UI, Inter, DejaVu Sans, sans-serif" font-size="11.5" font-weight="700">
-    <text x="59" y="18" text-anchor="middle" fill="#38bdf8">⚡ {label}</text>
+    <text x="59" y="18" text-anchor="middle" fill="#ffffff">⚡ {label}</text>
     <text x="196" y="18" text-anchor="middle">{val}</text>
   </g>
 </svg>
