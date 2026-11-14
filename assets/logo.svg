@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E1B4B"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="120" y1="110" x2="392" y2="402" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+    <linearGradient id="boltGrad" x1="220" y1="150" x2="295" y2="355" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 10% safe margin baked in (52px inset on 512x512 canvas) -->
+  <rect x="52" y="52" width="408" height="408" rx="92" fill="url(#bgGrad)" stroke="url(#accentGrad)" stroke-width="12"/>
+
+  <!-- Quota Gauge Arc -->
+  <path d="M138 316 A132 132 0 1 1 374 316" stroke="#334155" stroke-width="22" stroke-linecap="round"/>
+  <path d="M138 316 A132 132 0 1 1 352 178" stroke="url(#accentGrad)" stroke-width="22" stroke-linecap="round"/>
+
+  <!-- Multi-Agent Swarm Nodes -->
+  <circle cx="152" cy="186" r="18" fill="#38BDF8"/>
+  <circle cx="256" cy="124" r="20" fill="#818CF8"/>
+  <circle cx="360" cy="186" r="18" fill="#34D399"/>
+
+  <!-- Routing Links -->
+  <line x1="168" y1="196" x2="230" y2="238" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 8"/>
+  <line x1="256" y1="144" x2="256" y2="212" stroke="#818CF8" stroke-width="7" stroke-linecap="round"/>
+  <line x1="344" y1="196" x2="282" y2="238" stroke="#34D399" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 8"/>
+
+  <!-- Central Efficiency Lightning Core -->
+  <circle cx="256" cy="272" r="54" fill="#0F172A" stroke="url(#accentGrad)" stroke-width="8"/>
+  <path d="M266 230 L232 276 H260 L246 314 L284 266 H256 Z" fill="url(#boltGrad)"/>
+
+  <!-- Bottom Efficiency Bars -->
+  <rect x="168" y="368" width="52" height="16" rx="8" fill="#38BDF8"/>
+  <rect x="230" y="368" width="52" height="16" rx="8" fill="#818CF8"/>
+  <rect x="292" y="368" width="52" height="16" rx="8" fill="#34D399"/>
+</svg>

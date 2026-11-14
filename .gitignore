@@ -1,0 +1,17 @@
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Local secrets & one-click helper
+.env
+PUSH_TO_GITHUB.cmd
+
+# OS & editor files
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
