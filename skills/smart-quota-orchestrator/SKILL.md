@@ -1,12 +1,13 @@
 ---
 name: smart-quota-orchestrator
 description: >-
-  Autonomous AI Agent OS (v6.0) with 18 native MCP tools, live localhost web
-  command center (sqo serve), auto-detecting framework bootstrapper (sqo init),
+  Autonomous AI Agent OS (v7.0 Global Ecosystem) with 20 native MCP tools, npx
+  smart-quota-orchestrator CLI, live localhost web command center (sqo serve),
+  auto-detecting framework bootstrapper (sqo init), prompt/log compressor,
   context-rot monitor, 3-stage stateful hooks, and live $USD ROI ledger.
 ---
 
-# Smart Quota & Swarm Orchestrator (`v6.0` Autonomous Agent OS)
+# Smart Quota & Swarm Orchestrator (`v7.0` Global Ecosystem OS)
 
 Maximize engineering output per quota unit across **five active defense layers**:
 1. **3-Stage Stateful Lifecycle Engine (`hooks.json`)**:
@@ -36,6 +37,7 @@ Maximize engineering output per quota unit across **five active defense layers**
 | **10. Real-Time Localhost Web Center** | [live_server.py](./scripts/live_server.py) | Serves auto-refreshing Bilingual Web Command Center (`sqo serve` on `127.0.0.1:7890`) |
 | **11. Smart Framework Bootstrapper** | [init_workspace_preset.py](./scripts/init_workspace_preset.py) / `sqo_init_preset` | Auto-detects Flutter/Next.js/Laravel/Python/Go/Rust & seeds ignores, MCP & memories |
 | **12. Context-Rot Early-Warning Monitor** | [check_context_rot.py](./scripts/check_context_rot.py) / `sqo_context_health` | Scores quadratic session Context-Rot (`0–100`) & emits `<350`-token handoff snapshot |
+| **13. Dynamic SVG Shield Badge** | [generate_repo_badge.py](./scripts/generate_repo_badge.py) / `sqo_repo_badge` | Generates embeddable GitHub SVG shield badges (`sqo badge`) with verified compression % |
 
 ---
 

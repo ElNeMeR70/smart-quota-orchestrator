@@ -1,13 +1,13 @@
 <#
 .SYNOPSIS
-  One-click installer for Smart Quota & Swarm Orchestrator v5.0 Autonomous Agent OS Suite.
+  One-click installer for Smart Quota & Swarm Orchestrator v7.0 Global Ecosystem Suite (https://sqo.elnemer-ai.com).
 #>
 $ErrorActionPreference = "Stop"
 
 $RepoUrl = "https://github.com/ElNeMeR70/smart-quota-orchestrator.git"
 $AgyPluginDir = Join-Path $HOME ".gemini\config\plugins\smart-quota-orchestrator"
 
-Write-Host "==> Installing Smart Quota & Swarm Orchestrator v6.0 into Google Antigravity..." -ForegroundColor Cyan
+Write-Host "==> Installing Smart Quota & Swarm Orchestrator v7.0 into Google Antigravity..." -ForegroundColor Cyan
 
 $ParentDir = Split-Path -Parent $AgyPluginDir
 if (-not (Test-Path $ParentDir)) {
@@ -18,6 +18,9 @@ $PluginItems = @(
     "plugin.json",
     ".claude-plugin",
     "gemini-extension.json",
+    "package.json",
+    "bin",
+    "vscode-extension",
     "pyproject.toml",
     "smithery.yaml",
     "glama.json",
@@ -36,7 +39,7 @@ $PluginItems = @(
     "skills"
 )
 
-if (Test-Path (Join-Path $PSScriptRoot "plugin.json")) {
+if ($PSScriptRoot -and (Test-Path (Join-Path $PSScriptRoot "plugin.json"))) {
     New-Item -ItemType Directory -Force -Path $AgyPluginDir | Out-Null
     foreach ($item in $PluginItems) {
         $src = Join-Path $PSScriptRoot $item
@@ -45,12 +48,18 @@ if (Test-Path (Join-Path $PSScriptRoot "plugin.json")) {
         }
     }
 } else {
-    if (Test-Path $AgyPluginDir) {
+    if (Test-Path (Join-Path $AgyPluginDir ".git")) {
         git -C $AgyPluginDir pull --ff-only
+    } elseif (Test-Path $AgyPluginDir) {
+        $TmpClone = Join-Path ([System.IO.Path]::GetTempPath()) ("sqo_install_" + [guid]::NewGuid().ToString("N"))
+        git clone --depth 1 $RepoUrl $TmpClone
+        Copy-Item -Path (Join-Path $TmpClone "*") -Destination $AgyPluginDir -Recurse -Force
+        Remove-Item -Recurse -Force $TmpClone -ErrorAction SilentlyContinue
     } else {
         git clone --depth 1 $RepoUrl $AgyPluginDir
     }
 }
 
-Write-Host "[OK] Installed v6.0 Autonomous Agent OS Suite at: $AgyPluginDir" -ForegroundColor Green
-Write-Host "     Active: 18 MCP Tools + Live Web UI (`sqo serve`) + 3-Stage Hooks + `$USD ROI Ledger!" -ForegroundColor Yellow
+Write-Host "[OK] Installed v7.0 Global Ecosystem Suite at: $AgyPluginDir" -ForegroundColor Green
+Write-Host "     Active: 20 MCP Tools + 33 CLI Commands + Live Web UI (sqo serve) + 3-Stage Hooks + `$USD ROI Ledger!" -ForegroundColor Yellow
+Write-Host "     Live Playground & Docs: https://sqo.elnemer-ai.com" -ForegroundColor Cyan

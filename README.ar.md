@@ -1,20 +1,22 @@
 <div dir="rtl" align="center">
 
 <p>
+  <a href="https://sqo.elnemer-ai.com"><img src="https://img.shields.io/badge/🌐_المنصة_العالمية_التفاعلية-sqo.elnemer--ai.com-EC4899?style=for-the-badge" alt="المنصة الحية" /></a>
   <a href="./README.md"><img src="https://img.shields.io/badge/🇬🇧_English_Documentation-Read_Here-2563EB?style=for-the-badge" alt="English README" /></a>
   <a href="./docs/PLAYBOOK_AR.md"><img src="https://img.shields.io/badge/📗_كتاب_السيناريوهات_والحوارات-عربي-10B981?style=for-the-badge" alt="Arabic Playbook" /></a>
   <a href="./docs/PLAYBOOK_EN.md"><img src="https://img.shields.io/badge/📘_Engineering_Playbook-English-8B5CF6?style=for-the-badge" alt="English Playbook" /></a>
 </p>
 
-<img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v5.0 Hero Banner" width="100%" />
+<img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v6.0`)
-### نظام التشغيل الذاتي لحماية الكوتا، مركز القيادة المحلي الحي (`sqo serve`)، القوالب الذكية (`sqo init`)، وضغط السياق بنسبة 96.8%
+# ⚡ Smart Quota & Swarm Orchestrator (`v7.0` Global Ecosystem)
+### المنظومة العالمية المتكاملة لحماية الكوتا، `20` أداة MCP أصلية، مثبت `npx` عالمي، إضافة VS Code / Cursor، مركز القيادة المحلي الحي (`sqo serve`)، وضغط السياق بنسبة 96.8%
 
-[![الإصدار](https://img.shields.io/badge/Release-v6.0.0_Global_Edition-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![أدوات MCP](https://img.shields.io/badge/MCP_Server-18_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![المنصة الحية](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
+[![الإصدار](https://img.shields.io/badge/Release-v7.0.0_Global_Ecosystem-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![أدوات MCP](https://img.shields.io/badge/MCP_Server-20_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
 [![التوفير الفعلي](https://img.shields.io/badge/Verified_Savings-96.8%25_Tokens-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
-[![بدون مكتبات خارجية](https://img.shields.io/badge/Python_3.8%2B-Zero_Dependencies-38BDF8?style=for-the-badge)](./pyproject.toml)
+[![بدون مكتبات خارجية](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 
 </div>
 
@@ -148,21 +150,29 @@ bash ./install.sh
 python sqo.py sync-ide --workspace /path/to/your/project --ides all
 ```
 
-### 3️⃣ التثبيت العالمي كأمر نظام (`uv` / `pipx` / `npx skills`)
+### 3️⃣ التثبيت الفوري بسطر واحد من المنصة العالمية (`npx` / `irm` / `curl`)
 ```bash
-uv tool install git+https://github.com/ElNeMeR70/smart-quota-orchestrator.git
-# أو عبر معيار Agent Skills:
-npx skills add ElNeMeR70/smart-quota-orchestrator
+# عبر npx مباشرة في أي مشروع
+npx -y smart-quota-orchestrator init --workspace .
+
+# ويندوز (PowerShell) بسطر واحد من الدومين الرسمي
+irm https://sqo.elnemer-ai.com/install.ps1 | iex
+
+# ماك ولينكس بسطر واحد من الدومين الرسمي
+curl -fsSL https://sqo.elnemer-ai.com/install.sh | bash
 ```
+- **إضافة شريط الحالة الرسمية لمحررات VS Code / Cursor / Antigravity / Windsurf**: متوفرة في مجلد [`vscode-extension/`](./vscode-extension/) لعرض التوكنز والدولارات الموفّرة لحظياً أسفل المحرر!
 
 ---
 
-## 💻 أهم أوامر سطر الأوامر الموحد (`31` أداة في `sqo.py`)
+## 💻 أهم أوامر سطر الأوامر الموحد (`33` أداة في `sqo.py`)
 
 ```bash
-python sqo.py init --workspace .                # (جديد v6.0) كشف تلقائي لإطار العمل (Flutter/Laravel/Next.js...) وتهيئة كل الدروع!
-python sqo.py serve --workspace . --open        # (جديد v6.0) تشغيل مركز القيادة الحي في المتصفح على http://127.0.0.1:7890
-python sqo.py context-health --workspace .      # (جديد v6.0) فحص تضخم السياق التربيعي وتجهيز ملخص التسليم الذكي
+python sqo.py init --workspace .                # كشف تلقائي لإطار العمل (Flutter/Laravel/Next.js...) وتهيئة كل الدروع!
+python sqo.py serve --workspace . --open        # تشغيل مركز القيادة الحي في المتصفح على http://127.0.0.1:7890
+python sqo.py compress-prompt -f noisy.json     # (جديد v7.0) ضغط مصفوفات JSON وسجلات الأخطاء المتكررة وحذف المفاتيح السرية
+python sqo.py badge -w . -o badge.svg           # (جديد v7.0) توليد شارة SVG حية بنسبة ضغط التوكنز لمستودعك على GitHub
+python sqo.py context-health --workspace .      # فحص تضخم السياق التربيعي وتجهيز ملخص التسليم الذكي
 python sqo.py doctor --workspace .              # فحص شامل 8 في 1 للمشروع والـ KV-Cache والأمان والتوفير
 python sqo.py roi                               # عرض إجمالي التوكنز والدولارات ($USD) التي تم توفيرها
 python sqo.py media --workspace .               # حساب تكلفة الصور وملفات PDF بالتوكنز واكتشاف الصور الضخمة
@@ -174,7 +184,7 @@ python sqo.py search "verifyToken" -w .         # بحث دلالي فائق ا�
 python sqo.py dashboard -w . -o report.html     # توليد لوحة تحكم تفاعلية فخمة بصيغة HTML
 ```
 
-🌐 **صفحة الهبوط التفاعلية + حاسبة التوفير الشهري**: [`docs/index.html`](./docs/index.html) • **حقيبة الإطلاق والنشر العالمي**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)
+🌐 **المنصة التفاعلية العالمية الحية (بـ 4 لغات + مختبر ضغط السياق الفوري في المتصفح)**: **[https://sqo.elnemer-ai.com](https://sqo.elnemer-ai.com)** • **حقيبة الإطلاق والنشر العالمي**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)
 
 ---
 

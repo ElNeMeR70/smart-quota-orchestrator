@@ -1,9 +1,9 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
   "name": "smart-quota-orchestrator",
-  "version": "6.0.0",
-  "description": "Autonomous AI Agent OS Layer with 18 zero-dependency MCP tools, 3-stage stateful token-shield hooks, live $USD ROI ledger, SQLite FTS5 BM25 code search, incremental code graph, stack-trace pinpointer & multimodal media budgeter.",
-  "homepage": "https://github.com/ElNeMeR70/smart-quota-orchestrator",
+  "version": "7.0.0",
+  "description": "Autonomous AI Agent OS Layer (v7.0) with 20 zero-dependency MCP tools, npx CLI, 3-stage stateful token-shield hooks, live $USD ROI ledger, prompt/JSON/log compressor, SQLite FTS5 BM25 code search, incremental code graph & multimodal media budgeter.",
+  "homepage": "https://sqo.elnemer-ai.com",
   "license": "MIT",
   "maintainers": [
     {

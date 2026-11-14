@@ -1,6 +1,6 @@
 {
   "name": "smart-quota-orchestrator",
-  "version": "6.0.0",
-  "description": "Autonomous AI Agent OS Layer (v6.0): 18 native MCP tools, Live Localhost Web Command Center, framework auto-bootstrapper, Context-Rot monitor, and 3-stage stateful hooks.",
+  "version": "7.0.0",
+  "description": "Autonomous AI Agent OS Layer (v7.0 Global Ecosystem): 20 native MCP tools, npx CLI, Live Localhost Web Command Center, prompt/log compressor, framework auto-bootstrapper, and 3-stage stateful hooks.",
   "contextFileName": "rules/AGENTS.md"
 }

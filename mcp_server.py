@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v6.0).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v7.0).
 
-Exposes 18 native, token-saving engineering & code-intelligence tools directly to
+Exposes 20 native, token-saving engineering & code-intelligence tools directly to
 Google Antigravity, Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over
 JSON-RPC 2.0 `stdio` transport.
 
@@ -21,7 +21,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "6.0.0"
+SERVER_VERSION = "7.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -259,6 +259,29 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
             "required": ["workspace"],
         },
     },
+    {
+        "name": "sqo_compress_prompt",
+        "description": "Deterministically compress verbose raw text, repetitive JSON arrays, and noisy log pastes by 55%-85% while scrubbing accidental API keys/secrets.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "text": {"type": "string", "description": "Raw prompt, JSON dump, or log text to compress and scrub."},
+            },
+            "required": ["text"],
+        },
+    },
+    {
+        "name": "sqo_repo_badge",
+        "description": "Generate a verified Smart Quota OS SVG shield badge (`sqo-badge.svg`) displaying the repository's empirical token reduction % and prompt-tax grade.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "output_path": {"type": "string", "description": "Optional output SVG file path (default: sqo-badge.svg in workspace)."},
+            },
+            "required": ["workspace"],
+        },
+    },
 ]
 
 
@@ -380,6 +403,22 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
         mod = _load_tool_mod("smart-quota-orchestrator/scripts/check_context_rot.py")
         rep = mod.evaluate_context_health(Path(args["workspace"]).resolve(), goal=str(args.get("goal", "Continue active implementation")))
         return mod.render_markdown(rep)
+
+    if name == "sqo_compress_prompt":
+        mod = _load_tool_mod("context-compactor/scripts/compress_prompt.py")
+        rep = mod.compress_raw_prompt(str(args["text"]))
+        return (
+            f"Compressed `~{rep['original_tokens']}` -> `~{rep['compressed_tokens']}` tokens (`-{rep['savings_pct']}%`, `{rep['secrets_redacted']}` secrets redacted):\n\n"
+            f"{rep['compressed_text']}"
+        )
+
+    if name == "sqo_repo_badge":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/generate_repo_badge.py")
+        ws = Path(args["workspace"]).resolve()
+        svg, meta = mod.build_badge_svg(ws)
+        out = Path(args["output_path"]) if args.get("output_path") else (ws / "sqo-badge.svg")
+        out.write_text(svg, encoding="utf-8")
+        return f"[OK] Generated SVG badge (`-{meta['reduction_pct']}% Tokens | Grade {meta['grade']}`) at `{out}`"
 
     raise ValueError(f"Unknown MCP tool: {name}")
 

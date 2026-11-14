@@ -1,21 +1,23 @@
 <div align="center">
 
 <p>
+  <a href="https://sqo.elnemer-ai.com"><img src="https://img.shields.io/badge/🌐_Live_Platform_%26_Playground-sqo.elnemer--ai.com-6366F1?style=for-the-badge" alt="Live Interactive Platform" /></a>
   <a href="./README.ar.md"><img src="https://img.shields.io/badge/🇸🇦_الدليل_العربي_الكامل-اقرأ_بالعربية-10B981?style=for-the-badge" alt="الدليل العربي الكامل" /></a>
   <a href="./docs/PLAYBOOK_EN.md"><img src="https://img.shields.io/badge/📘_Real--World_Playbook-English-2563EB?style=for-the-badge" alt="English Playbook" /></a>
   <a href="./docs/PLAYBOOK_AR.md"><img src="https://img.shields.io/badge/📗_كتاب_الحوارات_والسيناريوهات-عربي-F59E0B?style=for-the-badge" alt="Arabic Playbook" /></a>
 </p>
 
-<img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v5.0 Hero Banner" width="100%" />
+<img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v6.0` Autonomous Agent OS)
+# ⚡ Smart Quota & Swarm Orchestrator (`v7.0` Global Ecosystem Edition)
 
-### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, 18 Native MCP Tools, Live Localhost Web Command Center (`sqo serve`), Auto-Framework Presets (`sqo init`) & Live `$USD` ROI Ledger
+### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, **20 Native MCP Tools**, `npx smart-quota-orchestrator` CLI, Live Localhost Web Command Center (`sqo serve`), Native VS Code / Cursor Extension & Live `$USD` ROI Ledger
 
-[![Release](https://img.shields.io/badge/Release-v6.0.0_Global_Edition-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![MCP Tools](https://img.shields.io/badge/MCP_Server-18_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![Live Site](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
+[![Release](https://img.shields.io/badge/Release-v7.0.0_Global_Ecosystem-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![MCP Tools](https://img.shields.io/badge/MCP_Server-20_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
 [![Token Savings](https://img.shields.io/badge/Verified_Compression-96.8%25-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
-[![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B-Zero_Dependencies-38BDF8?style=for-the-badge)](./pyproject.toml)
+[![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-A855F7?style=for-the-badge)](./LICENSE)
 
 **Works seamlessly with:** `Google Antigravity` • `Claude Code` • `Cursor` • `VS Code Copilot` • `Gemini CLI` • `Windsurf`
@@ -173,20 +175,32 @@ python sqo.py sync-ide --workspace /path/to/your/project --ides all
 python sqo.py git-guard --workspace /path/to/your/project
 ```
 
-### Option C: Global CLI (`uv tool` / `pipx`) or `npx skills`
+### Option C: 1-Line Cloud Installers (`npx` / `irm` / `curl`) & VS Code Extension
 ```bash
+# Universal Node/npx CLI & MCP bridge
+npx -y smart-quota-orchestrator init --workspace .
+
+# One-line cloud installer (Windows PowerShell)
+irm https://sqo.elnemer-ai.com/install.ps1 | iex
+
+# One-line cloud installer (macOS / Linux)
+curl -fsSL https://sqo.elnemer-ai.com/install.sh | bash
+
+# Python uv tool or Agent Skills CLI
 uv tool install git+https://github.com/ElNeMeR70/smart-quota-orchestrator.git
-# or: npx skills add ElNeMeR70/smart-quota-orchestrator
 ```
+- **Native VS Code / Cursor / Antigravity / Windsurf Status-Bar Extension**: included in [`vscode-extension/`](./vscode-extension/) — displays live prevented tokens & `$USD` saved directly in your IDE status bar!
 
 ---
 
-## 💻 Unified `sqo` Master CLI (31 Zero-Dependency Commands)
+## 💻 Unified `sqo` Master CLI (33 Zero-Dependency Commands)
 
 ```bash
-python sqo.py init --workspace .                # NEW v6.0: Auto-detect stack (Flutter/Next.js/Laravel/etc.) & bootstrap all shields!
-python sqo.py serve --workspace . --open        # NEW v6.0: Launch Live Localhost Bilingual Web Command Center (http://127.0.0.1:7890)
-python sqo.py context-health --workspace .      # NEW v6.0: Score session Context-Rot risk & emit <350-tok handoff snapshot
+python sqo.py init --workspace .                # v7.0: Auto-detect stack (Flutter/Next.js/Laravel/etc.) & bootstrap all shields!
+python sqo.py serve --workspace . --open        # v7.0: Launch Live Localhost Bilingual Web Command Center (http://127.0.0.1:7890)
+python sqo.py compress-prompt -f noisy.json     # NEW v7.0: Compact >4-item JSON arrays, collapse duplicate logs & scrub secrets
+python sqo.py badge -w . -o badge.svg           # NEW v7.0: Generate embeddable SVG shield badge with verified compression %
+python sqo.py context-health --workspace .      # Score session Context-Rot risk & emit <350-tok handoff snapshot
 python sqo.py doctor --workspace .              # Full 8-in-1 health, ROI, KV-cache, secret & graph check
 python sqo.py roi                               # View cumulative tokens & $USD saved by autonomous shields
 python sqo.py media --workspace .               # Audit PNG/JPEG/WebP/PDF multimodal vision token costs
@@ -201,7 +215,7 @@ python sqo.py slice -w . --emit-workflow        # Collision-free parallel swarm 
 python sqo.py dashboard -w . -o report.html     # Standalone dark-glassmorphism HTML telemetry center
 ```
 
-🌐 **Interactive Bilingual Landing Page + Monthly `$USD` Calculator**: [`docs/index.html`](./docs/index.html) • **PyPI & Directory Launch Kit**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)
+🌐 **Official Live Interactive Web App (4 Languages + Live Context Compressor Playground)**: **[https://sqo.elnemer-ai.com](https://sqo.elnemer-ai.com)** • **Launch Kit**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)
 
 ---
 

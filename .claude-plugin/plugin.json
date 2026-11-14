@@ -1,12 +1,12 @@
 {
   "name": "smart-quota-orchestrator",
-  "version": "6.0.0",
-  "description": "Autonomous AI Agent OS Layer (v6.0): 18 native MCP tools, Live Localhost Web Command Center, framework auto-bootstrapper, Context-Rot monitor, and 3-stage stateful hooks with live $USD ROI ledger.",
+  "version": "7.0.0",
+  "description": "Autonomous AI Agent OS Layer (v7.0 Global Ecosystem): 20 native MCP tools, npx smart-quota-orchestrator CLI, Live Localhost Web Command Center, prompt/log compressor, framework auto-bootstrapper, and 3-stage stateful hooks with live $USD ROI ledger.",
   "author": {
     "name": "ElNeMeR",
     "url": "https://github.com/ElNeMeR70"
   },
-  "homepage": "https://github.com/ElNeMeR70/smart-quota-orchestrator",
+  "homepage": "https://sqo.elnemer-ai.com",
   "repository": "https://github.com/ElNeMeR70/smart-quota-orchestrator",
   "license": "MIT"
 }

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "smart-quota-orchestrator"
-version = "6.0.0"
-description = "Autonomous AI Agent Quota, Context-Compression & Multi-Agent OS Layer (18 MCP tools, Live Localhost Web Command Center, Framework Auto-Bootstrapper, Context-Rot Monitor, Stateful Lifecycle Shield Hooks & Live $USD ROI Ledger)."
+version = "7.0.0"
+description = "Autonomous AI Agent Quota, Context-Compression & Multi-Agent OS Layer (v7.0: 20 MCP tools, 33 CLI commands, Live Localhost Web Command Center, Prompt/Log Compressor, Framework Auto-Bootstrapper, Context-Rot Monitor, Stateful Shield Hooks & Live $USD ROI Ledger)."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
@@ -14,7 +14,7 @@ keywords = ["ai-agents", "mcp", "antigravity", "claude-code", "cursor", "token-o
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/ElNeMeR70/smart-quota-orchestrator"
+Homepage = "https://sqo.elnemer-ai.com"
 Repository = "https://github.com/ElNeMeR70/smart-quota-orchestrator"
 
 [project.scripts]

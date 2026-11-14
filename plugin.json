@@ -1,18 +1,18 @@
 {
   "name": "smart-quota-orchestrator",
   "displayName": "Smart Quota & Swarm Orchestrator",
-  "version": "6.0.0",
-  "description": "Autonomous AI Agent OS Layer (v6.0): Live Localhost Web Command Center (`sqo serve`), auto-detecting framework bootstrapper (`sqo init`), Context-Rot early-warning monitor, 3-stage stateful hooks with live $USD ROI ledger, 18 native MCP tools, 6 skills & 3 subagents.",
+  "version": "7.0.0",
+  "description": "Autonomous AI Agent OS Layer (v7.0 Global Ecosystem): 20 native MCP tools, npx smart-quota-orchestrator CLI (33 commands), Live Localhost Web Command Center (`sqo serve`), VS Code/Cursor status-bar extension, prompt/log compressor, and 3-stage stateful hooks with live $USD ROI ledger.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
-    "Run sqo doctor v6.0 on this workspace and check session context-health & live $USD ROI savings",
+    "Run sqo doctor v7.0 on this workspace and check session context-health & live $USD ROI savings",
     "Auto-detect this repo's framework with sqo_init_preset and map all API routes and code hotspots",
-    "Partition this repo into collision-free parallel slices or check multimodal image/PDF vision token budgets"
+    "Compress noisy JSON/logs with sqo_compress_prompt or partition this repo into collision-free parallel slices"
   ],
   "author": {
     "name": "ElNeMeR",
     "url": "https://github.com/ElNeMeR70"
   },
-  "homepage": "https://github.com/ElNeMeR70/smart-quota-orchestrator",
+  "homepage": "https://sqo.elnemer-ai.com",
   "repository": "https://github.com/ElNeMeR70/smart-quota-orchestrator"
 }

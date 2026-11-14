@@ -1,13 +1,13 @@
 ---
 name: context-compactor
 description: >-
-  Eliminates text & multimodal bloat with 7 zero-dependency tools: AST/symbol
-  skeletonizer, adaptive multi-file context packer, multimodal image/PDF token
-  cost estimator, token-budgeted git diff compressor, CLI output denoiser,
-  .agentignore generator, and <400-token handoff brief builder.
+  Eliminates text & multimodal bloat with 8 zero-dependency tools: AST/symbol
+  skeletonizer, adaptive multi-file context packer, prompt/JSON/log compressor,
+  multimodal image/PDF token cost estimator, token-budgeted git diff compressor,
+  CLI output denoiser, .agentignore generator, and <400-token handoff brief builder.
 ---
 
-# Context Compactor & Multimodal Budget Toolkit (`v5.0`)
+# Context Compactor & Multimodal Budget Toolkit (`v7.0`)
 
 Prevent text and vision token bloat **before** it enters the conversation window using seven zero-dependency Python utilities (and native `sqo-engine` MCP tools):
 
@@ -20,6 +20,7 @@ Prevent text and vision token bloat **before** it enters the conversation window
 | **5. CLI Test/Build Denoiser** | [compact_command_output.py](./scripts/compact_command_output.py) | **80% – 95%** | Run `pytest`, `vitest`, `jest`, `npm test`, `tsc`, or `flutter test` cleanly |
 | **6. Context-Bomb Ignore Guard** | [generate_agent_ignore.py](./scripts/generate_agent_ignore.py) | **Prevents 10k–200k accidents** | Scan repos for heavy dumps/sourcemaps and write `.agentignore` / `.cursorignore` |
 | **7. Zero-Loss Handoff Brief** | [build_handoff_brief.py](./scripts/build_handoff_brief.py) | **90%+ on resume** | Package branch, dirty files, and next atomic actions (`<400` tokens) before `/compact` or subagents |
+| **8. Prompt, JSON & Log Compressor** | [compress_prompt.py](./scripts/compress_prompt.py) / `sqo_compress_prompt` | **65% – 96%** | Compact `>4`-item JSON arrays to schema+samples, collapse duplicate log lines `[Repeated ×N]` & scrub secrets |
 
 ---
 

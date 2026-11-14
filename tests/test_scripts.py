@@ -39,6 +39,7 @@ git_guard_mod = _load_module("install_git_guard", "skills/smart-quota-orchestrat
 live_srv_mod = _load_module("live_server", "skills/smart-quota-orchestrator/scripts/live_server.py")
 preset_mod = _load_module("init_workspace_preset", "skills/smart-quota-orchestrator/scripts/init_workspace_preset.py")
 rot_mod = _load_module("check_context_rot", "skills/smart-quota-orchestrator/scripts/check_context_rot.py")
+badge_mod = _load_module("generate_repo_badge", "skills/smart-quota-orchestrator/scripts/generate_repo_badge.py")
 
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
@@ -47,6 +48,7 @@ diff_mod = _load_module("compress_git_diff", "skills/context-compactor/scripts/c
 denoise_mod = _load_module("compact_command_output", "skills/context-compactor/scripts/compact_command_output.py")
 ignore_mod = _load_module("generate_agent_ignore", "skills/context-compactor/scripts/generate_agent_ignore.py")
 media_mod = _load_module("estimate_media_tokens", "skills/context-compactor/scripts/estimate_media_tokens.py")
+prompt_comp_mod = _load_module("compress_prompt", "skills/context-compactor/scripts/compress_prompt.py")
 
 bm25_mod = _load_module("search_code_bm25", "skills/semantic-code-navigator/scripts/search_code_bm25.py")
 blast_mod = _load_module("analyze_blast_radius", "skills/semantic-code-navigator/scripts/analyze_blast_radius.py")
@@ -295,16 +297,27 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertEqual(len(res["synced_files"]), 7)
             self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
 
-    def test_18_mcp_stdio_server_18_tools(self) -> None:
+    def test_18_mcp_stdio_server_20_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "6.0.0")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "7.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
         tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
-        self.assertEqual(len(tool_names), 18)
-        for expected in ("sqo_init_preset", "sqo_context_health", "sqo_roi_ledger", "sqo_media_budget", "sqo_pinpoint_error", "sqo_code_hotspots", "sqo_api_routes", "sqo_cache_audit"):
+        self.assertEqual(len(tool_names), 20)
+        for expected in (
+            "sqo_compress_prompt",
+            "sqo_repo_badge",
+            "sqo_init_preset",
+            "sqo_context_health",
+            "sqo_roi_ledger",
+            "sqo_media_budget",
+            "sqo_pinpoint_error",
+            "sqo_code_hotspots",
+            "sqo_api_routes",
+            "sqo_cache_audit",
+        ):
             self.assertIn(expected, tool_names)
 
     def test_19_compress_diff_and_denoise(self) -> None:
@@ -402,7 +415,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             try:
                 with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/overview", timeout=4) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(data["version"], "6.0.0")
+                self.assertEqual(data["version"], "7.0.0")
                 self.assertEqual(data["routes"][0]["path"], "/health")
 
                 req = urllib.request.Request(
@@ -418,13 +431,40 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
                 srv.shutdown()
                 srv.server_close()
 
-    def test_29_manifests_v6_complete(self) -> None:
-        for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json"):
+    def test_29_manifests_v7_complete(self) -> None:
+        for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json", "package.json", "vscode-extension/package.json"):
             data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
-            self.assertEqual(data["version"], "6.0.0")
+            self.assertEqual(data["version"], "7.0.0")
         self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
+        self.assertTrue((REPO_ROOT / "bin" / "sqo.js").is_file())
+        self.assertTrue((REPO_ROOT / "vscode-extension" / "extension.js").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
         self.assertEqual(len(tax["skills"]), 6)
+
+    def test_30_prompt_json_and_log_compressor(self) -> None:
+        big_items = [{"id": i, "email": f"u{i}@test.dev", "status": "ACTIVE"} for i in range(40)]
+        noisy = (
+            "Authorization: Bearer sk-proj-ABCDEFGHIJKLMNOPQRSTUVWXYZ123456\n"
+            + "\n".join(["[WARN] Redis socket retry"] * 12)
+            + "\n```json\n"
+            + json.dumps(big_items, indent=2)
+            + "\n```\n"
+        )
+        res = prompt_comp_mod.compress_raw_prompt(noisy)
+        self.assertGreater(res["savings_pct"], 60.0)
+        self.assertGreaterEqual(res["secrets_redacted"], 1)
+        self.assertIn("Repeated", res["compressed_text"])
+        self.assertNotIn("sk-proj-ABCDEFGH", res["compressed_text"])
+
+    def test_31_dynamic_svg_repo_badge_generator(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            out_svg = Path(tmp) / "badge.svg"
+            svg_txt, meta = badge_mod.build_badge_svg(REPO_ROOT / "skills")
+            out_svg.write_text(svg_txt, encoding="utf-8")
+            self.assertTrue(out_svg.is_file())
+            self.assertIn("<svg", svg_txt)
+            self.assertIn("Smart Quota", svg_txt)
+            self.assertGreater(meta["reduction_pct"], 50.0)
 
 
 if __name__ == "__main__":

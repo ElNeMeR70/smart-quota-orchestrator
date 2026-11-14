@@ -1,0 +1,46 @@
+{
+  "name": "smart-quota-orchestrator",
+  "version": "7.0.0",
+  "description": "Autonomous AI Agent OS Layer (20 Zero-Dep MCP Tools, 3-Stage Stateful Hook Firewall, Live Localhost Web Command Center, Framework Presets, Multimodal Vision Budgeter & Live $USD ROI Ledger) for Google Antigravity, Claude Code, Cursor, VS Code & Windsurf.",
+  "homepage": "https://sqo.elnemer-ai.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElNeMeR70/smart-quota-orchestrator.git"
+  },
+  "license": "MIT",
+  "author": "ElNeMeR <https://github.com/ElNeMeR70>",
+  "bin": {
+    "smart-quota-orchestrator": "./bin/sqo.js",
+    "sqo": "./bin/sqo.js"
+  },
+  "files": [
+    "bin/",
+    "hooks/",
+    "hooks.json",
+    "mcp_server.py",
+    "mcp_config.json",
+    "sqo.py",
+    "plugin.json",
+    "rules/",
+    "agents/",
+    "skills/",
+    "assets/",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "ai-agents",
+    "claude-code",
+    "cursor",
+    "antigravity",
+    "token-optimization",
+    "context-engineering",
+    "bm25",
+    "code-graph",
+    "kv-cache"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
