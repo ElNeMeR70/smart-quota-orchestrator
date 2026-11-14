@@ -60,6 +60,7 @@ def _resolve_db_path(workspace: Path, explicit_db: str = "") -> Path:
 
 
 def _init_db(db_path: Path) -> sqlite3.Connection:
+    db_path.parent.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(str(db_path))
     con.execute(
         """

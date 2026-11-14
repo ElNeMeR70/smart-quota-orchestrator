@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smart-quota-orchestrator"
+version = "4.0.0"
+description = "Autonomous AI Agent Quota, Context-Compression & Multi-Agent OS Layer (14 MCP tools, Stateful Lifecycle Shield Hooks, Incremental SQLite Code Graph, BM25 Search & Memory Vault)."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "ElNeMeR", email = "tt21913@gmail.com" }]
+keywords = ["ai-agents", "mcp", "antigravity", "claude-code", "cursor", "token-optimization", "bm25", "code-graph"]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/ElNeMeR70/smart-quota-orchestrator"
+Repository = "https://github.com/ElNeMeR70/smart-quota-orchestrator"
+
+[project.scripts]
+sqo = "sqo:main"
+sqo-mcp = "mcp_server:main"
+
+[tool.setuptools]
+py-modules = ["sqo", "mcp_server"]
+include-package-data = true

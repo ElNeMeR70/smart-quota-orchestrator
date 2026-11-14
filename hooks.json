@@ -1,6 +1,13 @@
 {
-  "sqo-token-bomb-shield": {
+  "sqo-autonomous-shield": {
     "enabled": true,
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "python hooks/token_shield_hook.py",
+        "timeout": 4
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "read_file|view_file|run_command",
@@ -8,7 +15,19 @@
           {
             "type": "command",
             "command": "python hooks/token_shield_hook.py",
-            "timeout": 5
+            "timeout": 4
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "read_file|view_file|edit_file|write_file|replace_file_content|multi_replace_file_content|write_to_file|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python hooks/token_shield_hook.py",
+            "timeout": 4
           }
         ]
       }

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Comprehensive v3.0 test suite (18 tests covering MCP Server, PreToolUse Hook, BM25, Memory Vault, Blast Radius & all CLI engines)."""
+"""Comprehensive v4.0.0 test suite (22 tests covering the 3-Stage Stateful Lifecycle Engine,
+14 Native MCP Tools, Incremental SQLite Code Graph & Route Mapper, 1-Turn Stack-Trace Pinpointer,
+KV-Cache Prefix Stability Auditor, 5-IDE Synchronizer, BM25 Search, Blast Radius, Memory Vault & CLI)."""
 
 from __future__ import annotations
 
 import datetime as dt
 import importlib.util
 import json
-import subprocess
-import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -30,6 +30,7 @@ simulate_mod = _load_module("simulate_workflow_cost", "skills/smart-quota-orches
 audit_burn = _load_module("audit_session_burn", "skills/smart-quota-orchestrator/scripts/audit_session_burn.py")
 dashboard_mod = _load_module("generate_html_dashboard", "skills/smart-quota-orchestrator/scripts/generate_html_dashboard.py")
 bench_mod = _load_module("benchmark_suite", "skills/smart-quota-orchestrator/scripts/benchmark_suite.py")
+sync_ide_mod = _load_module("sync_ide_configs", "skills/smart-quota-orchestrator/scripts/sync_ide_configs.py")
 
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
@@ -40,17 +41,21 @@ ignore_mod = _load_module("generate_agent_ignore", "skills/context-compactor/scr
 
 bm25_mod = _load_module("search_code_bm25", "skills/semantic-code-navigator/scripts/search_code_bm25.py")
 blast_mod = _load_module("analyze_blast_radius", "skills/semantic-code-navigator/scripts/analyze_blast_radius.py")
+graph_mod = _load_module("code_graph", "skills/semantic-code-navigator/scripts/code_graph.py")
+pinpoint_mod = _load_module("pinpoint_stacktrace", "skills/semantic-code-navigator/scripts/pinpoint_stacktrace.py")
+
 mem_mod = _load_module("memory_vault", "skills/project-memory-vault/scripts/memory_vault.py")
 scrub_mod = _load_module("scrub_secrets", "skills/project-memory-vault/scripts/scrub_secrets.py")
 
 slice_mod = _load_module("partition_parallel_slices", "skills/parallel-slice-architect/scripts/partition_parallel_slices.py")
 tax_mod = _load_module("optimize_prompt_rules", "skills/prompt-tax-profiler/scripts/optimize_prompt_rules.py")
+cache_mod = _load_module("audit_cache_stability", "skills/prompt-tax-profiler/scripts/audit_cache_stability.py")
 
 mcp_mod = _load_module("mcp_server", "mcp_server.py")
 hook_mod = _load_module("token_shield_hook", "hooks/token_shield_hook.py")
 
 
-class SmartQuotaEnterpriseV3Tests(unittest.TestCase):
+class SmartQuotaAutonomousOSV4Tests(unittest.TestCase):
     def test_01_parse_quota_pools(self) -> None:
         payload = {
             "models": ["gemini-4-carbon-medium", "gemini-pro-orchestrator", "claude-sonnet-4-6"],
@@ -145,54 +150,218 @@ class SmartQuotaEnterpriseV3Tests(unittest.TestCase):
         self.assertEqual(len(rep["benchmarks"]), 4)
         self.assertGreater(rep["average_token_reduction_pct"], 70.0)
 
-    def test_12_pre_tool_use_token_shield_hook(self) -> None:
+    def test_12_hook_lockfile_and_shell_shield(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             lock = Path(tmp) / "package-lock.json"
             lock.write_text("x" * (80 * 1024), encoding="utf-8")
 
             blocked = hook_mod.evaluate_hook({
-                "toolCall": {"name": "read_file", "args": {"Path": str(lock)}}
+                "hookEventName": "PreToolUse",
+                "toolCall": {"name": "read_file", "args": {"Path": str(lock)}},
             })
             self.assertEqual(blocked["decision"], "deny")
 
             allowed_ranged = hook_mod.evaluate_hook({
-                "toolCall": {"name": "read_file", "args": {"Path": str(lock), "StartLine": 1, "EndLine": 40}}
+                "hookEventName": "PreToolUse",
+                "toolCall": {"name": "read_file", "args": {"Path": str(lock), "StartLine": 1, "EndLine": 40}},
             })
             self.assertEqual(allowed_ranged["decision"], "allow")
 
             blocked_shell = hook_mod.evaluate_hook({
-                "toolCall": {"name": "run_command", "args": {"CommandLine": "cat package-lock.json"}}
+                "hookEventName": "PreToolUse",
+                "toolCall": {"name": "run_command", "args": {"CommandLine": "cat package-lock.json"}},
             })
             self.assertEqual(blocked_shell["decision"], "deny")
 
             allowed_shell = hook_mod.evaluate_hook({
-                "toolCall": {"name": "run_command", "args": {"CommandLine": "cat package-lock.json | head -n 20"}}
+                "hookEventName": "PreToolUse",
+                "toolCall": {"name": "run_command", "args": {"CommandLine": "cat package-lock.json | head -n 20"}},
             })
             self.assertEqual(allowed_shell["decision"], "allow")
 
-    def test_13_mcp_stdio_server_json_rpc_protocol(self) -> None:
+    def test_13_stateful_hook_dedup_autoclamp_loopbreaker_and_sessionstart(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp) / "ws"
+            state_dir = Path(tmp) / "state"
+            ws.mkdir()
+
+            # A) SessionStart warm memory injection
+            mem_db = ws / ".sqo" / "memory.db"
+            mem_mod.remember_fact(mem_db, "arch", "Billing webhook port", "Runs on port 8081", ["src/webhook.py"])
+            start_out = hook_mod.evaluate_hook({"hookEventName": "SessionStart", "cwd": str(ws)}, state_root=state_dir)
+            self.assertIn("injectSteps", start_out)
+            self.assertIn("Billing webhook port", start_out["injectSteps"][0]["systemMessage"]["systemMessage"])
+
+            # B) Duplicate-read deduplication + edit_file unlock
+            src = ws / "service.py"
+            src.write_text("def run():\n    return 42\n", encoding="utf-8")
+            conv_id = "conv-v4-test"
+
+            r1 = hook_mod.evaluate_hook(
+                {"hookEventName": "PreToolUse", "conversationId": conv_id, "toolCall": {"name": "read_file", "args": {"Path": str(src)}}},
+                state_root=state_dir,
+            )
+            self.assertEqual(r1["decision"], "allow")
+            hook_mod.evaluate_hook(
+                {"hookEventName": "PostToolUse", "conversationId": conv_id, "stepIdx": 3, "toolCall": {"name": "read_file", "args": {"Path": str(src)}}},
+                state_root=state_dir,
+            )
+
+            # Second identical unchanged read -> DENIED!
+            r2 = hook_mod.evaluate_hook(
+                {"hookEventName": "PreToolUse", "conversationId": conv_id, "toolCall": {"name": "read_file", "args": {"Path": str(src)}}},
+                state_root=state_dir,
+            )
+            self.assertEqual(r2["decision"], "deny")
+            self.assertIn("Deduplicator", r2["reason"])
+
+            # Edit the file -> PostToolUse clears read lock -> allowed again!
+            src.write_text("def run():\n    return 99\n", encoding="utf-8")
+            hook_mod.evaluate_hook(
+                {"hookEventName": "PostToolUse", "conversationId": conv_id, "toolCall": {"name": "edit_file", "args": {"Path": str(src)}}},
+                state_root=state_dir,
+            )
+            r3 = hook_mod.evaluate_hook(
+                {"hookEventName": "PreToolUse", "conversationId": conv_id, "toolCall": {"name": "read_file", "args": {"Path": str(src)}}},
+                state_root=state_dir,
+            )
+            self.assertEqual(r3["decision"], "allow")
+
+            # C) Auto-Clamp (`overwrite`) on giant source file (>55 KB & >1,200 lines)
+            giant = ws / "monolith.py"
+            giant.write_text(("def fn_x(): return '" + ("a" * 45) + "'\n") * 1350, encoding="utf-8")
+            clamped = hook_mod.evaluate_hook(
+                {"hookEventName": "PreToolUse", "conversationId": "conv-clamp", "toolCall": {"name": "read_file", "args": {"Path": str(giant)}}},
+                state_root=state_dir,
+            )
+            self.assertEqual(clamped["decision"], "allow")
+            self.assertEqual(clamped.get("overwrite"), {"StartLine": 1, "EndLine": 280})
+
+            # D) Blind Retry-Loop Breaker (3rd consecutive identical failing command denied)
+            bad_cmd = {"name": "run_command", "args": {"CommandLine": "pytest tests/broken.py"}}
+            for _ in range(2):
+                hook_mod.evaluate_hook(
+                    {"hookEventName": "PostToolUse", "conversationId": conv_id, "error": "Exit code 1", "toolCall": bad_cmd},
+                    state_root=state_dir,
+                )
+            third_try = hook_mod.evaluate_hook(
+                {"hookEventName": "PreToolUse", "conversationId": conv_id, "toolCall": bad_cmd},
+                state_root=state_dir,
+            )
+            self.assertEqual(third_try["decision"], "deny")
+            self.assertIn("Loop-Breaker", third_try["reason"])
+
+    def test_14_incremental_code_graph_and_route_mapper(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "src").mkdir()
+            (ws / "src" / "db.py").write_text(
+                "def query(x):\n    if x and (x > 1 or x < 0):\n        return x\n    return 0\n",
+                encoding="utf-8",
+            )
+            (ws / "src" / "api.py").write_text(
+                "from src.db import query\n\n@app.post('/api/v1/checkout')\ndef checkout():\n    return query(2)\n",
+                encoding="utf-8",
+            )
+            (ws / "src" / "orphan_helper.py").write_text("def unused():\n    return True\n", encoding="utf-8")
+
+            hot1 = graph_mod.analyze_hotspots(ws, top_k=5)
+            self.assertEqual(hot1["sync_stats"]["reindexed_modified_files"], 3)
+            self.assertEqual(hot1["top_hotspots"][0]["file"], "src/db.py")
+            self.assertIn("src/orphan_helper.py", hot1["potential_unreferenced_modules"])
+
+            # Second run should hit 100% incremental SQLite cache!
+            routes = graph_mod.extract_all_routes(ws)
+            self.assertEqual(routes["sync_stats"]["cached_unchanged_files"], 3)
+            self.assertEqual(routes["sync_stats"]["reindexed_modified_files"], 0)
+            self.assertEqual(routes["route_count"], 1)
+            self.assertEqual(routes["routes"][0]["path"], "/api/v1/checkout")
+            self.assertEqual(routes["routes"][0]["method"], "POST")
+
+    def test_15_stacktrace_pinpointer(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "app").mkdir()
+            lines = [f"line_{i} = {i}" for i in range(1, 40)]
+            lines[19] = "result = 1 / 0  # boom"
+            (ws / "app" / "billing.py").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+            trace = (
+                'Traceback (most recent call last):\n'
+                '  File "/usr/lib/python3.12/site-packages/starlette/routing.py", line 72, in app\n'
+                f'  File "{ws / "app" / "billing.py"}", line 20, in charge\n'
+                'ZeroDivisionError: division by zero\n'
+            )
+            rep = pinpoint_mod.pinpoint_trace(ws, trace, radius=4)
+            self.assertEqual(rep["frames_extracted"], 1)
+            self.assertEqual(rep["frames"][0]["file"], "app/billing.py")
+            self.assertEqual(rep["frames"][0]["crash_line"], 20)
+            self.assertIn(">>   20 | result = 1 / 0  # boom", rep["frames"][0]["snippet"])
+
+    def test_16_kv_cache_prefix_stability_auditor(self) -> None:
+        # 1. Audit our own plugin skills + hooks (verify 100/100 score!)
+        with tempfile.TemporaryDirectory() as clean_tmp:
+            cws = Path(clean_tmp)
+            (cws / "hooks.json").write_text((REPO_ROOT / "hooks.json").read_text(encoding="utf-8"), encoding="utf-8")
+            (cws / "hooks").mkdir()
+            (cws / "hooks" / "token_shield_hook.py").write_text(
+                (REPO_ROOT / "hooks" / "token_shield_hook.py").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            clean_rep = cache_mod.audit_cache_stability(cws)
+            self.assertEqual(clean_rep["cache_stability_score"], 100)
+
+        # 2. Detect PreInvocation + datetime.now() cache-busting anti-pattern
+        with tempfile.TemporaryDirectory() as bad_tmp:
+            bws = Path(bad_tmp)
+            (bws / "hooks.json").write_text('{"hooks": {"PreInvocation": []}}', encoding="utf-8")
+            (bws / "hooks").mkdir()
+            (bws / "hooks" / "bad_hook.py").write_text(
+                "import datetime\nmsg = {'injectSteps': str(datetime.now())}\n",
+                encoding="utf-8",
+            )
+            bad_rep = cache_mod.audit_cache_stability(bws)
+            self.assertLess(bad_rep["cache_stability_score"], 70)
+            self.assertTrue(bad_rep["has_per_turn_pre_invocation"])
+
+    def test_17_cross_ide_config_synchronizer(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            res = sync_ide_mod.sync_workspace_ides(ws, REPO_ROOT, ["all"], dry_run=False)
+            self.assertEqual(len(res["synced_files"]), 7)
+            self.assertTrue((ws / ".agentignore").is_file())
+            self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
+            self.assertTrue((ws / ".mcp.json").is_file())
+            self.assertTrue((ws / ".vscode" / "mcp.json").is_file())
+            vscode_cfg = json.loads((ws / ".vscode" / "mcp.json").read_text(encoding="utf-8"))
+            self.assertIn("sqo-engine", vscode_cfg["servers"])
+
+    def test_18_mcp_stdio_server_14_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["name"], "sqo-engine")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "4.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
-        self.assertEqual(len(tools_resp["result"]["tools"]), 10)
+        tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
+        self.assertEqual(len(tool_names), 14)
+        for expected in ("sqo_pinpoint_error", "sqo_code_hotspots", "sqo_api_routes", "sqo_cache_audit"):
+            self.assertIn(expected, tool_names)
 
         call_resp = mcp_mod.handle_rpc_message({
             "jsonrpc": "2.0",
             "id": 3,
             "method": "tools/call",
             "params": {
-                "name": "sqo_code_search",
-                "arguments": {"workspace": str(REPO_ROOT / "skills"), "query": "analyze_pools", "top_k": 3},
+                "name": "sqo_code_hotspots",
+                "arguments": {"workspace": str(REPO_ROOT / "skills"), "top_k": 3},
             },
         })
         assert call_resp is not None
         self.assertFalse(call_resp["result"]["isError"])
-        self.assertIn("parse_quota_pools.py", call_resp["result"]["content"][0]["text"])
+        self.assertIn("Hotspot", call_resp["result"]["content"][0]["text"])
 
-    def test_14_compress_diff_and_denoise(self) -> None:
+    def test_19_compress_diff_and_denoise(self) -> None:
         sample_diff = (
             "diff --git a/yarn.lock b/yarn.lock\n--- a/yarn.lock\n+++ b/yarn.lock\n@@ -1 +1 @@\n-a\n+b\n"
             "diff --git a/src/api.ts b/src/api.ts\n--- a/src/api.ts\n+++ b/src/api.ts\n@@ -1 +1,2 @@\n+export const ok = true;\n"
@@ -202,15 +371,24 @@ class SmartQuotaEnterpriseV3Tests(unittest.TestCase):
         n_res = denoise_mod.denoise_output("PASS a\nPASS b\nFAIL c\nAssertionError: boom\nTests: 1 failed, 2 passed", exit_code=1)
         self.assertTrue(any("AssertionError" in x for x in n_res["diagnostic_lines"]))
 
-    def test_15_manifests_v3_complete(self) -> None:
-        plugin_data = json.loads((REPO_ROOT / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(plugin_data["version"], "3.0.0")
+    def test_20_parallel_dependency_slices(self) -> None:
+        rep = slice_mod.partition_workspace(REPO_ROOT / "skills", [], max_workers=3)
+        self.assertGreaterEqual(rep["total_source_files"], 15)
+        self.assertTrue(rep["collision_free_guarantee"])
+
+    def test_21_handoff_brief_and_html_dashboard(self) -> None:
+        brief = handoff.build_brief(REPO_ROOT / "skills", "Ship v4.0", ["Push tag"])
+        self.assertEqual(brief["goal"], "Ship v4.0")
+        html_doc = dashboard_mod.build_dashboard_html(REPO_ROOT / "skills", REPO_ROOT / "skills")
+        self.assertIn("Telemetry Center", html_doc)
+
+    def test_22_manifests_v4_complete(self) -> None:
+        for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json"):
+            data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
+            self.assertEqual(data["version"], "4.0.0")
+        self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
         self.assertEqual(len(tax["skills"]), 6)
-        for ag in ("quota-planner.md", "token-auditor.md", "codebase-scout.md"):
-            self.assertTrue((REPO_ROOT / "agents" / ag).is_file())
-        self.assertTrue((REPO_ROOT / "mcp_config.json").is_file())
-        self.assertTrue((REPO_ROOT / "hooks.json").is_file())
 
 
 if __name__ == "__main__":

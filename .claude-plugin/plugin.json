@@ -1,7 +1,7 @@
 {
   "name": "smart-quota-orchestrator",
-  "version": "3.0.0",
-  "description": "Autonomous AI Quota & Context Engine: 10 native MCP tools, real-time PreToolUse token-bomb shield, SQLite BM25 code search, persistent memory vault, blast-radius analyzer, and 18 CLI engines.",
+  "version": "4.0.0",
+  "description": "Autonomous AI Agent OS Layer: 14 native MCP tools, 3-stage stateful hooks (duplicate-read deduplicator, loop breaker, auto-memory), incremental SQLite code graph, stack-trace pinpointer, and KV-cache auditor.",
   "author": {
     "name": "ElNeMeR",
     "url": "https://github.com/ElNeMeR70"

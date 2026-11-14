@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo_mcp`).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v4.0).
 
-Exposes 10 native, token-saving engineering tools directly to Google Antigravity,
-Claude Code, Cursor, Windsurf, and Gemini CLI over JSON-RPC 2.0 `stdio` transport.
+Exposes 14 native, token-saving engineering & code-intelligence tools directly to
+Google Antigravity, Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over
+JSON-RPC 2.0 `stdio` transport.
 
 Blocks cleanly on `sys.stdin.readline()` when idle (0.0% idle CPU, <15 MB RAM).
 Zero external `pip` packages required (100% Python 3.8+ standard library).
@@ -20,7 +21,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "3.0.0"
+SERVER_VERSION = "4.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -89,8 +90,44 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
         },
     },
     {
+        "name": "sqo_pinpoint_error",
+        "description": "Parse any multi-file crash stack trace (Python, Node/TS, Dart/Flutter, Go, Rust, PHP) and extract the exact +-10 line source window around every local workspace frame in 1 call.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root path."},
+                "stack_trace": {"type": "string", "description": "Raw stack trace / traceback text."},
+                "radius": {"type": "integer", "description": "Context lines above/below crash line (default: 10)."},
+            },
+            "required": ["workspace", "stack_trace"],
+        },
+    },
+    {
+        "name": "sqo_code_hotspots",
+        "description": "Sync incremental mtime-cached SQLite code graph (<10ms warm) and return top Cyclomatic Complexity x Import Fan-In bug hotspots plus unreferenced orphan modules.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root path."},
+                "top_k": {"type": "integer", "description": "Number of top hotspots to return (default: 10)."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_api_routes",
+        "description": "Extract complete Backend & UI Route table across Next.js, Express/Fastify, NestJS, FastAPI/Flask, Laravel, Go, and Flutter in <200 tokens.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root path."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
         "name": "sqo_memory_vault",
-        "description": "Persistent cross-session SQLite FTS5 architectural memory bank. Store ('remember') or BM25-query ('recall' / 'list') project facts and gotchas so new sessions skip rediscovery.",
+        "description": "Persistent cross-session SQLite FTS5 architectural memory bank (auto-injected at SessionStart!). Store ('remember') or BM25-query ('recall' / 'list') project facts.",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -141,6 +178,17 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
                 "workspace": {"type": "string", "description": "Workspace directory to audit for hardcoded secrets."},
                 "text": {"type": "string", "description": "Optional raw text snippet to redact instead of scanning workspace."},
             },
+        },
+    },
+    {
+        "name": "sqo_cache_audit",
+        "description": "Audit hooks, MCP tools, and rules for LLM Prompt KV-Cache prefix stability (ensuring 75%-90% prompt cache hit discounts).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace path to audit."},
+            },
+            "required": ["workspace"],
         },
     },
     {
@@ -199,6 +247,21 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
         res = mod.compute_blast_radius(Path(args["workspace"]).resolve(), list(args["targets"]))
         return mod.render_markdown(res)
 
+    if name == "sqo_pinpoint_error":
+        mod = _load_tool_mod("semantic-code-navigator/scripts/pinpoint_stacktrace.py")
+        res = mod.pinpoint_trace(Path(args["workspace"]).resolve(), str(args["stack_trace"]), radius=int(args.get("radius", 10)))
+        return mod.render_markdown(res)
+
+    if name == "sqo_code_hotspots":
+        mod = _load_tool_mod("semantic-code-navigator/scripts/code_graph.py")
+        res = mod.analyze_hotspots(Path(args["workspace"]).resolve(), top_k=int(args.get("top_k", 10)))
+        return mod.render_hotspots_md(res)
+
+    if name == "sqo_api_routes":
+        mod = _load_tool_mod("semantic-code-navigator/scripts/code_graph.py")
+        res = mod.extract_all_routes(Path(args["workspace"]).resolve())
+        return mod.render_routes_md(res)
+
     if name == "sqo_memory_vault":
         mod = _load_tool_mod("project-memory-vault/scripts/memory_vault.py")
         db_path = mod._resolve_db_path(Path(args["workspace"]).resolve())
@@ -237,6 +300,11 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
         rep = mod.scan_workspace_secrets(Path(args.get("workspace", ".")).resolve())
         return json.dumps(rep, indent=2, ensure_ascii=False)
 
+    if name == "sqo_cache_audit":
+        mod = _load_tool_mod("prompt-tax-profiler/scripts/audit_cache_stability.py")
+        rep = mod.audit_cache_stability(Path(args["workspace"]).resolve())
+        return mod.render_markdown(rep)
+
     if name == "sqo_quota_pools":
         mod = _load_tool_mod("smart-quota-orchestrator/scripts/parse_quota_pools.py")
         rep = mod.analyze_pools(json.loads(args["models_json"]))
@@ -259,7 +327,6 @@ def handle_rpc_message(req: Dict[str, Any]) -> Dict[str, Any] | None:
     method = req.get("method", "")
     req_id = req.get("id")
 
-    # Notifications have no `id` and expect no response
     if req_id is None:
         return None
 

@@ -1,13 +1,13 @@
 {
   "name": "smart-quota-orchestrator",
   "displayName": "Smart Quota & Swarm Orchestrator",
-  "version": "3.0.0",
-  "description": "Autonomous AI Quota & Context Engine: 10 native MCP tools, real-time PreToolUse token-bomb shield hook, SQLite FTS5 BM25 code search, cross-session memory vault, blast-radius analyzer, 6 skills, and 3 specialist subagents.",
+  "version": "4.0.0",
+  "description": "Autonomous AI Agent OS Layer: 3-stage stateful hooks (auto-memory injection, duplicate-read deduplicator, giant-file auto-clamper, retry-loop breaker), 14 native MCP tools, incremental SQLite code graph, stack-trace pinpointer, KV-cache auditor, 6 skills & 3 subagents.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
-    "Run sqo doctor and live compression benchmarks on this workspace, and check my model quota pools",
-    "Search this codebase with BM25, map the blast radius of my changes, and store architecture notes in the memory vault",
-    "Partition this project into collision-free parallel slices and generate an interactive HTML telemetry dashboard"
+    "Run sqo doctor v4.0 on this workspace: check hotspots, KV-cache stability, benchmarks, and live model quota pools",
+    "Map all API routes and code hotspots in this repo, and recall or store key architecture notes in the memory vault",
+    "Sync Smart Quota MCP & ignore shields across all IDEs or partition this repo into collision-free parallel slices"
   ],
   "author": {
     "name": "ElNeMeR",
