@@ -9,12 +9,12 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v8.0` Singularity Edition)
-### المنظومة العالمية الفائقة لحماية الكوتا: `25` أداة MCP، العقل الجماعي العابر للمشاريع (`Hive-Mind`)، مقطّر قواعد البيانات (`Schema Distiller`)، آلة الزمن (`Time-Machine`)، ولوحة المتصدرين العالمية الحية!
+# ⚡ Smart Quota & Swarm Orchestrator (`v9.0` Omniscient Edition)
+### نظام التشغيل العالمي الكلي لوكلاء الذكاء الاصطناعي: `31` أداة MCP، كاشف هلوسة المكتبات، مدقق الترجمة `i18n`، ذاكرة `SHA-256` الفورية، مستخرج عقود `OpenAPI 3.1`، وسحابة القواعد الذهبية الحية!
 
 [![المنصة الحية](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
-[![الإصدار](https://img.shields.io/badge/Release-v8.0.0_Singularity-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![أدوات MCP](https://img.shields.io/badge/MCP_Server-25_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![الإصدار](https://img.shields.io/badge/Release-v9.0.0_Omniscient-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![أدوات MCP](https://img.shields.io/badge/MCP_Server-31_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
 [![التوفير الفعلي](https://img.shields.io/badge/Verified_Savings-96.8%25_Tokens-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![بدون مكتبات خارجية](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 
@@ -165,19 +165,20 @@ curl -fsSL https://sqo.elnemer-ai.com/install.sh | bash
 
 ---
 
-## 💻 أهم أوامر سطر الأوامر الموحد (`39` أداة في `sqo.py`)
+## 💻 أهم أوامر سطر الأوامر الموحد (`45` أداة في `sqo.py`)
 
 ```bash
-python sqo.py init --workspace .                # كشف تلقائي لإطار العمل (Flutter/Laravel/Next.js...) وتهيئة كل الدروع!
-python sqo.py hive promote --workspace .        # (جديد v8.0) نقل خبرات وحلول المشروع إلى العقل الجماعي ~/.sqo/hive_mind.db لكل مشاريعك!
-python sqo.py schema --workspace .              # (جديد v8.0) تقطير جداول SQL و Prisma و Laravel و Drift بتوفير 96% من التوكنز!
-python sqo.py dry-run --workspace .             # (جديد v8.0) فحص استباقي في 12ms لأخطاء Syntax والأقواس والـ Imports قبل البناء
-python sqo.py checkpoint create -l "pre-edit"   # (جديد v8.0) آلة الزمن: حفظ نقطة استرجاع فورية واستعادة الملفات جراحياً بدون تعارض Git
-python sqo.py ci-shield --workspace .           # (جديد v8.0) توليد درع GitHub Actions لفحص كل Pull Request تلقائياً
-python sqo.py share --handle ElNeMeR --publish  # (جديد v8.0) نشر نتيجتك في لوحة المتصدرين العالمية وتوليد بطاقة GitHub الحية!
-python sqo.py serve --workspace . --open        # تشغيل مركز القيادة الحي في المتصفح على http://127.0.0.1:7890
-python sqo.py compress-prompt -f noisy.json     # ضغط مصفوفات JSON وسجلات الأخطاء المتكررة وحذف المفاتيح السرية
-python sqo.py doctor --workspace .              # فحص شامل 8 في 1 للمشروع والـ KV-Cache والأمان والتوفير
+python sqo.py verify-deps --workspace .         # (جديد v9.0) كشف المكتبات الوهمية/المهلوسة غير المسجلة في package.json و pubspec و pyproject!
+python sqo.py i18n --workspace .                # (جديد v9.0) فحص ملفات الترجمة (.arb و JSON) لكشف المفاتيح الناقصة وأخطاء المتغيرات بتوفير 97%!
+python sqo.py memo get -q "auth" --workspace .  # (جديد v9.0) ذاكرة التحليل الفورية المرتبطة ببصمة SHA-256 للملفات (توفير 100% من التوكنز!)
+python sqo.py contracts --workspace .           # (جديد v9.0) استخراج عقود الـ API ومخطط OpenAPI 3.1 بدون قراءة ملفات الباك-إند!
+python sqo.py swarm-plan "Add Auth" -w .        # (جديد v9.0) مخطط الأسراب الذكي لتوزيع المهام على النماذج السريعة بدون تعارض ملفات!
+python sqo.py hub pull --workspace .            # (جديد v9.0) سحب القواعد الذهبية المعتمدة لإطار عملك من سحابة sqo.elnemer-ai.com!
+python sqo.py hive promote --workspace .        # نقل خبرات وحلول المشروع إلى العقل الجماعي ~/.sqo/hive_mind.db لكل مشاريعك!
+python sqo.py schema --workspace .              # تقطير جداول SQL و Prisma و Laravel و Drift بتوفير 96% من التوكنز!
+python sqo.py dry-run --workspace .             # فحص استباقي في 12ms لأخطاء Syntax والأقواس والـ Imports قبل البناء
+python sqo.py checkpoint create -l "pre-edit"   # آلة الزمن: حفظ نقطة استرجاع فورية واستعادة الملفات جراحياً بدون تعارض Git
+python sqo.py share --handle ElNeMeR --publish  # نشر نتيجتك في لوحة المتصدرين العالمية وتوليد بطاقة GitHub الحية!
 ```
 
 🌐 **المنصة التفاعلية العالمية الحية (بـ 4 لغات + مختبر ضغط السياق الفوري في المتصفح)**: **[https://sqo.elnemer-ai.com](https://sqo.elnemer-ai.com)** • **حقيبة الإطلاق والنشر العالمي**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)

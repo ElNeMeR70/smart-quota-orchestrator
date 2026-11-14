@@ -9,13 +9,13 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Swarm Orchestrator (`v8.0` Singularity & Global Network Edition)
+# ⚡ Smart Quota & Swarm Orchestrator (`v9.0` Omniscient Global Agent OS)
 
-### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, **25 Native MCP Tools**, Cross-Repo Hive-Mind Brain, 6-Stack DB Schema Distiller, Session Time-Machine, Pre-Flight Syntax Guard & Live Global Network
+### Stretch Your AI Coding Quota by **10×–25×** with a Self-Enforcing 3-Stage Hook Firewall, **31 Native MCP Tools**, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Semantic Memo Cache, Cross-Repo Hive-Mind, 6-Stack DB Schema Distiller & Cloud Golden-Rule Hub
 
 [![Live Site](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
-[![Release](https://img.shields.io/badge/Release-v8.0.0_Singularity-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![MCP Tools](https://img.shields.io/badge/MCP_Server-25_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![Release](https://img.shields.io/badge/Release-v9.0.0_Omniscient-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![MCP Tools](https://img.shields.io/badge/MCP_Server-31_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
 [![Token Savings](https://img.shields.io/badge/Verified_Compression-96.8%25-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-A855F7?style=for-the-badge)](./LICENSE)
@@ -193,27 +193,23 @@ uv tool install git+https://github.com/ElNeMeR70/smart-quota-orchestrator.git
 
 ---
 
-## 💻 Unified `sqo` Master CLI (39 Zero-Dependency Commands)
+## 💻 Unified `sqo` Master CLI (45 Zero-Dependency Commands)
 
 ```bash
 python sqo.py init --workspace .                # Auto-detect stack (Flutter/Next.js/Laravel/etc.) & bootstrap all shields!
-python sqo.py hive promote --workspace .        # NEW v8.0: Federate project wisdom into ~/.sqo/hive_mind.db across ALL your repos!
-python sqo.py schema --workspace .              # NEW v8.0: Distill SQL/Prisma/Laravel/Drift/GraphQL schemas (-96% tokens!)
-python sqo.py dry-run --workspace .             # NEW v8.0: <12ms Pre-Flight Syntax, Brace, Import & Conflict Guard before builds
-python sqo.py checkpoint create -l "pre-auth"   # NEW v8.0: Zero-Git-Conflict Session Time-Machine & surgical rollback
-python sqo.py ci-shield --workspace .           # NEW v8.0: Generate GitHub Actions PR Token, Secret & KV-Cache Shield workflow
-python sqo.py share --handle ElNeMeR --publish  # NEW v8.0: Generate Live GitHub Profile Trophy SVG Card & sync global leaderboard!
+python sqo.py verify-deps --workspace .         # NEW v9.0: Catch hallucinated/undeclared npm, pip & pub packages before build!
+python sqo.py i18n --workspace .                # NEW v9.0: Audit Flutter .arb & JSON locales for missing keys & {var} bugs (-97% tok)
+python sqo.py memo get -q "auth flow" -w .      # NEW v9.0: 2ms SHA-256 file-bound Semantic Memoization Cache (100% token savings)
+python sqo.py contracts --workspace .           # NEW v9.0: Distill Backend Routes into <350-tok API Contract + OpenAPI 3.1 JSON
+python sqo.py swarm-plan "Add Stripe" -w .      # NEW v9.0: Turnkey Multi-Model File-Disjoint Swarm Blueprint (-82% frontier burn)
+python sqo.py hub pull --workspace .            # NEW v9.0: Pull Golden Stack Rules from live Cloud Hub (sqo.elnemer-ai.com)
+python sqo.py hive promote --workspace .        # Federate project wisdom into ~/.sqo/hive_mind.db across ALL your repos!
+python sqo.py schema --workspace .              # Distill SQL/Prisma/Laravel/Drift/GraphQL schemas (-96% tokens!)
+python sqo.py dry-run --workspace .             # <12ms Pre-Flight Syntax, Brace, Import & Conflict Guard before builds
+python sqo.py checkpoint create -l "pre-auth"   # Zero-Git-Conflict Session Time-Machine & surgical rollback
+python sqo.py share --handle ElNeMeR --publish  # Generate Live GitHub Profile Trophy SVG Card & sync global leaderboard!
 python sqo.py serve --workspace . --open        # Launch Live Localhost Bilingual Web Command Center (http://127.0.0.1:7890)
-python sqo.py compress-prompt -f noisy.json     # Compact >4-item JSON arrays, collapse duplicate logs & scrub secrets
-python sqo.py badge -w . -o badge.svg           # Generate embeddable SVG shield badge with verified compression %
-python sqo.py context-health --workspace .      # Score session Context-Rot risk & emit <350-tok handoff snapshot
 python sqo.py doctor --workspace .              # Full 8-in-1 health, ROI, KV-cache, secret & graph check
-python sqo.py roi                               # View cumulative tokens & $USD saved by autonomous shields
-python sqo.py media --workspace .               # Audit PNG/JPEG/WebP/PDF multimodal vision token costs
-python sqo.py hotspots --workspace . --top-k 10 # Incremental SQLite Complexity × Coupling bug hotspots
-python sqo.py routes --workspace .              # Extract complete Backend & Frontend route table
-python sqo.py pinpoint -w . -f crash.log        # 1-step multi-file crash stack-trace code window extractor
-python sqo.py search "verifyWebhook" -w .       # SQLite FTS5 BM25 symbol-chunk search (<250 tokens)
 ```
 
 🏆 **Live Dynamic GitHub Profile Trophy Card (`v8.0`):**

@@ -1,8 +1,8 @@
 {
   "name": "smart-quota-orchestrator",
   "displayName": "Smart Quota & Swarm Orchestrator",
-  "version": "8.0.0",
-  "description": "Autonomous AI Agent OS Layer (v8.0 Singularity Edition): 25 native MCP tools, Cross-Repo Hive-Mind Brain, 6-Stack DB Schema Distiller, Pre-Flight Syntax Guard, Session Time-Machine, GitHub PR Shield, npx CLI & live $USD ROI ledger.",
+  "version": "9.0.0",
+  "description": "Autonomous AI Agent OS Layer (v9.0 Omniscient Edition): 31 native MCP tools, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Semantic Memo Cache, API Contract Extractor, Cross-Repo Hive-Mind, 6-Stack DB Schema Distiller, Session Time-Machine & Cloud Hub.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
     "Run sqo doctor v7.0 on this workspace and check session context-health & live $USD ROI savings",

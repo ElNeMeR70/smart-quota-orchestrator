@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v8.0 Singularity Edition).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v9.0 Omniscient Edition).
 
-Exposes 25 native, token-saving engineering & code-intelligence tools directly to
+Exposes 31 native, token-saving engineering & code-intelligence tools directly to
 Google Antigravity, Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over
 JSON-RPC 2.0 `stdio` transport.
 
@@ -21,7 +21,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "8.0.0"
+SERVER_VERSION = "9.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -347,6 +347,82 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
             "required": ["workspace"],
         },
     },
+    {
+        "name": "sqo_verify_deps",
+        "description": "Anti-Hallucination Dependency & Phantom Import Verifier: cross-checks source imports across Python, JS/TS, and Dart/Flutter against package.json, pubspec.yaml, pyproject.toml, and requirements.txt to catch hallucinated/undeclared packages before build!",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_i18n_audit",
+        "description": "Universal Localization / i18n Drift & Placeholder Auditor: checks Flutter `.arb` and `locales/*.json` bundles for missing translation keys and `{var}` placeholder mismatches in <200 tokens (-97% vs reading raw locale files).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_memo_cache",
+        "description": "SHA-256 Content-Hash Invalidated Semantic Memoization Cache: stores/retrieves expensive subsystem analyses in 2ms (100% token savings) and auto-invalidates when any bound source file changes on disk.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["get", "put", "stats"], "description": "Memoization cache operation."},
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "question": {"type": "string", "description": "Analytical question or lookup key."},
+                "answer": {"type": "string", "description": "Synthesized answer to cache when action='put'."},
+                "files": {"type": "array", "items": {"type": "string"}, "description": "Source files whose SHA-256 hashes validate this cached answer."},
+            },
+            "required": ["action", "workspace"],
+        },
+    },
+    {
+        "name": "sqo_api_contracts",
+        "description": "Spec-Driven Backend-to-Frontend API Contract & OpenAPI 3.1 Extractor: distills HTTP endpoints and path parameters into a <350-token Contract Table + OpenAPI 3.1 JSON so mobile/frontend agents never need to read backend controllers.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Backend workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_swarm_plan",
+        "description": "Autonomous Multi-Agent Swarm Brief & Model-Routing Planner: partitions any goal into Stage-0 Shared Contracts (Frontier model) + collision-free Stage-1 Parallel Workers (Fast model, -82% quota burn) with ready-to-send prompts.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "goal": {"type": "string", "description": "Engineering feature or refactor goal."},
+                "max_workers": {"type": "integer", "description": "Max parallel workers (default: 4)."},
+            },
+            "required": ["workspace", "goal"],
+        },
+    },
+    {
+        "name": "sqo_cloud_hub",
+        "description": "Global Smart Quota Community Hub (`https://sqo.elnemer-ai.com/api/presets.php`): list, pull, or publish battle-tested Golden AI Rules & Gotchas for Flutter, Next.js, Laravel, Python, Rust & Go.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "action": {"type": "string", "enum": ["list", "pull", "publish"], "description": "Cloud Hub action."},
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "stack": {"type": "string", "description": "Tech stack ('auto', 'flutter', 'nextjs', 'laravel', 'python', 'rust', 'go')."},
+                "title": {"type": "string", "description": "Rule title when action='publish'."},
+                "rule": {"type": "string", "description": "Golden rule snippet when action='publish'."},
+            },
+            "required": ["action"],
+        },
+    },
 ]
 
 
@@ -530,6 +606,48 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
     if name == "sqo_ci_shield":
         mod = _load_tool_mod("smart-quota-orchestrator/scripts/generate_ci_shield.py")
         return json.dumps(mod.install_ci_shield(Path(args["workspace"]).resolve()), indent=2, ensure_ascii=False)
+
+    if name == "sqo_verify_deps":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/verify_hallucinations.py")
+        return mod.render_markdown(mod.verify_workspace_dependencies(Path(args["workspace"]).resolve()))
+
+    if name == "sqo_i18n_audit":
+        mod = _load_tool_mod("context-compactor/scripts/audit_i18n.py")
+        return mod.render_markdown(mod.audit_workspace_i18n(Path(args["workspace"]).resolve()))
+
+    if name == "sqo_memo_cache":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/semantic_cache.py")
+        ws = Path(args["workspace"]).resolve()
+        act = str(args["action"])
+        if act == "put":
+            res = mod.memo_put(ws, str(args.get("question", "")), str(args.get("answer", "")), args.get("files") or [])
+        elif act == "get":
+            res = mod.memo_get(ws, str(args.get("question", "")))
+        else:
+            res = mod.memo_stats(ws)
+        return json.dumps(res, indent=2, ensure_ascii=False)
+
+    if name == "sqo_api_contracts":
+        mod = _load_tool_mod("context-compactor/scripts/extract_contracts.py")
+        return mod.render_markdown(mod.extract_api_contracts(Path(args["workspace"]).resolve()))
+
+    if name == "sqo_swarm_plan":
+        mod = _load_tool_mod("parallel-slice-architect/scripts/plan_swarm.py")
+        bp = mod.build_swarm_blueprint(Path(args["workspace"]).resolve(), str(args["goal"]), max_workers=int(args.get("max_workers", 4)))
+        return mod.render_markdown(bp)
+
+    if name == "sqo_cloud_hub":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/cloud_hub.py")
+        act = str(args.get("action", "list"))
+        ws = Path(args.get("workspace", ".")).resolve()
+        st = str(args.get("stack", "auto"))
+        if act == "pull":
+            res = mod.pull_into_workspace(ws, stack=st)
+        elif act == "publish":
+            res = mod.publish_hub_rule(st, str(args.get("title", "")), str(args.get("rule", "")))
+        else:
+            res = mod.fetch_hub_presets("" if st in ("auto", "all") else st)
+        return json.dumps(res, indent=2, ensure_ascii=False)
 
     raise ValueError(f"Unknown MCP tool: {name}")
 

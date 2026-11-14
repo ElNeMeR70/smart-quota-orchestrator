@@ -46,6 +46,12 @@ ci_mod = _load_module("generate_ci_shield", "skills/smart-quota-orchestrator/scr
 share_mod = _load_module("cloud_share", "skills/smart-quota-orchestrator/scripts/cloud_share.py")
 hive_mod = _load_module("hive_mind", "skills/project-memory-vault/scripts/hive_mind.py")
 schema_mod = _load_module("distill_schema", "skills/context-compactor/scripts/distill_schema.py")
+vdeps_mod = _load_module("verify_hallucinations", "skills/smart-quota-orchestrator/scripts/verify_hallucinations.py")
+i18n_mod = _load_module("audit_i18n", "skills/context-compactor/scripts/audit_i18n.py")
+memo_mod = _load_module("semantic_cache", "skills/smart-quota-orchestrator/scripts/semantic_cache.py")
+contracts_mod = _load_module("extract_contracts", "skills/context-compactor/scripts/extract_contracts.py")
+swarm_plan_mod = _load_module("plan_swarm", "skills/parallel-slice-architect/scripts/plan_swarm.py")
+hub_mod = _load_module("cloud_hub", "skills/smart-quota-orchestrator/scripts/cloud_hub.py")
 
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
@@ -303,26 +309,26 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertEqual(len(res["synced_files"]), 7)
             self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
 
-    def test_18_mcp_stdio_server_25_tools(self) -> None:
+    def test_18_mcp_stdio_server_31_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "8.0.0")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "9.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
         tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
-        self.assertEqual(len(tool_names), 25)
+        self.assertEqual(len(tool_names), 31)
         for expected in (
+            "sqo_verify_deps",
+            "sqo_i18n_audit",
+            "sqo_memo_cache",
+            "sqo_api_contracts",
+            "sqo_swarm_plan",
+            "sqo_cloud_hub",
             "sqo_hive_mind",
             "sqo_schema_distill",
             "sqo_shadow_check",
             "sqo_checkpoint",
-            "sqo_ci_shield",
-            "sqo_compress_prompt",
-            "sqo_repo_badge",
-            "sqo_init_preset",
-            "sqo_context_health",
-            "sqo_roi_ledger",
         ):
             self.assertIn(expected, tool_names)
 
@@ -421,7 +427,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             try:
                 with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/overview", timeout=4) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(data["version"], "8.0.0")
+                self.assertEqual(data["version"], "9.0.0")
                 self.assertEqual(data["routes"][0]["path"], "/health")
 
                 req = urllib.request.Request(
@@ -437,15 +443,16 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
                 srv.shutdown()
                 srv.server_close()
 
-    def test_29_manifests_v8_complete(self) -> None:
+    def test_29_manifests_v9_complete(self) -> None:
         for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json", "package.json", "vscode-extension/package.json"):
             data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
-            self.assertEqual(data["version"], "8.0.0")
+            self.assertEqual(data["version"], "9.0.0")
         self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
         self.assertTrue((REPO_ROOT / "bin" / "sqo.js").is_file())
         self.assertTrue((REPO_ROOT / "vscode-extension" / "extension.js").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "telemetry.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "card.php").is_file())
+        self.assertTrue((REPO_ROOT / "docs" / "api" / "presets.php").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
         self.assertEqual(len(tax["skills"]), 6)
 
@@ -554,6 +561,62 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
         card = share_mod.build_share_payload(REPO_ROOT / "skills", handle="ElNeMeR")
         self.assertEqual(card["handle"], "ElNeMeR")
         self.assertIn("https://sqo.elnemer-ai.com/api/card.php", card["live_card_url"])
+
+    def test_37_anti_hallucination_dependency_verifier(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "package.json").write_text(json.dumps({"dependencies": {"zod": "^3.22.0", "unused-pkg": "1.0.0"}}), encoding="utf-8")
+            (ws / "index.ts").write_text("import { z } from 'zod';\nimport { magic } from 'hallucinated-ai-sdk';\n", encoding="utf-8")
+            rep = vdeps_mod.verify_workspace_dependencies(ws)
+            self.assertFalse(rep["clean"])
+            self.assertEqual(rep["phantom_imports"][0]["package"], "hallucinated-ai-sdk")
+            self.assertEqual(rep["unused_dependencies"][0]["package"], "unused-pkg")
+
+    def test_38_universal_i18n_drift_and_placeholder_auditor(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            l10n = ws / "lib" / "l10n"
+            l10n.mkdir(parents=True)
+            (l10n / "app_en.arb").write_text(json.dumps({"hello": "Hello {userName}", "logout": "Sign out"}), encoding="utf-8")
+            (l10n / "app_ar.arb").write_text(json.dumps({"hello": "مرحباً {wrongVar}"}), encoding="utf-8")
+            rep = i18n_mod.audit_workspace_i18n(ws)
+            self.assertEqual(rep["total_missing_keys"], 1)
+            self.assertEqual(rep["total_placeholder_mismatches"], 1)
+
+    def test_39_sha256_file_bound_semantic_memoization_cache(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            f = ws / "auth.py"
+            f.write_text("TOKEN_TTL = 3600\n", encoding="utf-8")
+            memo_mod.memo_put(ws, "What is auth TTL?", "Auth TTL is 3600s", ["auth.py"])
+            hit = memo_mod.memo_get(ws, "what is   AUTH ttl?")
+            self.assertEqual(hit["status"], "HIT")
+
+            f.write_text("TOKEN_TTL = 7200\n", encoding="utf-8")
+            stale = memo_mod.memo_get(ws, "What is auth TTL?")
+            self.assertEqual(stale["status"], "STALE_INVALIDATED")
+
+    def test_40_backend_to_frontend_openapi_contract_extractor(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "server.py").write_text("@app.get('/api/orders/{order_id}')\ndef get_order(order_id: str):\n    return {}\n", encoding="utf-8")
+            rep = contracts_mod.extract_api_contracts(ws)
+            self.assertEqual(rep["endpoint_count"], 1)
+            self.assertIn("/api/orders/{order_id}", rep["openapi_3_1"]["paths"])
+
+    def test_41_autonomous_multi_model_swarm_planner(self) -> None:
+        bp = swarm_plan_mod.build_swarm_blueprint(REPO_ROOT / "skills", "Audit auth jwt security and refactor helpers", max_workers=3)
+        self.assertTrue(bp["collision_free_guarantee"])
+        self.assertGreaterEqual(len(bp["workers"]), 1)
+        self.assertGreater(bp["frontier_quota_savings_pct"], 50.0)
+
+    def test_42_cloud_golden_rules_hub_offline_and_pull(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "pubspec.yaml").write_text("name: demo\n", encoding="utf-8")
+            pulled = hub_mod.pull_into_workspace(ws, stack="auto", online=False)
+            self.assertEqual(pulled["stack"], "flutter")
+            self.assertGreaterEqual(pulled["imported_rules"], 1)
 
 
 if __name__ == "__main__":

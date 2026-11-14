@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 $RepoUrl = "https://github.com/ElNeMeR70/smart-quota-orchestrator.git"
 $AgyPluginDir = Join-Path $HOME ".gemini\config\plugins\smart-quota-orchestrator"
 
-Write-Host "==> Installing Smart Quota & Swarm Orchestrator v8.0 Singularity into Google Antigravity..." -ForegroundColor Cyan
+Write-Host "==> Installing Smart Quota & Swarm Orchestrator v9.0 Omniscient into Google Antigravity..." -ForegroundColor Cyan
 
 $ParentDir = Split-Path -Parent $AgyPluginDir
 if (-not (Test-Path $ParentDir)) {
@@ -44,6 +44,13 @@ if ($PSScriptRoot -and (Test-Path (Join-Path $PSScriptRoot "plugin.json"))) {
     foreach ($item in $PluginItems) {
         $src = Join-Path $PSScriptRoot $item
         if (Test-Path $src) {
+            if ($item -eq "hooks") {
+                $dstHook = Join-Path $AgyPluginDir "hooks\token_shield_hook.py"
+                $srcHook = Join-Path $src "token_shield_hook.py"
+                if ((Test-Path $dstHook) -and ((Get-FileHash $srcHook).Hash -eq (Get-FileHash $dstHook).Hash)) {
+                    continue
+                }
+            }
             Copy-Item -Path $src -Destination $AgyPluginDir -Recurse -Force
         }
     }
@@ -60,6 +67,6 @@ if ($PSScriptRoot -and (Test-Path (Join-Path $PSScriptRoot "plugin.json"))) {
     }
 }
 
-Write-Host "[OK] Installed v8.0 Singularity Edition at: $AgyPluginDir" -ForegroundColor Green
-Write-Host "     Active: 25 MCP Tools + 39 CLI Commands + Hive-Mind + Schema Distiller + Time-Machine + `$USD ROI Ledger!" -ForegroundColor Yellow
+Write-Host "[OK] Installed v9.0 Omniscient Edition at: $AgyPluginDir" -ForegroundColor Green
+Write-Host "     Active: 31 MCP Tools + 45 CLI Commands + Anti-Hallucination + i18n Matrix + Memo Cache + Hive-Mind!" -ForegroundColor Yellow
 Write-Host "     Live Playground & Docs: https://sqo.elnemer-ai.com" -ForegroundColor Cyan
