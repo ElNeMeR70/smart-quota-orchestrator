@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "smart-quota-orchestrator"
 version = "13.0.0"
-description = "Autonomous AI Agent Quota, Context-Compression & Multi-Agent OS Layer (v13.0 Zenith: 48 MCP tools, 62 CLI commands, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Memo Cache, Hive-Mind, Schema Distiller & Live $USD ROI Ledger)."
+description = "Autonomous AI Engineering OS (v13.0 Zenith: 53 Zero-Dep MCP tools, 67 CLI commands, 1-Cmd Autopilot, 8-Gate PR Shield, Cloud FinOps Guard, Repo-DNA, Surgical AST Mutator, <15ms Hook Firewall & Live $USD ROI Ledger)."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
 authors = [{ name = "ElNeMeR", email = "tt21913@gmail.com" }]
-keywords = ["ai-agents", "mcp", "antigravity", "claude-code", "cursor", "token-optimization", "bm25", "code-graph", "kv-cache"]
+keywords = ["ai-agents", "mcp", "mcp-server", "antigravity", "claude-code", "cursor", "windsurf", "vscode", "token-optimization", "finops", "sast", "code-review", "bm25", "code-graph", "kv-cache", "rtl"]
 dependencies = []
 
 [project.urls]

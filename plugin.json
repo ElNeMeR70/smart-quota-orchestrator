@@ -1,13 +1,13 @@
 {
   "name": "smart-quota-orchestrator",
-  "displayName": "Smart Quota & Swarm Orchestrator",
+  "displayName": "Smart Quota & Superpowers OS",
   "version": "13.0.0",
-  "description": "Autonomous AI Agent OS Layer (v13.0 Zenith Edition): 48 native MCP tools, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Semantic Memo Cache, API Contract Extractor, Cross-Repo Hive-Mind, 6-Stack DB Schema Distiller, Session Time-Machine & Cloud Hub.",
+  "description": "Autonomous AI Engineering OS (v13.0 Zenith Edition): 53 native zero-dep MCP tools, 67 CLI commands, 1-Cmd Autopilot, 8-Gate PR Shield (SAST/TOCTOU/N+1/RTL), Cloud FinOps Guard, Repo-DNA Fingerprinter, Surgical AST Mutator & <15ms Token Firewall.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
-    "Run sqo doctor v7.0 on this workspace and check session context-health & live $USD ROI savings",
-    "Auto-detect this repo's framework with sqo_init_preset and map all API routes and code hotspots",
-    "Compress noisy JSON/logs with sqo_compress_prompt or partition this repo into collision-free parallel slices"
+    "Run sqo_autopilot on this workspace to install the <15ms hook firewall, compile CLAUDE.md/AGENTS.md, render a live Mermaid architecture diagram, and run a full security & FinOps audit",
+    "Run sqo_pr_review (8-Gate PR Shield) on my git diff to check for OWASP SAST, FinOps bill-shock loops, N+1 queries, TOCTOU races, and RTL CSS defects",
+    "Map this repo's architecture with sqo_arch_diagram and inspect Repo-DNA conventions with sqo_repo_dna"
   ],
   "author": {
     "name": "ElNeMeR",

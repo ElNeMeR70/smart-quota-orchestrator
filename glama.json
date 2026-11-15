@@ -2,7 +2,7 @@
   "$schema": "https://glama.ai/mcp/schemas/server.json",
   "name": "smart-quota-orchestrator",
   "version": "13.0.0",
-  "description": "Autonomous AI Agent OS Layer (v13.0 Zenith Edition) with 48 zero-dependency MCP tools, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Semantic Memo Cache, Cross-Repo Hive-Mind, 6-Stack Schema Distiller & Time-Machine.",
+  "description": "Autonomous AI Engineering OS (v13.0 Zenith Edition) with 53 zero-dependency MCP tools, 67 CLI commands, 1-command Autopilot, 8-Gate PR Shield (SAST/TOCTOU/N+1/RTL), Cloud FinOps Bill-Shock Guard, Repo-DNA Fingerprinter, Surgical AST Mutator & <15ms Token Firewall.",
   "homepage": "https://sqo.elnemer-ai.com",
   "license": "MIT",
   "maintainers": [

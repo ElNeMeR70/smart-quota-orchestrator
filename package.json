@@ -1,7 +1,7 @@
 {
   "name": "smart-quota-orchestrator",
   "version": "13.0.0",
-  "description": "Autonomous AI Agent OS Layer (v13.0 Zenith Edition: 48 Zero-Dep MCP Tools, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Semantic Memo Cache, API Contract Extractor, Cross-Repo Hive-Mind, Schema Distiller & 3-Stage Hook Firewall) for Google Antigravity, Claude Code, Cursor, VS Code & Windsurf.",
+  "description": "Autonomous AI Engineering OS (v13.0 Zenith Edition: 53 Zero-Dep MCP Tools, 67 CLI Commands, 1-Cmd Autopilot, 8-Gate PR Shield, Cloud FinOps Bill-Shock Guard, Repo-DNA Fingerprinter, Surgical AST Mutator & <15ms Token Firewall) for Claude Code, Cursor, Google Antigravity, VS Code & Windsurf.",
   "homepage": "https://sqo.elnemer-ai.com",
   "repository": {
     "type": "git",
@@ -34,11 +34,20 @@
     "claude-code",
     "cursor",
     "antigravity",
+    "windsurf",
+    "vscode",
+    "gemini",
     "token-optimization",
     "context-engineering",
+    "finops",
+    "sast",
+    "code-review",
+    "ast",
     "bm25",
     "code-graph",
-    "kv-cache"
+    "kv-cache",
+    "rtl",
+    "zero-dependencies"
   ],
   "engines": {
     "node": ">=16.0.0"
