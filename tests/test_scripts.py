@@ -66,6 +66,12 @@ tsynth_mod = _load_module("test_synthesizer", "skills/apex-spec-surgeon/scripts/
 uirtl_mod = _load_module("ui_rtl_auditor", "skills/apex-spec-surgeon/scripts/ui_rtl_auditor.py")
 drift_mod = _load_module("detect_drift", "skills/context-compactor/scripts/detect_drift.py")
 
+finops_mod = _load_module("finops_guard", "skills/apex-spec-surgeon/scripts/finops_guard.py")
+forensics_mod = _load_module("git_forensics", "skills/semantic-code-navigator/scripts/git_forensics.py")
+dna_mod = _load_module("repo_dna", "skills/context-compactor/scripts/repo_dna.py")
+council_mod = _load_module("council_review", "skills/apex-spec-surgeon/scripts/council_review.py")
+xray_mod = _load_module("prompt_xray", "skills/context-compactor/scripts/prompt_xray.py")
+
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
 pack_mod = _load_module("pack_context_bundle", "skills/context-compactor/scripts/pack_context_bundle.py")
@@ -322,16 +328,21 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertEqual(len(res["synced_files"]), 7)
             self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
 
-    def test_18_mcp_stdio_server_43_tools(self) -> None:
+    def test_18_mcp_stdio_server_48_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "11.0.0")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "12.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
         tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
-        self.assertEqual(len(tool_names), 43)
+        self.assertEqual(len(tool_names), 48)
         for expected in (
+            "sqo_finops_guard",
+            "sqo_git_forensics",
+            "sqo_repo_dna",
+            "sqo_council_review",
+            "sqo_prompt_xray",
             "sqo_security_audit",
             "sqo_perf_audit",
             "sqo_gen_tests",
@@ -452,7 +463,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             try:
                 with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/overview", timeout=4) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(data["version"], "11.0.0")
+                self.assertEqual(data["version"], "12.0.0")
                 self.assertEqual(data["routes"][0]["path"], "/health")
 
                 req = urllib.request.Request(
@@ -468,10 +479,10 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
                 srv.shutdown()
                 srv.server_close()
 
-    def test_29_manifests_v11_complete(self) -> None:
+    def test_29_manifests_v12_complete(self) -> None:
         for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json", "package.json", "vscode-extension/package.json"):
             data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
-            self.assertEqual(data["version"], "11.0.0")
+            self.assertEqual(data["version"], "12.0.0")
         self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
         self.assertTrue((REPO_ROOT / "bin" / "sqo.js").is_file())
         self.assertTrue((REPO_ROOT / "vscode-extension" / "extension.js").is_file())
@@ -479,6 +490,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
         self.assertTrue((REPO_ROOT / "docs" / "api" / "card.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "presets.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "analyze.php").is_file())
+        self.assertTrue((REPO_ROOT / "docs" / "api" / "share_scan.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "apex-skill.md").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
         self.assertEqual(len(tax["skills"]), 7)
@@ -885,6 +897,113 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
         rep = sast_mod.scan_workspace_security(REPO_ROOT / "skills")
         self.assertTrue(rep["secure"])
         self.assertEqual(rep["critical_count"], 0)
+
+    def test_55_cloud_finops_bill_shock_guard(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "Dashboard.tsx").write_text(
+                "export function Dash() {\n"
+                "  useEffect(() => {\n"
+                "    onSnapshot(collection(db, 'orders'), (s) => setOrders(s.docs));\n"
+                "  });\n"
+                "  return null;\n"
+                "}\n",
+                encoding="utf-8",
+            )
+            (ws / "functions.ts").write_text(
+                "export const sync = onDocumentWritten('invoices/{id}', async (e) => {\n"
+                "  await db.collection('invoices').add({ mirrored: true });\n"
+                "});\n",
+                encoding="utf-8",
+            )
+            (ws / "batch_ai.py").write_text(
+                "def summarize_all(items, client):\n"
+                "    for item in items:\n"
+                "        client.models.generate_content(model='gemini-2.5-flash', contents=item)\n",
+                encoding="utf-8",
+            )
+            rep = finops_mod.audit_workspace_finops(ws)
+            self.assertFalse(rep["wallet_safe"])
+            ids = {r["id"] for r in rep["risks"]}
+            self.assertIn("FINOPS-INF-USEEFFECT", ids)
+            self.assertIn("FINOPS-RECURSIVE-TRIGGER", ids)
+            self.assertIn("FINOPS-LLM-IN-LOOP", ids)
+            self.assertIn("FINOPS-UNCAPPED-LLM", ids)
+
+    def test_56_git_evolutionary_forensics_cochange_twins_and_bug_magnets(self) -> None:
+        raw_log = (
+            "__COMMIT__|a1|fix:stripe webhook plan sync crash\n"
+            "backend/stripe_webhook.py\n"
+            "mobile/lib/models/plan_tier.dart\n"
+            "__COMMIT__|a2|feat:add annual billing tier\n"
+            "backend/stripe_webhook.py\n"
+            "mobile/lib/models/plan_tier.dart\n"
+            "__COMMIT__|a3|hotfix:broken grace period check\n"
+            "backend/stripe_webhook.py\n"
+            "mobile/lib/models/plan_tier.dart\n"
+        )
+        commits = forensics_mod.parse_git_log_commits(raw_log)
+        rep = forensics_mod.analyze_commits_forensics(commits, min_shared=2)
+        self.assertEqual(rep["analyzed_commits"], 3)
+        self.assertGreaterEqual(len(rep["invisible_twins"]), 1)
+        self.assertEqual(rep["invisible_twins"][0]["coupling_pct"], 100.0)
+        self.assertEqual(rep["bug_magnets"][0]["bugfix_commits"], 2)
+
+    def test_57_single_shot_repo_dna_genome_synthesizer(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "package.json").write_text('{"dependencies": {"next": "15.1.0"}}', encoding="utf-8")
+            (ws / "schema.sql").write_text("CREATE TABLE wallets (id INT PRIMARY KEY, balance INT);\n", encoding="utf-8")
+            (ws / "app.py").write_text(
+                "@app.post('/api/pay')\n"
+                "def pay():\n"
+                "    key = os.getenv('STRIPE_SECRET')\n"
+                "    return {'ok': True}\n",
+                encoding="utf-8",
+            )
+            rep = dna_mod.synthesize_repo_dna(ws)
+            self.assertIn("app.py", rep["entrypoints"])
+            self.assertEqual(rep["entity_count"], 1)
+            self.assertGreaterEqual(rep["route_count"], 1)
+            self.assertLess(rep["dna_tokens"], 420)
+            self.assertIn("Repo-DNA Genome", rep["dna_markdown"])
+
+    def test_58_four_persona_adversarial_council_toctou_and_timeouts(self) -> None:
+        bad_code = (
+            "def withdraw(user, amount):\n"
+            "    if user.balance >= amount:\n"
+            "        user.balance -= amount\n"
+            "    try:\n"
+            "        requests.post('https://bank.example/transfer', json={'amt': amount})\n"
+            "    except Exception:\n"
+            "        pass\n"
+        )
+        docket = council_mod.review_code_with_council(bad_code, "wallet.py")
+        seats = {d["seat"] for d in docket}
+        self.assertIn("🔴 Exploit Hunter", seats)
+        self.assertIn("🟠 Principal SRE", seats)
+        self.assertGreaterEqual(len(docket), 3)
+
+    def test_59_bilingual_prompt_xray_sniper_brief_enricher(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "billing_stripe.py").write_text(
+                "def process_stripe_checkout(user_id: str, amount: int):\n"
+                "    return {'paid': amount}\n",
+                encoding="utf-8",
+            )
+            rep = xray_mod.enrich_vague_prompt(ws, "صلح الدفع")
+            self.assertLess(rep["clarity_score"], 55)
+            self.assertEqual(rep["estimated_exploration_tokens_saved"], 28000)
+            self.assertTrue(any("billing_stripe.py" in t for t in rep["pinned_targets"]))
+            self.assertIn("PINNED TARGETS", rep["sniper_prompt"])
+
+    def test_60_self_dogfood_finops_and_council_on_skills(self) -> None:
+        fin_rep = finops_mod.audit_workspace_finops(REPO_ROOT / "skills")
+        self.assertTrue(fin_rep["wallet_safe"])
+        self.assertEqual(fin_rep["critical_count"], 0)
+        council_rep = council_mod.run_council_on_workspace(REPO_ROOT / "skills")
+        self.assertTrue(council_rep["approved"])
 
 
 if __name__ == "__main__":

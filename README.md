@@ -9,26 +9,26 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Superpowers OS (`v11.0` Hypernova Edition)
+# ⚡ Smart Quota & Superpowers OS (`v12.0` Quantum Edition)
 
-### The Complete Autonomous AI Software Engineering OS: **43 Native MCP Tools**, **57 CLI Commands**, OWASP Agentic SAST, Database N+1 & Async Profiler, Zero-Token Test Synthesizer, Bilingual RTL/a11y Auditor, Surgical AST Symbol Editing (`-85%` Output Tokens), Karpathy Gatekeeper & 3-Stage Quota Firewall (`-96.8%` Input Tokens)
+### The Complete Autonomous AI Software Engineering OS: **48 Native MCP Tools**, **62 CLI Commands**, Cloud & AI FinOps Bill-Shock Guard, Git Evolutionary Forensics, `<420-Token` Repo-DNA Genome, 4-Seat Adversarial Council, Bilingual Prompt X-Ray Sniper, OWASP SAST & 3-Stage Quota Firewall (`-96.8%` Input / `-85%` Output Tokens)
 
 [![Live Site](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
-[![Release](https://img.shields.io/badge/Release-v11.0.0_Hypernova-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![MCP Tools](https://img.shields.io/badge/MCP_Server-43_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![Release](https://img.shields.io/badge/Release-v12.0.0_Quantum-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![MCP Tools](https://img.shields.io/badge/MCP_Server-48_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
 [![Token Savings](https://img.shields.io/badge/Verified_Compression-96.8%25_In_%7C_85%25_Out-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-A855F7?style=for-the-badge)](./LICENSE)
 
 **Works seamlessly with:** `Google Antigravity` • `Claude Code` • `Cursor` • `VS Code Copilot` • `Gemini CLI` • `Windsurf`
 
-> **Want the 1-File Standalone Karpathy + Superpowers + Quota Guard (`CLAUDE.md` / `AGENTS.md`)?** Grab [`docs/apex-skill.md`](./docs/apex-skill.md) (`https://sqo.elnemer-ai.com/apex-skill.md`) — or run `npx -y smart-quota-orchestrator init --workspace .` for the full 38-tool Autonomous OS!
+> **Want the 1-File Standalone Karpathy + Superpowers + Quota Guard (`CLAUDE.md` / `AGENTS.md`)?** Grab [`docs/apex-skill.md`](./docs/apex-skill.md) (`https://sqo.elnemer-ai.com/apex-skill.md`) — or run `npx -y smart-quota-orchestrator init --workspace .` for the full 48-tool Autonomous OS!
 
 ---
 
-## 🏆 New in `v10.0 Apex`: 6 Viral Superpowers Re-Engineered in Pure Python (`0` Dependencies)
+## 🏆 Flagship Engines (`v10.0` – `v12.0 Quantum` — 100% Pure Python, `0` Dependencies)
 
-| `v10.0` Engine | Inspired By | MCP Tool / CLI | What It Unlocks |
+| Engine | Edition / Origin | MCP Tool / CLI | What It Unlocks |
 | :--- | :--- | :--- | :--- |
 | **1. Surgical Symbol AST Mutator** | `oraios/serena` | `sqo_edit_symbol` / `sqo symbol-edit` | Mutates exact `Class.method` by name (**-85% Output Tokens!**) with Time-Machine backup & `<8ms` syntax auto-rollback |
 | **2. Executable Karpathy Diff Gate** | `andrej-karpathy-skills` | `sqo_verify_work` / `sqo verify-work` | Catches `TODO` laziness stubs, silent public symbol deletions & out-of-scope file creep (`0–100` Grade `A+`) |
@@ -40,6 +40,11 @@
 | **8. N+1 & UI-Jank Perf Profiler** | `v11.0 Hypernova` | `sqo_perf_audit` / `sqo perf-audit` | Detects DB/HTTP N+1 loops, sequential `await` waterfalls, undisposed Flutter controllers & `jsonDecode` in `build()` |
 | **9. Zero-Token Test Synthesizer** | `v11.0 Hypernova` | `sqo_gen_tests` / `sqo gen-tests` | Deterministically generates Python `unittest`, TS `vitest` & Dart `flutter_test` harnesses (**-3,000 Output Tokens!**) |
 | **10. RTL, a11y & Drift Guards** | `v11.0 Hypernova` | `sqo_ui_audit` & `sqo_drift_guard` | Catches Arabic RTL `left/right` bugs, Flutter `Row` overflows & missing `.env.example` boot-crash variables |
+| **11. Cloud & AI FinOps Guard** | `v12.0 Quantum` | `sqo_finops_guard` / `sqo finops` | Blocks `$5,000` overnight wallet-shocks: `useEffect` infinite Firestore loops, recursive triggers & uncapped LLM loops |
+| **12. Git Evolutionary Forensics** | `v12.0 Quantum` | `sqo_git_forensics` / `sqo forensics` | Mines `git log` to uncover **Hidden Co-Change Twins** (`>=55%` coupling with zero imports) & Bug-Magnet Hotzones |
+| **13. `<420-Token` Repo-DNA Strand** | `v12.0 Quantum` | `sqo_repo_dna` / `sqo dna` | Compresses an entire unfamiliar codebase's stack, core modules, DB entities & routes into `<420` tokens (**-99.2%!**) |
+| **14. 4-Seat Adversarial Council** | `v12.0 Quantum` | `sqo_council_review` / `sqo council` | Zero-LLM-cost review from Exploit Hunter (TOCTOU double-spend), 3 AM SRE (`timeout=`), UX Critic & Karpathy Minimalist |
+| **15. Bilingual Prompt X-Ray Sniper** | `v12.0 Quantum` | `sqo_prompt_xray` / `sqo xray` | Auto-enriches vague Arabic/English prompts (`"صلح الدفع"`) with BM25 `file:Lstart-Lend` coordinates (**-28k tokens!**) |
 
 [**Why v5.0?**](#-the-7-silent-quota-killers-and-how-v50-eliminates-them) • [**Visual Architecture**](#️-system-architecture-v50) • [**Real-World Dialogues**](#-real-world-developer--agent-dialogues-before-vs-after) • [**16 MCP Tools**](#-16-native-mcp-tools-sqo-engine) • [**Quick Install**](#-1-minute-installation) • [**الملخص بالعربية**](#-الملخص-العربي-السريع)
 

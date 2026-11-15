@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-"""Unified Master CLI (`sqo`) for Smart Quota & Superpowers OS v11.0 Hypernova Edition.
+"""Unified Master CLI (`sqo`) for Smart Quota & Superpowers OS v12.0 Quantum Edition.
 
-Provides 57 deterministic, zero-dependency commands for AI coding agents and developers:
+Provides 62 deterministic, zero-dependency commands for AI coding agents and developers:
+  - finops          : Cloud & AI API Bill-Shock Preventer (Infinite useEffect/Firestore/LLM loops!)
+  - forensics       : Git Evolutionary Forensics (Invisible Co-Change Twins & Bug-Magnet Hotzones)
+  - dna             : Single-Shot <420-Token Repo-DNA Genome Synthesizer (-99.2% vs Repomix!)
+  - council         : 4-Persona Adversarial Engineering Council (TOCTOU, HTTP Timeouts, Swallowed Errs)
+  - xray            : Bilingual Prompt Token X-Ray & Sniper Brief Auto-Enricher (-28k Exploration Tok)
   - sec-audit       : OWASP Top-10 & Agentic SAST Vulnerability Scanner (SQLi/CMDi/XSS/Eval)
   - perf-audit      : Database N+1 Loop, Async Waterfall & Flutter UI-Jank Profiler
   - gen-tests       : Zero-Token Deterministic Unit & Edge-Case Test Synthesizer (-3k Out Tok)
@@ -74,6 +79,11 @@ SKILLS_DIR = ROOT_DIR / "skills"
 
 COMMAND_MAP: Dict[str, Tuple[Path, List[str]]] = {
     "serve": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "live_server.py", []),
+    "finops": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "finops_guard.py", []),
+    "forensics": (SKILLS_DIR / "semantic-code-navigator" / "scripts" / "git_forensics.py", []),
+    "dna": (SKILLS_DIR / "context-compactor" / "scripts" / "repo_dna.py", []),
+    "council": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "council_review.py", []),
+    "xray": (SKILLS_DIR / "context-compactor" / "scripts" / "prompt_xray.py", []),
     "sec-audit": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "security_sast.py", []),
     "perf-audit": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "perf_profiler.py", []),
     "gen-tests": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "test_synthesizer.py", []),

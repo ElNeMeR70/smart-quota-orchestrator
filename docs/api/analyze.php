@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 /**
- * Smart Quota & Superpowers OS v11.0 Hypernova — Live Cloud 4-Engine Code Doctor API
+ * Smart Quota & Superpowers OS v12.0 Quantum — Live Cloud 6-Engine Code Doctor API
  * Endpoint: POST https://sqo.elnemer-ai.com/api/analyze.php
- * Runs deterministic Security SAST + N+1 Performance + RTL/UI + Karpathy/SDK checks in <8ms!
+ * Runs Security SAST + Cloud FinOps + Council TOCTOU/SRE + N+1 Perf + RTL/UI + Karpathy/SDK checks in <8ms!
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -58,15 +58,35 @@ foreach ($lines as $i => $ln) {
     }
 }
 
-// 2. N+1 Loop Check
+// 2. N+1 Loop & LLM FinOps Loop Check
 for ($i = 0; $i < count($lines); $i++) {
-    if (preg_match('/^\s*(?:for\s*\(|for\s+\w+\s+in\b|foreach\s*\()/', $lines[$i])) {
-        $window = implode("\n", array_slice($lines, $i + 1, 7));
+    if (preg_match('/^\s*(?:for\s*\(|for\s+\w+\s+in\b|foreach\s*\(|while\s*\()/', $lines[$i])) {
+        $window = implode("\n", array_slice($lines, $i + 1, 8));
         if (preg_match('/\bawait\s+(?:prisma|db|fetch|axios|http|supabase)|\.(?:findUnique|findMany|query)\s*\(/', $window)) {
             $findings[] = ['pillar' => 'Perf Profiler', 'severity' => 'HIGH', 'line' => $i + 2, 'msg' => 'N+1 DB/Network query inside loop — batch with WHERE IN / include / Promise.all'];
             $perfPen += 30;
         }
+        if (preg_match('/(?:chat\.completions\.create|messages\.create|models\.generate_content|generateText)\s*\(/', $window)) {
+            $findings[] = ['pillar' => 'Cloud FinOps', 'severity' => 'CRITICAL', 'line' => $i + 2, 'msg' => 'FINOPS-LLM-IN-LOOP: Paid LLM call inside loop ($50–$800 wallet-drain risk) — batch items!'];
+            $perfPen += 35;
+        }
     }
+}
+
+// 3. FinOps Infinite useEffect & Council TOCTOU / Missing Timeout Checks
+if (preg_match('/useEffect\s*\(\s*\(\s*\)\s*=>\s*\{[\s\S]{1,360}?(?:onSnapshot|getDocs|fetch|axios|supabase)\b[\s\S]{1,200}?\}\s*\)/', $code, $m)) {
+    if (!preg_match('/,\s*\[[^\]]*\]\s*\)\s*$/', trim($m[0]))) {
+        $findings[] = ['pillar' => 'Cloud FinOps', 'severity' => 'CRITICAL', 'line' => 1, 'msg' => 'FINOPS-INF-USEEFFECT: Firestore/API read inside useEffect without [] array ($2,500/day loop)!'];
+        $perfPen += 35;
+    }
+}
+if (preg_match('/if\s*\(?\s*[\w.]*(?:balance|credits|wallet|stock)\s*>=?[\s\S]{1,200}?(?:balance|credits|wallet|stock)\s*-=/i', $code)) {
+    $findings[] = ['pillar' => 'Council Exploit', 'severity' => 'CRITICAL', 'line' => 1, 'msg' => 'TOCTOU Double-Spend Race Condition on balance/wallet — use atomic SQL UPDATE WHERE balance >= ?'];
+    $secPen += 35;
+}
+if (preg_match('/\b(?:requests|httpx)\.(?:get|post|put|delete)\s*\((?![^)]*\btimeout\s*=)[^)]+\)/', $code)) {
+    $findings[] = ['pillar' => 'Council SRE', 'severity' => 'HIGH', 'line' => 1, 'msg' => 'Outbound HTTP call missing timeout= parameter — hung socket can freeze worker threads at 3 AM'];
+    $perfPen += 20;
 }
 
 $secScore  = max(0, 100 - $secPen);
@@ -78,7 +98,7 @@ $grade     = $overall >= 95 ? 'A+' : ($overall >= 85 ? 'A' : ($overall >= 70 ? '
 
 echo json_encode([
     'ok' => true,
-    'version' => '11.0.0',
+    'version' => '12.0.0',
     'overall_score' => $overall,
     'grade' => $grade,
     'pillars' => [
