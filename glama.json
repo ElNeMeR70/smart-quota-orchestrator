@@ -1,8 +1,8 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
   "name": "smart-quota-orchestrator",
-  "version": "12.0.0",
-  "description": "Autonomous AI Agent OS Layer (v12.0 Quantum Edition) with 48 zero-dependency MCP tools, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Semantic Memo Cache, Cross-Repo Hive-Mind, 6-Stack Schema Distiller & Time-Machine.",
+  "version": "13.0.0",
+  "description": "Autonomous AI Agent OS Layer (v13.0 Zenith Edition) with 48 zero-dependency MCP tools, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Semantic Memo Cache, Cross-Repo Hive-Mind, 6-Stack Schema Distiller & Time-Machine.",
   "homepage": "https://sqo.elnemer-ai.com",
   "license": "MIT",
   "maintainers": [

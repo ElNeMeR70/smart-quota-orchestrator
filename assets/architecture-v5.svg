@@ -23,10 +23,10 @@
 
   <!-- Header -->
   <text x="550" y="42" text-anchor="middle" fill="#0F172A" font-family="Plus Jakarta Sans, Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="800">
-    SMART QUOTA &amp; SUPERPOWERS OS v12.0 — QUANTUM AGENT ARCHITECTURE
+    SMART QUOTA &amp; SUPERPOWERS OS v13.0 — ZENITH AGENT ARCHITECTURE
   </text>
   <text x="550" y="66" text-anchor="middle" fill="#475569" font-family="Plus Jakarta Sans, Segoe UI, Inter, Arial, sans-serif" font-size="13.5" font-weight="600">
-    100% Python Standard Library • Zero pip Packages • 48 Native MCP Tools • Cloud FinOps + Repo-DNA + Git Forensics + SAST + Quota Shield
+    100% Python Standard Library • Zero pip Packages • 53 Native MCP Tools • Autopilot + 8-Gate PR Shield + FinOps + Repo-DNA + Quota Firewall
   </text>
 
   <!-- Row 1: Supported AI Clients -->
@@ -60,27 +60,27 @@
     <text x="60" y="390" fill="#B45309" font-weight="800">3. PostToolUse: Updates read ledger + logs $USD saved to ROI DB</text>
   </g>
 
-  <!-- Right Column: 48-Tool Native MCP Server -->
+  <!-- Right Column: 53-Tool Native MCP Server -->
   <rect x="570" y="186" width="490" height="215" rx="16" fill="#FFFFFF" stroke="#10B981" stroke-opacity="0.7" stroke-width="1.8"/>
   <rect x="588" y="202" width="315" height="24" rx="6" fill="url(#emeraldGrad)"/>
-  <text x="745" y="218" text-anchor="middle" fill="#FFFFFF" font-family="Segoe UI, Inter, sans-serif" font-size="12" font-weight="800">LAYER 2: 48 NATIVE JSON-RPC MCP TOOLS</text>
+  <text x="745" y="218" text-anchor="middle" fill="#FFFFFF" font-family="Segoe UI, Inter, sans-serif" font-size="12" font-weight="800">LAYER 2: 53 NATIVE JSON-RPC MCP TOOLS</text>
   <g font-family="Consolas, monospace" font-size="11.8" fill="#065F46" font-weight="600">
-    <text x="590" y="248">• sqo_finops_guard     (Wallet Shield)</text>
-    <text x="590" y="269">• sqo_repo_dna         (&lt;420-tok DNA)</text>
-    <text x="590" y="290">• sqo_git_forensics    (Hidden Twins)</text>
-    <text x="590" y="311">• sqo_council_review   (4-Seat Audit)</text>
-    <text x="590" y="332">• sqo_prompt_xray      (Sniper Brief)</text>
-    <text x="590" y="353">• sqo_edit_symbol      (-85% Out Tok)</text>
-    <text x="590" y="374">• sqo_security_audit   (OWASP SAST)</text>
-    <text x="590" y="393">• sqo_perf_audit       (N+1 &amp; Jank)</text>
+    <text x="590" y="248">• sqo_autopilot        (1-Cmd Brain)</text>
+    <text x="590" y="269">• sqo_pr_review        (8-Gate PR)</text>
+    <text x="590" y="290">• sqo_finops_guard     (Wallet Shield)</text>
+    <text x="590" y="311">• sqo_repo_dna         (&lt;420-tok DNA)</text>
+    <text x="590" y="332">• sqo_git_forensics    (Hidden Twins)</text>
+    <text x="590" y="353">• sqo_council_review   (4-Seat Audit)</text>
+    <text x="590" y="374">• sqo_edit_symbol      (-85% Out Tok)</text>
+    <text x="590" y="393">• sqo_security_audit   (OWASP SAST)</text>
 
-    <text x="835" y="248">• sqo_gen_tests        (0-Tok Tests)</text>
-    <text x="835" y="269">• sqo_ui_audit         (RTL &amp; a11y)</text>
-    <text x="835" y="290">• sqo_verify_work      (Karpathy Gate)</text>
-    <text x="835" y="311">• sqo_spec_engine      (Spec DAG)</text>
-    <text x="835" y="332">• sqo_sdk_radar        (No Deprecated)</text>
-    <text x="835" y="353">• sqo_memory_graph     (Auto-Capture)</text>
-    <text x="835" y="374">• sqo_schema_distill   (6-Stack DB)</text>
+    <text x="835" y="248">• sqo_arch_diagram     (Live Mermaid)</text>
+    <text x="835" y="269">• sqo_compile_rules    (0-Tok Rules)</text>
+    <text x="835" y="290">• sqo_dead_code        (Orphan Hunt)</text>
+    <text x="835" y="311">• sqo_perf_audit       (N+1 &amp; Jank)</text>
+    <text x="835" y="332">• sqo_ui_audit         (RTL &amp; a11y)</text>
+    <text x="835" y="353">• sqo_spec_engine      (Spec DAG)</text>
+    <text x="835" y="374">• sqo_memory_graph     (Auto-Capture)</text>
     <text x="835" y="393">• sqo_hive_mind        (Global Brain)</text>
   </g>
 

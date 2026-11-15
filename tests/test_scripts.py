@@ -72,6 +72,12 @@ dna_mod = _load_module("repo_dna", "skills/context-compactor/scripts/repo_dna.py
 council_mod = _load_module("council_review", "skills/apex-spec-surgeon/scripts/council_review.py")
 xray_mod = _load_module("prompt_xray", "skills/context-compactor/scripts/prompt_xray.py")
 
+autopilot_mod = _load_module("autopilot_engine", "skills/smart-quota-orchestrator/scripts/autopilot_engine.py")
+pr_shield_mod = _load_module("pr_shield", "skills/apex-spec-surgeon/scripts/pr_shield.py")
+mermaid_mod = _load_module("arch_mermaid", "skills/semantic-code-navigator/scripts/arch_mermaid.py")
+rules_gen_mod = _load_module("compile_repo_rules", "skills/smart-quota-orchestrator/scripts/compile_repo_rules.py")
+dead_code_mod = _load_module("dead_code_hunter", "skills/semantic-code-navigator/scripts/dead_code_hunter.py")
+
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
 pack_mod = _load_module("pack_context_bundle", "skills/context-compactor/scripts/pack_context_bundle.py")
@@ -328,16 +334,21 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertEqual(len(res["synced_files"]), 7)
             self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
 
-    def test_18_mcp_stdio_server_48_tools(self) -> None:
+    def test_18_mcp_stdio_server_53_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "12.0.0")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "13.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
         tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
-        self.assertEqual(len(tool_names), 48)
+        self.assertEqual(len(tool_names), 53)
         for expected in (
+            "sqo_autopilot",
+            "sqo_pr_review",
+            "sqo_arch_diagram",
+            "sqo_compile_rules",
+            "sqo_dead_code",
             "sqo_finops_guard",
             "sqo_git_forensics",
             "sqo_repo_dna",
@@ -463,7 +474,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             try:
                 with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/overview", timeout=4) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(data["version"], "12.0.0")
+                self.assertEqual(data["version"], "13.0.0")
                 self.assertEqual(data["routes"][0]["path"], "/health")
 
                 req = urllib.request.Request(
@@ -479,10 +490,10 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
                 srv.shutdown()
                 srv.server_close()
 
-    def test_29_manifests_v12_complete(self) -> None:
+    def test_29_manifests_v13_complete(self) -> None:
         for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json", "package.json", "vscode-extension/package.json"):
             data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
-            self.assertEqual(data["version"], "12.0.0")
+            self.assertEqual(data["version"], "13.0.0")
         self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
         self.assertTrue((REPO_ROOT / "bin" / "sqo.js").is_file())
         self.assertTrue((REPO_ROOT / "vscode-extension" / "extension.js").is_file())
@@ -1004,6 +1015,72 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
         self.assertEqual(fin_rep["critical_count"], 0)
         council_rep = council_mod.run_council_on_workspace(REPO_ROOT / "skills")
         self.assertTrue(council_rep["approved"])
+
+    def test_61_autopilot_mission_packet_compiler(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "package.json").write_text('{"dependencies": {"next": "15.2.0"}}', encoding="utf-8")
+            (ws / "checkout.ts").write_text(
+                "export async function handleStripePayment(uid: string) {\n  return { ok: true };\n}\n",
+                encoding="utf-8",
+            )
+            rep = autopilot_mod.compile_mission_packet(ws, "صلح الدفع فى checkout")
+            self.assertTrue(rep["ok"])
+            self.assertIn("Zenith Autopilot Mission Packet", rep["mission_markdown"])
+            self.assertTrue(any("checkout.ts" in t for t in rep["pinned_targets"]))
+
+    def test_62_eight_gate_pr_shield_scorecard(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "clean.py").write_text("def add_total(a: int, b: int) -> int:\n    return a + b\n", encoding="utf-8")
+            rep = pr_shield_mod.run_8_gate_pr_review(ws)
+            self.assertTrue(rep["merge_ready"])
+            self.assertEqual(rep["overall_score"], 100)
+            self.assertEqual(rep["grade"], "A+")
+            self.assertEqual(len(rep["gates"]), 8)
+
+    def test_63_zero_token_mermaid_architecture_diagrammer(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "schema.sql").write_text("CREATE TABLE users (id INT PRIMARY KEY, email TEXT);\n", encoding="utf-8")
+            (ws / "server.py").write_text("@app.get('/api/users')\ndef list_users():\n    return []\n", encoding="utf-8")
+            rep = mermaid_mod.generate_architecture_mermaid(ws)
+            self.assertIn("flowchart LR", rep["module_mermaid"])
+            self.assertIn("flowchart TD", rep["routes_mermaid"])
+            self.assertIn("erDiagram", rep["er_mermaid"])
+
+    def test_64_bespoke_repo_aware_rules_compiler(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "package.json").write_text(
+                '{"scripts": {"test": "vitest run", "build": "next build"}, "dependencies": {"next": "15.1.0"}}',
+                encoding="utf-8",
+            )
+            rep = rules_gen_mod.compile_bespoke_rules(ws, write_target="CLAUDE.md")
+            self.assertTrue(rep["ok"])
+            self.assertTrue((ws / "CLAUDE.md").is_file())
+            self.assertIn("vitest run", rep["rules_markdown"])
+
+    def test_65_dead_code_and_orphan_module_hunter(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "main.py").write_text("from active_helper import run_job\nrun_job()\n", encoding="utf-8")
+            (ws / "active_helper.py").write_text("def run_job():\n    return 1\n", encoding="utf-8")
+            (ws / "forgotten_old_widget.py").write_text("def unused_legacy():\n    return 0\n", encoding="utf-8")
+            rep = dead_code_mod.hunt_dead_modules(ws)
+            orphans = [c["file"] for c in rep["orphan_candidates"]]
+            self.assertIn("forgotten_old_widget.py", orphans)
+            self.assertNotIn("active_helper.py", orphans)
+
+    def test_66_hero_showcase_svg_and_clean_arabic_readme_links(self) -> None:
+        self.assertTrue((REPO_ROOT / "assets" / "hero-showcase.svg").is_file())
+        readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+        readme_ar = (REPO_ROOT / "README.ar.md").read_text(encoding="utf-8")
+        # Ensure shields.io `for-the-badge` is NEVER used on Arabic text (prevents disconnected Arabic letters!)
+        self.assertNotIn("style=for-the-badge", readme_en)
+        self.assertNotIn("style=for-the-badge", readme_ar)
+        self.assertIn("hero-showcase.svg", readme_en)
+        self.assertIn("v13.0", readme_en)
 
 
 if __name__ == "__main__":

@@ -1,22 +1,26 @@
 <div dir="rtl" align="center">
 
+<img src="./assets/hero-showcase.svg" alt="Smart Quota & Superpowers OS v13.0 Zenith" width="100%" />
+
+<br />
+
 <p>
-  <a href="https://sqo.elnemer-ai.com"><img src="https://img.shields.io/badge/🌐_المنصة_العالمية_التفاعلية-sqo.elnemer--ai.com-EC4899?style=for-the-badge" alt="المنصة الحية" /></a>
-  <a href="./README.md"><img src="https://img.shields.io/badge/🇬🇧_English_Documentation-Read_Here-2563EB?style=for-the-badge" alt="English README" /></a>
-  <a href="./docs/PLAYBOOK_AR.md"><img src="https://img.shields.io/badge/📗_كتاب_السيناريوهات_والحوارات-عربي-10B981?style=for-the-badge" alt="Arabic Playbook" /></a>
-  <a href="./docs/PLAYBOOK_EN.md"><img src="https://img.shields.io/badge/📘_Engineering_Playbook-English-8B5CF6?style=for-the-badge" alt="English Playbook" /></a>
+  <a href="https://sqo.elnemer-ai.com"><strong>🌐 المنصة التفاعلية الحية (sqo.elnemer-ai.com)</strong></a>
+  &nbsp;•&nbsp;
+  <a href="./README.md"><strong>🇬🇧 English Documentation</strong></a>
+  &nbsp;•&nbsp;
+  <a href="./docs/PLAYBOOK_AR.md"><strong>📗 كتاب السيناريوهات والحوارات العملية</strong></a>
+  &nbsp;•&nbsp;
+  <a href="https://sqo.elnemer-ai.com/apex-skill.md"><strong>📄 ملف القواعد المستقل (CLAUDE.md)</strong></a>
 </p>
 
-<img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
-
-# ⚡ Smart Quota & Swarm Orchestrator (`v9.0` Omniscient Edition)
-### نظام التشغيل العالمي الكلي لوكلاء الذكاء الاصطناعي: `31` أداة MCP، كاشف هلوسة المكتبات، مدقق الترجمة `i18n`، ذاكرة `SHA-256` الفورية، مستخرج عقود `OpenAPI 3.1`، وسحابة القواعد الذهبية الحية!
-
-[![المنصة الحية](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
-[![الإصدار](https://img.shields.io/badge/Release-v9.0.0_Omniscient-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![أدوات MCP](https://img.shields.io/badge/MCP_Server-31_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
-[![التوفير الفعلي](https://img.shields.io/badge/Verified_Savings-96.8%25_Tokens-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
-[![بدون مكتبات خارجية](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
+<p>
+  <a href="https://github.com/ElNeMeR70/smart-quota-orchestrator"><img src="https://img.shields.io/badge/Release-v13.0.0_Zenith-4F46E5?style=flat-square" alt="v13.0.0 Zenith" /></a>
+  <a href="./mcp_server.py"><img src="https://img.shields.io/badge/MCP_Tools-53_Native-059669?style=flat-square" alt="53 MCP Tools" /></a>
+  <a href="./sqo.py"><img src="https://img.shields.io/badge/CLI_Commands-67-0284C7?style=flat-square" alt="67 CLI Commands" /></a>
+  <a href="./tests/test_scripts.py"><img src="https://img.shields.io/badge/Unit_Tests-66%2F66_OK-10B981?style=flat-square" alt="66/66 Tests" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/Zero_Dependencies-MIT-D97706?style=flat-square" alt="Zero Dependencies" /></a>
+</p>
 
 </div>
 
@@ -24,181 +28,106 @@
 
 ---
 
-## 🌟 لماذا يحتاج كل مبرمج في العالم إلى هذه الأداة فوراً؟
+## ⚡ البداية السريعة في 30 ثانية (بدون أي مكتبات `pip` خارجية!)
 
-عندما تعمل مع وكلاء الذكاء الاصطناعي الحديثين (**Gemini 4 Carbon / Argon / Hydrogen**، أو **Claude Opus / Sonnet 4.6**، أو **GPT**)، فإن الكوتا الخاصة بك لا تضيع بسبب الكود الفعلي الذي تكتبه، بل تبتلعها **سبع كوارث صامتة** تحدث في كل جلسة برمجة دون أن تشعر:
+يعمل النظام فوراً مع جميع بيئات الذكاء الاصطناعي الحديثة (**Google Antigravity**، **Claude Code**، **Cursor**، **VS Code Copilot**، **Gemini CLI**، و**Windsurf**):
 
-1. **إعادة استكشاف المشروع من الصفر في كل محادثة جديدة** (`15,000 – 30,000` توكن ضائعة).
-2. **قراءة ملفات قفل وحزم عملاقة بالخطأ** مثل `package-lock.json` أو `pubspec.lock` أو `.js.map` (`50,000 – 180,000` توكن في ضغطة واحدة!).
-3. **نسيان الوكيل وإعادة قراءته لنفس الملف 3 أو 4 مرات** رغم أن الملف لم يتغير على القرص إطلاقاً!
-4. **قراءة ملف كود ضخم طوله 2,000 سطر بالكامل** من أجل تعديل دالة واحدة من 15 سطراً.
-5. **دخول الوكيل في حلقة مفرغة (`Retry Loop`)** بتشغيل نفس أمر الاختبار الفاشل 4 مرات متتالية بدون تعديل أي كود.
-6. **إرفاق صور شاشة بدقة `4K` أو ملفات PDF كبيرة** تلتهم عشرات آلاف توكنات الرؤية (`Vision Tiles`).
-7. **كسر خصم الـ `KV-Cache` (الذي يوفر 90% من سعر التوكنز)** بسبب إضافة توقيت متغير في القواعد النظامية.
+```bash
+# 1. التهيئة التلقائية الذكية لأي مشروع (يكتشف Flutter / Next.js / Laravel / Python / Go / Rust تلقائياً)
+npx -y smart-quota-orchestrator init --workspace .
 
-تتدخل منظومة **Smart Quota & Swarm Orchestrator `v5.0`** كـ **طبقة نظام تشغيل ذاتية التنفيذ (`Autonomous Agent OS`)** تعمل تلقائياً في أقل من **`15ms`** بدون الحاجة لتثبيت أي مكتبة خارجية (`Zero pip install`)!
+# 2. أو التثبيت المباشر بسطر واحد على ويندوز (PowerShell)
+irm https://sqo.elnemer-ai.com/install.ps1 | iex
+
+# 3. أو التثبيت المباشر على macOS / Linux
+curl -fsSL https://sqo.elnemer-ai.com/install.sh | bash
+
+# 4. توليد دستور ذكاء اصطناعي مخصص لمشروعك الفعلي بصفر توكن!
+npx -y smart-quota-orchestrator rules-gen --workspace . --write CLAUDE.md
+```
+
+وبعد التثبيت، يكفيك **أمران اثنان فقط** لإدارة أي مهمة برمجية باحترافية:
+
+```bash
+# أولاً: قبل البدء في أي ميزة أو إصلاح خطأ (بالعربية أو الإنجليزية) — يجهز خريطة القنص في أقل من 45 ملي ثانية!
+npx smart-quota-orchestrator autopilot "صلح مشكلة خصم الرصيد المكرر وبطء صفحة الطلبات" --workspace .
+
+# ثانياً: قبل عمل Commit أو فتح Pull Request — يشغّل البوابات الهندسية الثمانية دفعة واحدة!
+npx smart-quota-orchestrator pr-shield --workspace .
+```
 
 ---
 
-## 🖼️ البنية المعمارية الكاملة للإصدار الخامس (`v5.0`)
+## 🔥 لماذا تنتهي كوتا الـ 5 ساعات في 35 دقيقة؟ وكيف يحلّها الإصدار `v13.0 Zenith` جذرياً؟
+
+عندما تبرمج باستخدام **Claude Opus/Sonnet 4.6** أو **Gemini 4 Carbon** أو **GPT**، فإن الكوتا الخاصة بك لا تضيع في كتابة الكود الفعلي، بل تحترق في **7 تسريبات خفية** تحدث في الخلفية، بالإضافة إلى أخطاء قاتلة يولّدها الـ AI وتكلفك آلاف الدولارات في الإنتاج:
+
+1. **استكشاف المشروع من الصفر في كل محادثة جديدة** (`15,000 – 35,000` توكن ضائعة).
+2. **قراءة ملفات قفل وحزم ضخمة بالخطأ** مثل `package-lock.json` و`pubspec.lock` و`.js.map` (`50,000 – 180,000` توكن في ثانية واحدة!).
+3. **إعادة قراءة نفس الملف غير المعدّل 3 أو 4 مرات** في نفس الجلسة!
+4. **إعادة كتابة ملف طوله 600 سطر بالكامل** لتعديل دالة واحدة فقط من 15 سطراً (حرق توكنات الإخراج الباهظة!).
+5. **كوارث الفواتير السحابية (`Cloud & AI Bill-Shock`)**: وضع قراءة `Firestore onSnapshot` أو `fetch` داخل `useEffect` بدون مصفوفة `[]`، أو استدعاء نماذج الذكاء الاصطناعي داخل حلقات `for` بدون سقف `max_tokens` — مما يسبب فاتورة بقيمة **\$2,500 إلى \$10,000 في ليلة واحدة**!
+6. **ثغرات الإنتاج الخفية**: حقن `SQL Injection`، ثغرة السحب المزدوج للرصيد (`TOCTOU Race Condition`)، طلبات HTTP بدون `timeout=` تجمد السيرفر فجراً، وكسر اتجاه الواجهات العربية `RTL`!
 
 <p align="center">
-  <img src="./assets/architecture-v5.svg" alt="مخطط البنية المعمارية لمنظومة Smart Quota v5.0" width="100%" />
+  <img src="./assets/hero-banner.jpg" alt="Smart Quota & Superpowers OS v13.0 Zenith" width="100%" />
 </p>
 
 ---
 
-## 📊 نتائج القياس الفعلي الموثقة (`96.6%` توفير حقيقي في التوكنز!)
-
-لا نعتمد على تقديرات نظرية؛ شغّل بنفسك الأمر `python sqo.py benchmark --workspace .` على أي مشروع لديك لترى الأرقام الحقيقية المقاسة مباشرة على ملفاتك:
+## 🏗️ الطبقات الست لنظام التشغيل الهندسي `v13.0 Zenith`
 
 <p align="center">
-  <img src="./assets/benchmark-comparison.svg" alt="مقارنة استهلاك التوكنز قبل وبعد استخدام Smart Quota v5.0" width="100%" />
+  <img src="./assets/architecture-v5.svg" alt="البنية المعمارية للإصدار 13.0 Zenith" width="100%" />
 </p>
 
----
-
-## 🛡️ كيف يعمل الدرع الذاتي ثلاثي المراحل تلقائياً أثناء كتابتك للكود؟
+### 1️⃣ الجدار الناري ثلاثي المراحل في أقل من `15ms` (`-96.8%` من توكنات الإدخال)
+لا نعتمد على نصائح نصية قد يتجاهلها النموذج؛ بل يعمل [`hooks/token_shield_hook.py`](./hooks/token_shield_hook.py) كحاجز تنفيذي حتمي قبل استدعاء الأدوات:
+- **`SessionStart`**: يحقن أهم 8 حقائق معمارية من `.sqo/memory.db` وذاكرة المشاريع المشتركة `~/.sqo/hive_mind.db` في بداية المحادثة مع الحفاظ بنسبة **100% على خصم الـ `KV-Cache` (90% توفير في السعر!)**.
+- **`PreToolUse`**: يمنع ملفات القفل العملاقة، يمنع إعادة قراءة الملفات غير المعدّلة عبر بصمة `mtime_ns`، يقلّم قراءة الملفات التي تتجاوز `1,200` سطر تلقائياً إلى أول `280` سطراً، ويوقف تكرار نفس الأمر الفاشل 3 مرات متتالية.
+- **`PostToolUse`**: يسجل العلاقات الزمنية بين الملفات في `.sqo/memory_graph.db` ويحسب كل توكن ودولار وفّرته المنظومة في دفتر `sqo roi`!
 
 <p align="center">
   <img src="./assets/shield-lifecycle.svg" alt="دورة حياة الدرع الذاتي ثلاثي المراحل" width="100%" />
 </p>
 
-1. **المرحلة الأولى — `SessionStart` (ذاكرة فورية من اللحظة صفر)**:
-   بمجرد فتح محادثة جديدة، يقرأ الـ Hook أهم 8 حقائق معمارية مخزنة في `.sqo/memory.db` ويحقنها مرة واحدة فقط في بداية الجلسة، فيفهم الوكيل بنية مشروعك فوراً بدون إهدار 20 ألف توكن في البحث العشوائي، مع الحفاظ بنسبة **100%** على ثبات بادئة الـ **KV-Cache**!
-2. **المرحلة الثانية — `PreToolUse` (جدار ناري رباعي في أقل من `15ms`)**:
-   - **حاجز قنابل التوكنز (`Token-Bomb Blocker`)**: يمنع القراءة الكاملة أو أوامر `cat` لملفات القفل والخرائط (`>50 KB`).
-   - **مانع القراءات المكررة الذكي (`Stateful Deduplicator`)**: يحفظ بصمة `(المسار + mtime_ns + نطاق الأسطر)` ويرفض إعادة قراءة نفس الملف طالما لم يتغير على القرص!
-   - **المُقلّم التلقائي للملفات العملاقة (`overwrite` Auto-Clamper)**: يحوّل أي قراءة عمياء لملف كود يتجاوز `1,200` سطر تلقائياً إلى قراءة أول `280` سطراً فقط (`StartLine: 1, EndLine: 280`).
-   - **كاسر الحلقات المفرغة (`Retry-Loop Breaker`)**: يوقف المحاولة الثالثة المتتالية لنفس الأمر الفاشل إذا لم يقم الوكيل بتعديل أي ملف كود بين المحاولات.
-3. **المرحلة الثالثة — `PostToolUse` + دفتر التوفير المالي الحي (`sqo roi`)**:
-   يسجّل القراءات الناجحة، ويفتح قفل الملف فوراً عند تعديله بـ `edit_file`، ويوثّق كل توكن ودولار تم توفيره في قاعدة بيانات **`roi_ledger.db`**!
+---
+
+### 2️⃣ الطيار الآلي (`sqo autopilot`) + البصمة الجينية (`Repo-DNA`) + التعديل الجراحي (`-85%` إخراج)
+- **`sqo autopilot`**: يدمج 4 محركات في أمر واحد (`<45ms`): يقرأ البصمة الجينية للمشروع في أقل من `420` توكن، يحول طلبك العربي أو الإنجليزي عبر محرك `BM25` إلى إحداثيات أسطر دقيقة (`file:Lstart-Lend`)، يحذرك من **التوائم الخفية في تاريخ `Git`**، ويضيف قواعد الإصدارات المثبتة لديك!
+- **`sqo_edit_symbol`**: يعدّل الدالة أو الكلاس بالاسم مباشرة بدلاً من إعادة كتابة الملف كاملاً (**يوفر 85% من توكنات الكتابة الأغلى سعراً!**)، مع أخذ نسخة احتياطية تلقائية والتراجع الفوري خلال `<8ms` إذا حدث أي خطأ نحوي (`Syntax Error`)!
+- **`sqo rules-gen`**: يفحص مشروعك الفعلي على القرص ويولّد ملف `CLAUDE.md` أو `.cursorrules` مفصّلاً على مقاس مشروعك بصفر توكن!
 
 <p align="center">
-  <img src="./assets/terminal-roi-preview.svg" alt="معاينة مخرجات دفتر التوفير المالي وفحص الطبيب الذكي في الطرفية" width="100%" />
+  <img src="./assets/terminal-roi-preview.svg" alt="معاينة حية لأوامر autopilot و pr-shield و roi" width="100%" />
 </p>
 
 ---
 
-## 🎭 حوارات واقعية كاملة: شاهد الفرق بنفسك (قبل ❌ وبعد ✅)
-
-### السيناريو 1: عطل مفاجئ في الدفع الإلكتروني (`Stack Trace` من 6 ملفات)
-
-| الوجه | ❌ الوكيل التقليدي (بدون الإضافة) | ✅ الوكيل مع Smart Quota `v5.0` |
-| :--- | :--- | :--- |
-| **طلب المبرمج** | *"عندي خطأ 500 في `/api/stripe/webhook` وده سجل الخطأ، صلحه!"* | *"عندي خطأ 500 في `/api/stripe/webhook` وده سجل الخطأ، صلحه!"* |
-| **ما يفعله الوكيل** | يشغّل `grep` عشوائي ⬅️ يقرأ 3 ملفات كاملة (`3,200` سطر) ⬅️ يقرأ ملف `.js.map` بالخطأ ⬅️ يشغّل 200 اختبار دفعة واحدة! | يسترجع ملاحظة Stripe تلقائياً في الجولة 0 ⬅️ يستدعي `sqo_pinpoint_error` فيستخرج الـ 10 أسطر المحيطة بالخطأ فقط ⬅️ يشغّل الاختبار المتأثر فقط عبر `sqo_blast_radius`! |
-| **عدد الجولات** | `5` إلى `7` جولات بطيئة | **جولتان فقط (في ثوانٍ!)** |
-| **التوكنز المستهلكة** | **`109,700` توكن** (حرق 38% من الكوتا!) | **`1,120` توكن فقط (توفير 98.9%!)** |
-
-### السيناريو 2: حوار حي مع دفتر التوفير المالي والصور (`v5.0` الجديد)
-
-> **👨‍💻 المبرمج:** *"يا بطل، وريني وفرتلي كام توكن ودولار النهاردة، وافحصلي صور التصميم في مجلد `assets/` قبل ما أرفعها في الشات!"*
->
-> **🤖 الوكيل (يستدعي `sqo_roi_ledger` و `sqo_media_budget` في أقل من 50 ملي ثانية):**
-> - **تقرير التوفير الحي (`ROI Ledger`)**: تم اعتراض **94 عملية إهدار** تلقائياً وتوفير **`1,482,940` توكن** (ما يعادل **`$4.45`** على نماذج Sonnet/Carbon وحتى **`$22.24`** على نماذج Opus)!
-> - **فحص ميزانية الصور (`Media Budget`)**: صورة `mockup-4k.png` أبعادها `3840×2160` وستكلفك **`3,870` توكن رؤية** في كل رسالة؛ نصيحة النظام: تصغير العرض الأقصى إلى `1280px` يخفض التكلفة بنسبة **`83%`** مع الحفاظ على وضوح النص الكامل!
-
-📖 **لقراءة 4 حوارات تفصيلية إضافية وخطط عمل متكاملة حسب تخصصك:** افتح **[📗 الدليل العملي العربي الكامل (`docs/PLAYBOOK_AR.md`)](./docs/PLAYBOOK_AR.md)**.
+### 3️⃣ بوابة الفحص الثمانية قبل النشر (`sqo pr-shield` / `sqo_pr_review`)
+بضغطة واحدة وفي أقل من `65ms`، تفحص المنظومة كودك عبر **8 محركات هندسية صارمة** وتصدر جدول مراجعة احترافي بدرجة من `0` إلى `100` (`Grade A+`):
+1. **🛡️ فاحص الثغرات الأمنية (`OWASP SAST`)**: يكشف حقن `SQLi`، حقن الأوامر `CMDi`، ثغرات `XSS`، و`eval()`.
+2. **💸 حارس فواتير السحابة والذكاء الاصطناعي (`FinOps Guard`)**: يكشف حلقات `useEffect` اللانهائية مع `Firestore/fetch`، الدوال السحابية التي تستدعي نفسها بلا توقف، واستدعاءات الـ LLM داخل الحلقات.
+3. **🎭 مجلس المراجعة الرباعي (`4-Seat Adversarial Council`)**: يكشف ثغرة السحب المزدوج للرصيد (`TOCTOU Double-Spend`)، طلبات الشبكة بدون `timeout=`، وبلع الأخطاء الصامت (`except: pass` / `catch {}`).
+4. **⚡ محلل الأداء (`Perf & N+1 Profiler`)**: يكشف استعلامات قواعد البيانات داخل الحلقات، وتسريب الذاكرة في `Flutter Controllers`.
+5. **🎨 فاحص العربية `RTL` وإمكانية الوصول (`UI & RTL Guard`)**: يكشف استخدام `left/right` الثابت الذي يفسد الواجهات العربية ويقترح `EdgeInsetsDirectional` و`margin-inline-start`.
+6. **📦 كاشف المكتبات المهلوسة (`Verify Deps`)**: يمنع استيراد حزم غير موجودة في `package.json` أو `pubspec.yaml` أو `pyproject.toml`.
+7. **⚙️ حارس انحراف متغيرات البيئة (`Drift Guard`)**: يكشف المتغيرات المستخدمة في الكود والغائبة عن `.env.example`.
+8. **🔐 الماسح الأمني للأسرار (`10-Rule Secret DLP`)**: يمنع تسرب أي مفاتيح API أو كلمات مرور قواعد بيانات قبل عمل `git commit`.
 
 ---
 
-## 🔌 جدول الـ 16 أداة المدمجة في خادم الـ MCP (`sqo-engine`)
-
-بمجرد تثبيت الإضافة، يمتلك وكيلك الذكي هذه الأدوات الـ 16 تلقائياً:
-
-| اسم أداة الـ MCP | الوظيفة الفورية | نسبة التوفير |
-| :--- | :--- | :--- |
-| **`sqo_code_search`** | بحث فوري بخوارزمية `SQLite FTS5 BM25` يرجع الدالة/الكلاس المطلوب بحدوده الدقيقة | **90% – 98%** |
-| **`sqo_smart_outline`** | استخراج الهيكل الشجري (`AST Skeleton`) وأرقام الأسطر للملفات الكبيرة أو استخراج دالة بعينها | **85% – 96%** |
-| **`sqo_context_pack`** | ضغط مجلد كامل في ميزانية توكنز صارمة (كود كامل للملفات الأساسية + هيكل للمساندة) | **75% – 96%** |
-| **`sqo_blast_radius`** | حساب الملفات المتأثرة بالتعديل واختيار **أقل عدد من ملفات الـ Unit Tests** لتشغيلها | **80% – 95%** |
-| **`sqo_pinpoint_error`** | تحليل أي `Stack Trace` واستخراج نافذة `±10` أسطر حول كل موقع خطأ محلي في خطوة واحدة | **93% – 96%** |
-| **`sqo_code_hotspots`** | رسم بياني تزايدي بـ SQLite يكشف أعقد الملفات وأكثرها ارتباطاً والملفات غير المستوردة | **`<10ms` فوري** |
-| **`sqo_api_routes`** | استخراج جدول مسارات الـ API والشاشات لـ Next.js وExpress وNestJS وFastAPI وLaravel وGo وFlutter | **95%+** |
-| **`sqo_memory_vault`** | ذاكرة معمارية دائمة عبر الجلسات (`remember` / `recall` / `list`) تُحقن تلقائياً عند البدء | **يلغي إعادة الفحص** |
-| **`sqo_dependency_slices`** | تقسيم ملفات المشروع إلى شرائح متوازية خالية 100% من تعارضات الدمج (`Zero Merge Conflicts`) | **يوفر 65%–81% كوتا** |
-| **`sqo_budgeted_diff`** | ضغط فروقات `git diff` وحذف ملفات القفل والخرائط لمراجعة الكود بأقل تكلفة | **70% – 95%** |
-| **`sqo_secret_scrub`** | فحص المشروع من أي مفاتيح سرية أو كلمات مرور مسربة وتنقية النصوص قبل الإرسال | **حماية أمنية 100%** |
-| **`sqo_cache_audit`** | فحص القواعد والـ Hooks لضمان الحفاظ على خصم الـ **KV-Cache (90%)** | **خصم 90% مدخلات** |
-| **`sqo_quota_pools`** | تجميع حصص النماذج المشتركة والاحتياطية وحساب معدل الاستهلاك الآمن بالساعة | **منع نفاد الكوتا** |
-| **`sqo_benchmark`** | قياس عملي حي لنسبة توفير التوكنز على مشروعك الحالي بالأرقام الدقيقة | **إثبات رقمي حي** |
-| **`sqo_roi_ledger`** | عرض سجل التوكنز والدولارات (`$USD`) التي وفّرها الدرع التلقائي | **قياس العائد المالي** |
-| **`sqo_media_budget`** | حساب تكلفة الصور (`PNG/JPEG/WebP/GIF`) وملفات `PDF` عبر Gemini وClaude وOpenAI | **50% – 85%** |
-| **`sqo_init_preset`** | **(جديد `v6.0`)** كشف تلقائي لنوع المشروع (`Flutter/Next.js/Laravel/Python/Go/Rust`) وتهيئة الدروع والذاكرة | **تهيئة فورية بضغطة** |
-| **`sqo_context_health`** | **(جديد `v6.0`)** قياس تآكل وتضخم السياق (`Context Rot 0–100`) وتوليد ملخص تسليم فوري (`<350` توكن) | **توفير ~65% للجولة** |
+### 4️⃣ التحقيق الجنائي للـ Git (`sqo forensics`) + مخططات Mermaid الحية (`sqo arch-mermaid`) + صائد الكود الميت (`sqo dead-code`)
+- **`sqo forensics`**: يحلل سجل `git log` ليكشف الملفات المقترنة تاريخياً بنسبة `>=55%` حتى لو لم يكن بينهما أي `import` مباشر، بالإضافة لكشف أكثر الملفات عرضة للأعطال!
+- **`sqo arch-mermaid`**: يولّد تلقائياً 3 رسوم بيانية تفاعلية بصيغة `Mermaid` (مخطط الاعتماديات، خريطة الـ API Routes، ومخطط علاقات قاعدة البيانات `erDiagram`) بصفر توكن!
+- **`sqo dead-code`**: يكتشف الملفات اليتيمة والمهجورة التي خلّفتها تعديلات الـ AI السابقة لتقليص حجم المشروع وتسريع البحث!
 
 ---
 
-## 🚀 التثبيت السريع في دقيقة واحدة (جميع الأنظمة والمحررات)
+## 🌐 المنصة التفاعلية الحية والروابط الرسمية
 
-### 1️⃣ التثبيت الكامل في Google Antigravity
-```powershell
-git clone https://github.com/ElNeMeR70/smart-quota-orchestrator.git
-cd smart-quota-orchestrator
-
-# على نظام Windows (PowerShell):
-powershell -ExecutionPolicy Bypass -File .\install.ps1
-
-# على نظام macOS / Linux:
-bash ./install.sh
-```
-
-### 2️⃣ تفعيل الحماية وخادم الـ MCP في 5 بيئات برمجة بأمر واحد!
-يضبط تلقائياً كلاً من **Antigravity** و**Cursor** و**Claude Code** و**VS Code** و**Windsurf**:
-```bash
-python sqo.py sync-ide --workspace /path/to/your/project --ides all
-```
-
-### 3️⃣ التثبيت الفوري بسطر واحد من المنصة العالمية (`npx` / `irm` / `curl`)
-```bash
-# عبر npx مباشرة في أي مشروع
-npx -y smart-quota-orchestrator init --workspace .
-
-# ويندوز (PowerShell) بسطر واحد من الدومين الرسمي
-irm https://sqo.elnemer-ai.com/install.ps1 | iex
-
-# ماك ولينكس بسطر واحد من الدومين الرسمي
-curl -fsSL https://sqo.elnemer-ai.com/install.sh | bash
-```
-- **إضافة شريط الحالة الرسمية لمحررات VS Code / Cursor / Antigravity / Windsurf**: متوفرة في مجلد [`vscode-extension/`](./vscode-extension/) لعرض التوكنز والدولارات الموفّرة لحظياً أسفل المحرر!
-
----
-
-## 💻 أهم أوامر سطر الأوامر الموحد (`45` أداة في `sqo.py`)
-
-```bash
-python sqo.py verify-deps --workspace .         # (جديد v9.0) كشف المكتبات الوهمية/المهلوسة غير المسجلة في package.json و pubspec و pyproject!
-python sqo.py i18n --workspace .                # (جديد v9.0) فحص ملفات الترجمة (.arb و JSON) لكشف المفاتيح الناقصة وأخطاء المتغيرات بتوفير 97%!
-python sqo.py memo get -q "auth" --workspace .  # (جديد v9.0) ذاكرة التحليل الفورية المرتبطة ببصمة SHA-256 للملفات (توفير 100% من التوكنز!)
-python sqo.py contracts --workspace .           # (جديد v9.0) استخراج عقود الـ API ومخطط OpenAPI 3.1 بدون قراءة ملفات الباك-إند!
-python sqo.py swarm-plan "Add Auth" -w .        # (جديد v9.0) مخطط الأسراب الذكي لتوزيع المهام على النماذج السريعة بدون تعارض ملفات!
-python sqo.py hub pull --workspace .            # (جديد v9.0) سحب القواعد الذهبية المعتمدة لإطار عملك من سحابة sqo.elnemer-ai.com!
-python sqo.py hive promote --workspace .        # نقل خبرات وحلول المشروع إلى العقل الجماعي ~/.sqo/hive_mind.db لكل مشاريعك!
-python sqo.py schema --workspace .              # تقطير جداول SQL و Prisma و Laravel و Drift بتوفير 96% من التوكنز!
-python sqo.py dry-run --workspace .             # فحص استباقي في 12ms لأخطاء Syntax والأقواس والـ Imports قبل البناء
-python sqo.py checkpoint create -l "pre-edit"   # آلة الزمن: حفظ نقطة استرجاع فورية واستعادة الملفات جراحياً بدون تعارض Git
-python sqo.py share --handle ElNeMeR --publish  # نشر نتيجتك في لوحة المتصدرين العالمية وتوليد بطاقة GitHub الحية!
-```
-
-🌐 **المنصة التفاعلية العالمية الحية (بـ 4 لغات + مختبر ضغط السياق الفوري في المتصفح)**: **[https://sqo.elnemer-ai.com](https://sqo.elnemer-ai.com)** • **حقيبة الإطلاق والنشر العالمي**: [`docs/LAUNCH_KIT.md`](./docs/LAUNCH_KIT.md)
-
----
-
-## ❓ الأسئلة الشائعة (FAQ)
-
-- **هل تحتاج الأداة إلى أي اشتراك أو مفتاح API أو مكتبات `pip` خارجية؟**
-  إطلاقاً! تعمل بنسبة **100%** بالمكتبة القياسية المدمجة في Python (`sqlite3`, `ast`, `struct`, `json`) بدون أي اتصال خارجي، وبياناتك تبقى محلياً بالكامل على جهازك.
-- **هل تستهلك الـ Hooks أو خادم الـ MCP أي معالج (CPU) في الخلفية؟**
-  صفر بالمئة (`0.0% CPU`) في وضع الانتظار، وتتنفذ فحوصات `PreToolUse` في أقل من `10–15` ملي ثانية!
-- **ماذا يحدث لو عدّلت ملفاً بعد قراءته؟ هل سيمنعني مانع التكرار من قراءته مجدداً؟**
-  لا! يعتمد مانع التكرار على البصمة الزمنية بالنانوثانية (`st_mtime_ns`) + مرحلة `PostToolUse` التي تفتح القفل تلقائياً فور تعديل الملف.
-
----
-
-<p align="center">
-  صُمّم وطُوّر بشغف لخدمة مجتمع المطورين العالمي والعربي 🌍⚡<br/>
-  إذا أفادتك الأداة في مضاعفة إنتاجيتك وتوفير الكوتا، لا تنسَ دعم المستودع بنجمة ⭐ على <a href="https://github.com/ElNeMeR70/smart-quota-orchestrator">GitHub</a>!
-</p>
+- **المنصة الشاملة والمختبرات التفاعلية الحية**: [https://sqo.elnemer-ai.com](https://sqo.elnemer-ai.com)
+- **ملف الدستور الهندسي المستقل بضغطة واحدة**: [https://sqo.elnemer-ai.com/apex-skill.md](https://sqo.elnemer-ai.com/apex-skill.md)
+- **كتاب السيناريوهات والحوارات العملية الكامل**: [`docs/PLAYBOOK_AR.md`](./docs/PLAYBOOK_AR.md)
 
 </div>

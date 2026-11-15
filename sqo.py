@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-"""Unified Master CLI (`sqo`) for Smart Quota & Superpowers OS v12.0 Quantum Edition.
+"""Unified Master CLI (`sqo`) for Smart Quota & Superpowers OS v13.0 Zenith Edition.
 
-Provides 62 deterministic, zero-dependency commands for AI coding agents and developers:
+Provides 67 deterministic, zero-dependency commands for AI coding agents and developers:
+  - autopilot       : 1-Command Autonomous Mission Compiler (Repo-DNA + BM25 + Twins + SDK Idioms!)
+  - pr-shield       : 8-Gate Pre-PR Autonomous Review Scorecard & GitHub PR Markdown Emitter
+  - arch-mermaid    : Zero-Token Live Mermaid Architecture, Route & ER Diagram Generator
+  - rules-gen       : Bespoke Repo-Aware CLAUDE.md / AGENTS.md / .cursorrules Compiler (0 LLM Tok!)
+  - dead-code       : Orphan Module & AI Dead-Code Hunter to shrink repo context bloat
   - finops          : Cloud & AI API Bill-Shock Preventer (Infinite useEffect/Firestore/LLM loops!)
   - forensics       : Git Evolutionary Forensics (Invisible Co-Change Twins & Bug-Magnet Hotzones)
   - dna             : Single-Shot <420-Token Repo-DNA Genome Synthesizer (-99.2% vs Repomix!)
@@ -78,6 +83,11 @@ ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 
 COMMAND_MAP: Dict[str, Tuple[Path, List[str]]] = {
+    "autopilot": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "autopilot_engine.py", []),
+    "pr-shield": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "pr_shield.py", []),
+    "arch-mermaid": (SKILLS_DIR / "semantic-code-navigator" / "scripts" / "arch_mermaid.py", []),
+    "rules-gen": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "compile_repo_rules.py", []),
+    "dead-code": (SKILLS_DIR / "semantic-code-navigator" / "scripts" / "dead_code_hunter.py", []),
     "serve": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "live_server.py", []),
     "finops": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "finops_guard.py", []),
     "forensics": (SKILLS_DIR / "semantic-code-navigator" / "scripts" / "git_forensics.py", []),

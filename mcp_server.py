@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v12.0 Quantum Edition).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v13.0 Zenith Edition).
 
-Exposes 48 native, token-saving, Cloud FinOps Bill-Shock, Git Forensics, Repo-DNA, 4-Seat Council,
-OWASP SAST, N+1 Performance, RTL/UI & Superpowers tools directly to Google Antigravity, Claude Code,
-Cursor, Windsurf, VS Code, and Gemini CLI over JSON-RPC 2.0 `stdio` transport.
+Exposes 53 native, token-saving, Autopilot Mission Compiler, 8-Gate PR Shield, Mermaid Architecture,
+Bespoke Rules Compiler, Dead-Code Hunter, Cloud FinOps Bill-Shock, Git Forensics, Repo-DNA,
+4-Seat Council, OWASP SAST, N+1 Performance, RTL/UI & Superpowers tools directly to Google Antigravity,
+Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over JSON-RPC 2.0 `stdio` transport.
 
 Blocks cleanly on `sys.stdin.readline()` when idle (0.0% idle CPU, <15 MB RAM).
 Zero external `pip` packages required (100% Python 3.8+ standard library).
@@ -21,7 +22,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "12.0.0"
+SERVER_VERSION = "13.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -632,6 +633,63 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
             "required": ["workspace", "prompt"],
         },
     },
+    {
+        "name": "sqo_autopilot",
+        "description": "1-Command Autonomous Mission Compiler (v13.0 Zenith): orchestrates Repo-DNA + Bilingual Prompt X-Ray BM25 Pinning + Git Forensics Twin Warnings + Pinned SDK Idioms in <45ms into a single <650-token Master Mission Packet!",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "goal": {"type": "string", "description": "Developer task or bug description in English or Arabic."},
+            },
+            "required": ["workspace", "goal"],
+        },
+    },
+    {
+        "name": "sqo_pr_review",
+        "description": "8-Gate Pre-PR & Pre-Deploy Autonomous Scorecard (v13.0 Zenith): runs OWASP SAST + Cloud FinOps + 4-Seat Council + N+1 Perf + Arabic RTL + Phantom Deps + Env Drift + Secret DLP in <65ms and outputs a GitHub PR Review Markdown Table (0–100 Grade A+).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_arch_diagram",
+        "description": "Zero-Token Live Mermaid Architecture, Route & ER Diagrammer (v13.0 Zenith): inspects real imports, HTTP/UI routes, and DB schemas in <25ms to emit 3 GitHub-ready Mermaid diagrams (`flowchart LR`, `flowchart TD`, `erDiagram`).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_compile_rules",
+        "description": "Bespoke Repo-Aware CLAUDE.md / AGENTS.md / .cursorrules Compiler (v13.0 Zenith): inspects your exact repo stack, build/test scripts, core modules & SDK versions in <25ms (0 LLM tokens!) and compiles custom AI constitution files.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+                "write_target": {"type": "string", "description": "Optional relative output file (e.g. CLAUDE.md, AGENTS.md, .cursorrules)."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_dead_code",
+        "description": "Orphan Module & AI Dead-Code Hunter (v13.0 Zenith): cross-checks all source files against inbound imports and framework entrypoints to find unreferenced orphan files bloating context tokens.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
 ]
 
 
@@ -969,6 +1027,26 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
     if name == "sqo_prompt_xray":
         mod = _load_tool_mod("context-compactor/scripts/prompt_xray.py")
         return mod.render_markdown(mod.enrich_vague_prompt(Path(args["workspace"]).resolve(), str(args["prompt"])))
+
+    if name == "sqo_autopilot":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/autopilot_engine.py")
+        return mod.compile_mission_packet(Path(args["workspace"]).resolve(), str(args["goal"]))["mission_markdown"]
+
+    if name == "sqo_pr_review":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/pr_shield.py")
+        return mod.run_8_gate_pr_review(Path(args["workspace"]).resolve())["pr_markdown"]
+
+    if name == "sqo_arch_diagram":
+        mod = _load_tool_mod("semantic-code-navigator/scripts/arch_mermaid.py")
+        return mod.generate_architecture_mermaid(Path(args["workspace"]).resolve())["markdown"]
+
+    if name == "sqo_compile_rules":
+        mod = _load_tool_mod("smart-quota-orchestrator/scripts/compile_repo_rules.py")
+        return mod.compile_bespoke_rules(Path(args["workspace"]).resolve(), write_target=str(args.get("write_target", "")))["rules_markdown"]
+
+    if name == "sqo_dead_code":
+        mod = _load_tool_mod("semantic-code-navigator/scripts/dead_code_hunter.py")
+        return mod.render_markdown(mod.hunt_dead_modules(Path(args["workspace"]).resolve()))
 
     raise ValueError(f"Unknown MCP tool: {name}")
 

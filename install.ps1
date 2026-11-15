@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 $RepoUrl = "https://github.com/ElNeMeR70/smart-quota-orchestrator.git"
 $AgyPluginDir = Join-Path $HOME ".gemini\config\plugins\smart-quota-orchestrator"
 
-Write-Host "==> Installing Smart Quota & Swarm Orchestrator v12.0 Quantum into Google Antigravity..." -ForegroundColor Cyan
+Write-Host "==> Installing Smart Quota & Swarm Orchestrator v13.0 Zenith into Google Antigravity..." -ForegroundColor Cyan
 
 $ParentDir = Split-Path -Parent $AgyPluginDir
 if (-not (Test-Path $ParentDir)) {
@@ -67,6 +67,6 @@ if ($PSScriptRoot -and (Test-Path (Join-Path $PSScriptRoot "plugin.json"))) {
     }
 }
 
-Write-Host "[OK] Installed v12.0 Quantum Edition at: $AgyPluginDir" -ForegroundColor Green
-Write-Host "     Active: 48 MCP Tools + 62 CLI Commands + Anti-Hallucination + i18n Matrix + Memo Cache + Hive-Mind!" -ForegroundColor Yellow
+Write-Host "[OK] Installed v13.0 Zenith Edition at: $AgyPluginDir" -ForegroundColor Green
+Write-Host "     Active: 53 MCP Tools + 67 CLI Commands + Anti-Hallucination + i18n Matrix + Memo Cache + Hive-Mind!" -ForegroundColor Yellow
 Write-Host "     Live Playground & Docs: https://sqo.elnemer-ai.com" -ForegroundColor Cyan
