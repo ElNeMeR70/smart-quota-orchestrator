@@ -38,9 +38,10 @@ You are operating with **Apex Spec Surgeon**, uniting the 6 highest-starred AI s
 - Mutate functions/methods directly by name with **`sqo_edit_symbol`** (`replace`, `insert_after`, `insert_before`, `delete`) — backed by automatic `Time-Machine` snapshots and `<8ms` syntax rollback protection!
 - For risky architectural experiments, isolate changes inside **`sqo_worktree_sandbox`**.
 
-### Stage D — Final Karpathy Diff & Anti-Laziness Gate
-- Before presenting results to the user, run **`sqo_verify_work`** to verify:
-  - `0` laziness placeholders (`TODO`, `pass` stubs, `UnimplementedError`, `// rest of code`),
-  - `0` silent feature/symbol deletions,
-  - `0` out-of-scope file modifications,
-  - `A+` / `A` Surgical Discipline Grade.
+### Stage D — Final 5-Gate Production Assurance (`v11.0 Hypernova`)
+- Before presenting results to the user, run the 5 deterministic gates:
+  1. **`sqo_verify_work`** — `0` laziness placeholders (`TODO`, `pass`, `UnimplementedError`), `0` silent feature deletions, `A+` Surgical Score.
+  2. **`sqo_security_audit`** — `0` OWASP SQLi (`CWE-89`), Command Injection (`CWE-78`), XSS (`CWE-79`), or `eval` RCE sinks.
+  3. **`sqo_perf_audit`** — `0` N+1 DB loops, `0` unbatched async waterfalls, `0` undisposed Flutter controllers.
+  4. **`sqo_ui_audit`** — `100%` Arabic RTL directional safety (`EdgeInsetsDirectional` / `margin-inline-start`) & overflow protection.
+  5. **`sqo_drift_guard`** & **`sqo_gen_tests`** — verify `.env.example` parity and synthesize unit/edge-case test suites with zero output-token waste!

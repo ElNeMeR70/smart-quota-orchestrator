@@ -60,6 +60,12 @@ karp_mod = _load_module("verify_karpathy", "skills/apex-spec-surgeon/scripts/ver
 sdk_mod = _load_module("sdk_radar", "skills/apex-spec-surgeon/scripts/sdk_radar.py")
 sandbox_mod = _load_module("worktree_sandbox", "skills/apex-spec-surgeon/scripts/worktree_sandbox.py")
 
+sast_mod = _load_module("security_sast", "skills/apex-spec-surgeon/scripts/security_sast.py")
+perf_mod = _load_module("perf_profiler", "skills/apex-spec-surgeon/scripts/perf_profiler.py")
+tsynth_mod = _load_module("test_synthesizer", "skills/apex-spec-surgeon/scripts/test_synthesizer.py")
+uirtl_mod = _load_module("ui_rtl_auditor", "skills/apex-spec-surgeon/scripts/ui_rtl_auditor.py")
+drift_mod = _load_module("detect_drift", "skills/context-compactor/scripts/detect_drift.py")
+
 handoff = _load_module("build_handoff_brief", "skills/context-compactor/scripts/build_handoff_brief.py")
 outline_mod = _load_module("smart_outline", "skills/context-compactor/scripts/smart_outline.py")
 pack_mod = _load_module("pack_context_bundle", "skills/context-compactor/scripts/pack_context_bundle.py")
@@ -316,16 +322,21 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             self.assertEqual(len(res["synced_files"]), 7)
             self.assertTrue((ws / ".cursor" / "mcp.json").is_file())
 
-    def test_18_mcp_stdio_server_38_tools(self) -> None:
+    def test_18_mcp_stdio_server_43_tools(self) -> None:
         init_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
         assert init_resp is not None
-        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "10.0.0")
+        self.assertEqual(init_resp["result"]["serverInfo"]["version"], "11.0.0")
 
         tools_resp = mcp_mod.handle_rpc_message({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
         assert tools_resp is not None
         tool_names = {t["name"] for t in tools_resp["result"]["tools"]}
-        self.assertEqual(len(tool_names), 38)
+        self.assertEqual(len(tool_names), 43)
         for expected in (
+            "sqo_security_audit",
+            "sqo_perf_audit",
+            "sqo_gen_tests",
+            "sqo_ui_audit",
+            "sqo_drift_guard",
             "sqo_edit_symbol",
             "sqo_find_callers",
             "sqo_spec_engine",
@@ -441,7 +452,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             try:
                 with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/overview", timeout=4) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(data["version"], "10.0.0")
+                self.assertEqual(data["version"], "11.0.0")
                 self.assertEqual(data["routes"][0]["path"], "/health")
 
                 req = urllib.request.Request(
@@ -457,16 +468,17 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
                 srv.shutdown()
                 srv.server_close()
 
-    def test_29_manifests_v10_complete(self) -> None:
+    def test_29_manifests_v11_complete(self) -> None:
         for mf in ("plugin.json", ".claude-plugin/plugin.json", "gemini-extension.json", "glama.json", "package.json", "vscode-extension/package.json"):
             data = json.loads((REPO_ROOT / mf).read_text(encoding="utf-8"))
-            self.assertEqual(data["version"], "10.0.0")
+            self.assertEqual(data["version"], "11.0.0")
         self.assertTrue((REPO_ROOT / "pyproject.toml").is_file())
         self.assertTrue((REPO_ROOT / "bin" / "sqo.js").is_file())
         self.assertTrue((REPO_ROOT / "vscode-extension" / "extension.js").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "telemetry.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "card.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "api" / "presets.php").is_file())
+        self.assertTrue((REPO_ROOT / "docs" / "api" / "analyze.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "apex-skill.md").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
         self.assertEqual(len(tax["skills"]), 7)
@@ -784,6 +796,95 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
             sandbox_mod.promote_sandbox(ws, "exp-refactor")
             self.assertEqual((ws / "core.py").read_text(encoding="utf-8"), "VAL = 2\n")
             sandbox_mod.cleanup_sandbox(ws, "exp-refactor")
+
+    def test_49_owasp_agentic_sast_security_scanner(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "vuln.py").write_text(
+                'def bad(uid, cmd):\n'
+                '    q = f"SELECT * FROM users WHERE id = {uid}"\n'
+                '    os.system(f"rm -rf {cmd}")\n'
+                '    return eval(uid)\n',
+                encoding="utf-8",
+            )
+            rep = sast_mod.scan_workspace_security(ws)
+            self.assertFalse(rep["secure"])
+            self.assertGreaterEqual(rep["critical_count"], 2)
+            cwes = {f["cwe"] for f in rep["findings"]}
+            self.assertIn("CWE-89", cwes)
+
+    def test_50_n_plus_1_query_waterfall_and_flutter_jank_profiler(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "orders.ts").write_text(
+                "export async function load(users: any[]) {\n"
+                "  const a = await fetch('/api/one');\n"
+                "  const b = await fetch('/api/two');\n"
+                "  for (const u of users) {\n"
+                "    await prisma.order.findMany({ where: { userId: u.id } });\n"
+                "  }\n"
+                "}\n",
+                encoding="utf-8",
+            )
+            (ws / "leak.dart").write_text("class S { final c = TextEditingController(); }\n", encoding="utf-8")
+            rep = perf_mod.profile_workspace_performance(ws)
+            self.assertGreaterEqual(rep["n_plus_1_count"], 1)
+            kinds = {i["kind"] for i in rep["issues"]}
+            self.assertIn("sequential_async_waterfall", kinds)
+            self.assertIn("flutter_controller_leak", kinds)
+
+    def test_51_zero_token_deterministic_test_synthesizer(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            src_f = ws / "pricing.py"
+            src_f.write_text(
+                "def calc_discount(amount: float) -> float:\n"
+                "    if amount < 0:\n"
+                "        raise ValueError('negative')\n"
+                "    return amount * 0.9\n",
+                encoding="utf-8",
+            )
+            out_test = ws / "test_pricing.py"
+            res = tsynth_mod.synthesize_tests_for_file(src_f, write_to=out_test)
+            self.assertTrue(res["ok"])
+            self.assertTrue(out_test.is_file())
+            self.assertIn("calc_discount", res["target_functions"])
+            self.assertIn("assertRaises", res["test_code"])
+
+    def test_52_bilingual_arabic_rtl_a11y_and_overflow_auditor(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / "card.dart").write_text(
+                "Widget build(c) => Padding(\n"
+                "  padding: EdgeInsets.only(left: 12),\n"
+                "  child: Row(children: [Icon(Icons.star), Text('Very long Arabic/English label')]),\n"
+                ");\n",
+                encoding="utf-8",
+            )
+            (ws / "page.html").write_text('<img src="hero.png"><div style="margin-left: 20px;">Hi</div>', encoding="utf-8")
+            rep = uirtl_mod.audit_workspace_ui(ws)
+            kinds = {i["kind"] for i in rep["issues"]}
+            self.assertIn("flutter_rtl_hardcoded_direction", kinds)
+            self.assertIn("flutter_row_text_overflow", kinds)
+            self.assertIn("a11y_img_missing_alt", kinds)
+
+    def test_53_environment_variable_and_config_drift_guard(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ws = Path(tmp)
+            (ws / ".env.example").write_text("DATABASE_URL=postgres://localhost/db\n", encoding="utf-8")
+            (ws / "app.ts").write_text(
+                "const db = process.env.DATABASE_URL;\n"
+                "const wh = process.env.STRIPE_WEBHOOK_SECRET;\n",
+                encoding="utf-8",
+            )
+            rep = drift_mod.audit_env_and_config_drift(ws)
+            self.assertFalse(rep["clean"])
+            self.assertEqual(rep["missing_from_env_example"][0]["var"], "STRIPE_WEBHOOK_SECRET")
+
+    def test_54_self_dogfood_security_sast_clean_on_our_own_skills(self) -> None:
+        rep = sast_mod.scan_workspace_security(REPO_ROOT / "skills")
+        self.assertTrue(rep["secure"])
+        self.assertEqual(rep["critical_count"], 0)
 
 
 if __name__ == "__main__":

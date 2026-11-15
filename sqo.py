@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-"""Unified Master CLI (`sqo`) for Smart Quota & Superpowers OS v10.0 Apex Edition.
+"""Unified Master CLI (`sqo`) for Smart Quota & Superpowers OS v11.0 Hypernova Edition.
 
-Provides 52 deterministic, zero-dependency commands for AI coding agents and developers:
+Provides 57 deterministic, zero-dependency commands for AI coding agents and developers:
+  - sec-audit       : OWASP Top-10 & Agentic SAST Vulnerability Scanner (SQLi/CMDi/XSS/Eval)
+  - perf-audit      : Database N+1 Loop, Async Waterfall & Flutter UI-Jank Profiler
+  - gen-tests       : Zero-Token Deterministic Unit & Edge-Case Test Synthesizer (-3k Out Tok)
+  - ui-audit        : Bilingual Arabic RTL, WCAG Accessibility & Flutter Overflow Auditor
+  - drift           : Environment Variable & `.env.example` Boot-Crash Drift Detector
   - symbol-edit     : Serena-Class Surgical Symbol-Level AST Mutator (-85% Output Tokens!)
   - callers         : Fast Cross-Repo Function/Method Call-Site Locator before signature edits
   - spec            : Spec-Kit + Taskmaster Autonomous Spec-Driven DAG & Gatekeeper
@@ -69,6 +74,11 @@ SKILLS_DIR = ROOT_DIR / "skills"
 
 COMMAND_MAP: Dict[str, Tuple[Path, List[str]]] = {
     "serve": (SKILLS_DIR / "smart-quota-orchestrator" / "scripts" / "live_server.py", []),
+    "sec-audit": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "security_sast.py", []),
+    "perf-audit": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "perf_profiler.py", []),
+    "gen-tests": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "test_synthesizer.py", []),
+    "ui-audit": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "ui_rtl_auditor.py", []),
+    "drift": (SKILLS_DIR / "context-compactor" / "scripts" / "detect_drift.py", []),
     "symbol-edit": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "edit_symbol.py", []),
     "callers": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "edit_symbol.py", ["--action", "callers"]),
     "spec": (SKILLS_DIR / "apex-spec-surgeon" / "scripts" / "spec_engine.py", []),

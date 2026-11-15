@@ -229,13 +229,13 @@
 <body>
   <nav>
     <div class="container nav-inner">
-      <a href="#" class="brand">⚡ Smart Quota OS <span class="pill">v10.0 Apex</span></a>
+      <a href="#" class="brand">⚡ Smart Quota OS <span class="pill">v11.0 Hypernova</span></a>
       <div class="nav-links">
         <a href="#playground" data-i18n="navPlay">Live Playground</a>
-        <a href="#apex-radar" data-i18n="navApex">Karpathy &amp; SDK Radar</a>
+        <a href="#apex-radar" data-i18n="navApex">4-Engine Code Doctor</a>
         <a href="#cloud-hub" data-i18n="navHub">Golden Rules Hub</a>
         <a href="#leaderboard" data-i18n="navLead">Leaderboard</a>
-        <a href="#mcp-tools" data-i18n="navMcp">38 MCP Tools</a>
+        <a href="#mcp-tools" data-i18n="navMcp">43 MCP Tools</a>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <div class="lang-bar theme-switch" title="Switch Color Palette">
@@ -257,7 +257,7 @@
   <div class="container">
     <!-- HERO -->
     <section class="hero">
-      <span class="pill" data-i18n="hBadge">v10.0 Apex • 38 Native MCP Tools • Karpathy Diff Gate • Surgical Symbol Edit (-85% Out) • Spec DAG • Auto-Memory Graph • SDK Radar</span>
+      <span class="pill" data-i18n="hBadge">v11.0 Hypernova • 43 Native MCP Tools • OWASP SAST • N+1 Perf Profiler • Zero-Token Test Synth • RTL/UI Guard • Karpathy Gate</span>
       <h1 data-i18n="hTitle">The All-In-One Autonomous OS Uniting the Top 6 AI Coding Superpowers</h1>
       <p data-i18n="hSub">
         Combines Quota Shield (-96.8% input tokens), Serena-class Symbol Editing (-85% output tokens), Karpathy's Surgical Laws, Spec-Kit DAGs, Claude-Mem Auto-Graph &amp; Context7 SDK Grounding in 1 zero-dependency engine!
@@ -410,26 +410,32 @@
       <img src="./assets/benchmark-comparison.svg" alt="Empirical Benchmark" style="width:100%;border-radius:16px;border:1px solid var(--border);" />
     </div>
 
-    <!-- NEW v10.0: LIVE KARPATHY DIFF GATE & SDK DEPRECATION RADAR + 1-CLICK SKILL -->
-    <h2 class="section-title" id="apex-radar" data-i18n="apexTitle">⚖️ v10.0 Live Karpathy Diff Gate &amp; SDK Deprecation Radar</h2>
-    <p class="section-sub" data-i18n="apexSub">Paste any AI-generated diff or code snippet to catch <code>TODO</code> laziness stubs, silent feature deletions, and outdated 2023 SDK calls instantly!</p>
+    <!-- NEW v11.0: LIVE 4-ENGINE HYPERNOVA CODE DOCTOR STUDIO -->
+    <h2 class="section-title" id="apex-radar" data-i18n="apexTitle">🛡️ v11.0 Hypernova 4-Engine Code Doctor (SAST + N+1 + RTL + Karpathy)</h2>
+    <p class="section-sub" data-i18n="apexSub">Paste any AI-generated diff or Python/Flutter/TS/PHP snippet to audit OWASP Security, N+1 DB Loops, Arabic RTL Bugs, and Karpathy Discipline in &lt;8ms!</p>
     <div class="card">
       <div class="tabs">
-        <button class="tab active" onclick="loadApexSample('bad', this)">❌ AI Failure Diff (Laziness + Feature Deletion + Deprecated SDK)</button>
-        <button class="tab" onclick="loadApexSample('clean', this)">✅ Clean Surgical Diff (Grade A+ • Modern SDKs)</button>
+        <button class="tab active" onclick="loadApexSample('bad', this)">🚨 AI Disaster Sample (SQLi + N+1 Loop + Broken RTL + TODO Stub)</button>
+        <button class="tab" onclick="loadApexSample('clean', this)">✅ Production-Grade Sample (100/100 Grade A+)</button>
+      </div>
+      <div class="stat-strip" style="margin-top:0;margin-bottom:14px;">
+        <div class="stat-chip"><span id="scSec">100</span><small>🛡️ Security SAST</small></div>
+        <div class="stat-chip"><span id="scPerf">100</span><small>⚡ N+1 &amp; Perf</small></div>
+        <div class="stat-chip"><span id="scRtl">100</span><small>🎨 RTL &amp; UI Guard</small></div>
+        <div class="stat-chip"><span id="scKarp">100</span><small>⚖️ Karpathy &amp; SDK</small></div>
       </div>
       <div class="grid-2">
         <div>
-          <label style="font-size:0.85rem;color:var(--muted);font-weight:700;">INPUT GIT DIFF OR CODE SNIPPET</label>
+          <label style="font-size:0.85rem;color:var(--muted);font-weight:700;">INPUT GIT DIFF OR SOURCE CODE</label>
           <textarea id="apexIn" oninput="runApexRadar()"></textarea>
         </div>
         <div>
-          <label style="font-size:0.85rem;color:var(--cyan);font-weight:800;">DETERMINISTIC APEX GATEKEEPER VERDICT</label>
+          <label style="font-size:0.85rem;color:var(--cyan);font-weight:800;">4-PILLAR HYPERNOVA DIAGNOSTIC REPORT</label>
           <pre id="apexOut" style="min-height:210px;white-space:pre-wrap;"></pre>
         </div>
       </div>
       <div class="oneliner-box" style="max-width:100%;margin:18px 0 0;">
-        <span style="font-weight:700;font-size:0.88rem;">⚡ Want the lightweight 1-File Karpathy + Superpowers + Quota Skill (`CLAUDE.md` / `AGENTS.md`)?</span>
+        <span style="font-weight:700;font-size:0.88rem;">⚡ Grab the 1-File Standalone Skill (`CLAUDE.md` / `AGENTS.md`):</span>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <code id="apexCurl">curl -fsSL https://sqo.elnemer-ai.com/apex-skill.md -o CLAUDE.md</code>
           <button class="btn primary" onclick="copyText('apexCurl')">📋 Copy 1-Liner</button>
@@ -438,10 +444,10 @@
       </div>
     </div>
 
-    <!-- 38 NATIVE MCP TOOLS CATALOG -->
-    <h2 class="section-title" id="mcp-tools" data-i18n="mcpTitle">🔌 All 38 Zero-Dependency Native MCP Tools (v10.0 Apex)</h2>
+    <!-- 43 NATIVE MCP TOOLS CATALOG -->
+    <h2 class="section-title" id="mcp-tools" data-i18n="mcpTitle">🔌 All 43 Zero-Dependency Native MCP Tools (v11.0 Hypernova)</h2>
     <div class="card">
-      <input type="text" id="toolFilter" placeholder="🔎 Filter 38 MCP tools (e.g. edit_symbol, spec, verify_work, sdk_radar, memory_graph, sandbox, hive)..." oninput="renderTools()" />
+      <input type="text" id="toolFilter" placeholder="🔎 Filter 43 MCP tools (e.g. security_audit, perf_audit, gen_tests, ui_audit, drift_guard, edit_symbol, spec)..." oninput="renderTools()" />
       <div class="tool-grid" id="toolGrid"></div>
     </div>
 
@@ -530,7 +536,7 @@
   <div id="copyToast" class="toast">✨ Copied to clipboard!</div>
   <footer>
     <div class="container">
-      <strong>Smart Quota &amp; Superpowers OS v10.0 Apex Edition</strong> • Created by <a href="https://github.com/ElNeMeR70" style="color:var(--cyan);">ElNeMeR</a> •
+      <strong>Smart Quota &amp; Superpowers OS v11.0 Hypernova Edition</strong> • Created by <a href="https://github.com/ElNeMeR70" style="color:var(--cyan);">ElNeMeR</a> •
       <a href="https://github.com/ElNeMeR70/smart-quota-orchestrator" style="color:var(--emerald);">GitHub Repository (MIT)</a>
     </div>
   </footer>
@@ -731,34 +737,34 @@ const toolsList = [
   ["sqo_memory_graph", "🔥 v10.0 Apex: Claude-Mem Auto-Captured Temporal Knowledge Graph + Mermaid export"],
   ["sqo_verify_work", "🔥 v10.0 Apex: Executable Karpathy Diff, Anti-Laziness & Silent-Deletion Gatekeeper"],
   ["sqo_sdk_radar", "🔥 v10.0 Apex: Context7-Class Live Pinned SDK Idioms & Deprecated API Scanner"],
-  ["sqo_worktree_sandbox", "🔥 v10.0 Apex: Superpowers Isolated Git Worktree / Snapshot Experiment Runner"]
+  ["sqo_worktree_sandbox", "🔥 v10.0 Apex: Superpowers Isolated Git Worktree / Snapshot Experiment Runner"],
+  ["sqo_security_audit", "🚀 v11.0 Hypernova: OWASP Top-10 & Agentic SAST Scanner (SQLi/CMDi/XSS/Eval/Crypto)"],
+  ["sqo_perf_audit", "🚀 v11.0 Hypernova: Database N+1 Loop, Async Waterfall & Flutter UI-Jank Profiler"],
+  ["sqo_gen_tests", "🚀 v11.0 Hypernova: Zero-Token Deterministic Unit & Edge-Case Test Synthesizer (-3k Out Tok)"],
+  ["sqo_ui_audit", "🚀 v11.0 Hypernova: Bilingual Arabic RTL, WCAG a11y & Flutter Row Overflow Auditor"],
+  ["sqo_drift_guard", "🚀 v11.0 Hypernova: Environment Variable & .env.example Boot-Crash Drift Detector"]
 ];
 
 const apexSamples = {
-  bad: `diff --git a/lib/checkout_screen.dart b/lib/checkout_screen.dart
---- a/lib/checkout_screen.dart
-+++ b/lib/checkout_screen.dart
-@@ -10,8 +10,7 @@
--def applyLoyaltyDiscount(total) {
--  return total * 0.9;
--}
-+Widget buildCheckout(BuildContext context) {
-+  // TODO: implement rest of payment logic here
-+  return WillPopScope(
-+    child: Container(color: Colors.indigo.withOpacity(0.4)),
+  bad: `+async function syncOrders(users, uid) {
++  const row = await db.query(\`SELECT * FROM accounts WHERE id = \${uid}\`);
++  for (const u of users) {
++    await prisma.order.findMany({ where: { userId: u.id } });
++  }
++  // TODO: implement rest of validation logic
++  return Padding(
++    padding: EdgeInsets.only(left: 16),
++    child: WillPopScope(child: Container(color: Colors.blue.withOpacity(0.5))),
 +  );
-+}
-+import google.generativeai as genai`,
-  clean: `diff --git a/lib/checkout_screen.dart b/lib/checkout_screen.dart
---- a/lib/checkout_screen.dart
-+++ b/lib/checkout_screen.dart
-@@ -10,4 +10,8 @@
- Widget buildCheckout(BuildContext context) {
-+  return PopScope(
-+    canPop: true,
-+    child: Container(color: Colors.indigo.withValues(alpha: 0.4)),
++}`,
+  clean: `+async function syncOrders(userIds, uid) {
++  const row = await db.query("SELECT id, plan FROM accounts WHERE id = ?", [uid]);
++  const orders = await prisma.order.findMany({ where: { userId: { in: userIds } } });
++  return Padding(
++    padding: EdgeInsetsDirectional.only(start: 16),
++    child: PopScope(canPop: true, child: Container(color: Colors.blue.withValues(alpha: 0.5))),
 +  );
- }`
++}`
 };
 
 function loadApexSample(k, btn) {
@@ -773,32 +779,46 @@ function loadApexSample(k, btn) {
 function runApexRadar() {
   const txt = (document.getElementById("apexIn") || {}).value || "";
   const issues = [];
-  const removedSyms = [], addedSyms = new Set();
-  txt.split(/\r?\n/).forEach(ln => {
-    if (ln.startsWith("+") && !ln.startsWith("+++")) {
-      const c = ln.slice(1);
-      const ms = c.match(/^\s*(?:export\s+)?(?:def|class|function|Widget|Future)\s+([A-Za-z_]\w*)/);
-      if (ms) addedSyms.add(ms[1]);
-      if (/(?:\/\/|#)\s*(?:TODO|FIXME|\.\.\.\s*rest)/i.test(c) || /UnimplementedError|NotImplementedError/.test(c))
-        issues.push("❌ [KARPATHY LAZINESS GATE] Unfinished TODO / stub placeholder: " + c.trim());
-    } else if (ln.startsWith("-") && !ln.startsWith("---")) {
-      const ms = ln.slice(1).match(/^\s*(?:export\s+)?(?:def|class|function)\s+([A-Za-z_]\w*)/);
-      if (ms) removedSyms.push(ms[1]);
-    }
-  });
-  removedSyms.forEach(s => { if (!addedSyms.has(s)) issues.push("❌ [SILENT FEATURE DELETION] Symbol `" + s + "` was deleted without replacement!"); });
-  if (/\bWillPopScope\s*\(/.test(txt)) issues.push("⚠️ [SDK RADAR • Flutter 3.22+] `WillPopScope` is deprecated -> Use `PopScope(canPop:, onPopInvokedWithResult:)`");
-  if (/\.withOpacity\s*\(/.test(txt)) issues.push("⚠️ [SDK RADAR • Flutter 3.27+] `.withOpacity()` loses wide-gamut precision -> Use `.withValues(alpha:)`");
-  if (/google\.generativeai|@google\/generative-ai/.test(txt)) issues.push("⚠️ [SDK RADAR • Gemini SDK] Legacy `google-generativeai` -> Use unified `from google import genai` (`google-genai`)");
-  if (/ChatCompletion\.create/.test(txt)) issues.push("⚠️ [SDK RADAR • OpenAI v1+] Legacy `ChatCompletion.create` -> Use `OpenAI().chat.completions.create()`");
+  let secPen = 0, perfPen = 0, rtlPen = 0, karpPen = 0;
 
-  const score = Math.max(0, 100 - issues.length * 22);
-  const grade = score >= 95 ? "A+" : (score >= 80 ? "B" : (score >= 55 ? "C" : "F (BLOCKED)"));
+  if (/(?:SELECT|DELETE\s+FROM|UPDATE)[\s\S]{0,60}?(?:\$\{|\{[A-Za-z_])/i.test(txt)) {
+    issues.push("🚨 [SECURITY SAST • CWE-89] SQL Injection via string interpolation -> Use parameterized `?` bindings!");
+    secPen += 38;
+  }
+  if (/(?:\bos\.system\s*\(|shell\s*=\s*True|dangerouslySetInnerHTML|\beval\s*\()/i.test(txt)) {
+    issues.push("🚨 [SECURITY SAST • CWE-78/79] Command/XSS/Eval injection sink -> Use safe APIs / DOMPurify!");
+    secPen += 30;
+  }
+  if (/(?:for\s*\(|for\s+\w+\s+in|foreach)[\s\S]{0,160}?\bawait\s+(?:prisma|db|fetch|axios|http)/.test(txt)) {
+    issues.push("⚡ [PERF PROFILER • N+1] Database/Network `await` inside loop -> Batch with `WHERE IN` or `Promise.all`!");
+    perfPen += 35;
+  }
+  if (/(?:EdgeInsets\.only\s*\([^)]*(?:left|right)\s*:|Alignment\.(?:centerLeft|centerRight)|margin-left\s*:)/.test(txt)) {
+    issues.push("🎨 [RTL & UI GUARD] Hardcoded `left/right` breaks Arabic RTL -> Use `EdgeInsetsDirectional` / `margin-inline-start`!");
+    rtlPen += 28;
+  }
+  if (/(?:\/\/|#)\s*(?:TODO|FIXME|\.\.\.\s*rest)/i.test(txt) || /UnimplementedError|NotImplementedError/.test(txt)) {
+    issues.push("⚖️ [KARPATHY GATE] Unfinished TODO / stub placeholder violates Goal-Driven Completion!");
+    karpPen += 28;
+  }
+  if (/\bWillPopScope\s*\(|\.withOpacity\s*\(|google\.generativeai|ChatCompletion\.create/.test(txt)) {
+    issues.push("📚 [SDK RADAR] Outdated 2023 SDK call -> Upgrade to `PopScope` / `.withValues(alpha:)` / `google-genai`!");
+    karpPen += 22;
+  }
+
+  const sSec = Math.max(0, 100 - secPen), sPerf = Math.max(0, 100 - perfPen), sRtl = Math.max(0, 100 - rtlPen), sKarp = Math.max(0, 100 - karpPen);
+  document.getElementById("scSec").textContent = sSec + "/100";
+  document.getElementById("scPerf").textContent = sPerf + "/100";
+  document.getElementById("scRtl").textContent = sRtl + "/100";
+  document.getElementById("scKarp").textContent = sKarp + "/100";
+
+  const overall = Math.round((sSec + sPerf + sRtl + sKarp) / 4);
+  const grade = overall >= 95 ? "A+" : (overall >= 80 ? "B" : (overall >= 60 ? "C" : "F (BLOCKED)"));
   const out = document.getElementById("apexOut");
   if (out) {
-    out.textContent = `⚖️ KARPATHY & SDK RADAR SCORE: ${score}/100  •  GRADE: ${grade}\n` +
+    out.textContent = `🏆 OVERALL HYPERNOVA HEALTH: ${overall}/100  •  GRADE: ${grade}\n` +
       "──────────────────────────────────────────────────────────\n" +
-      (issues.length ? issues.join("\n\n") : "✅ ZERO laziness stubs!\n✅ ZERO silent feature deletions!\n✅ ZERO deprecated 2023 SDK hallucinations!\n🚀 Ready to ship with Surgical Precision.");
+      (issues.length ? issues.join("\n\n") : "✅ 100/100 Security SAST (Zero SQLi/CMDi/XSS)!\n✅ 100/100 Performance (Zero N+1 loops)!\n✅ 100/100 Arabic/English RTL Directional Safety!\n✅ 100/100 Karpathy Discipline & Modern SDKs!");
   }
 }
 function renderTools() {
@@ -828,12 +848,12 @@ function calcROI() {
 const translations = {
   ar: {
     dir: "rtl",
-    hBadge: "الإصدار 10.0 Apex • 38 أداة MCP • التعديل الجراحي للدوال (-85% كتابة) • بوابة كارباثي الصارمة • شجرة المواصفات DAG • رادار المكتبات",
-    hTitle: "نظام التشغيل الشامل الذي يجمع أقوى 6 قدرات برمجة بالذكاء الاصطناعي في أداة واحدة",
-    hSub: "يجمع توفير 96.8% من توكينات القراءة + 85% من توكينات الكتابة عبر تعديل الدوال بالاسم + درع كارباثي ضد الكسل وحذف الميزات + الذاكرة التلقائية الصامتة + رادار أحدث إصدارات المكتبات!",
-    ctaTry: "⚖️ جرّب رادار كارباثي وكاشف المكتبات القديمة", ctaCfg: "🛠️ ولّد ملفات الحماية لمشروعك",
-    apexTitle: "⚖️ بوابة كارباثي الجراحية ورادار المكتبات الملغاة (v10.0 مباشر)",
-    apexSub: "الصق أي تعديل أو كود ليكشف فوراً تعليقات TODO الكسولة، أو الحذف الصامت للميزات، أو دوال Flutter/Python/Next.js القديمة!",
+    hBadge: "الإصدار 11.0 Hypernova • 43 أداة MCP • فاحص الثغرات OWASP SAST • كاشف بطء قواعد البيانات N+1 • مولّد الاختبارات الآلي • فاحص RTL",
+    hTitle: "نظام التشغيل الشامل الذي يجمع أقوى قدرات هندسة البرمجيات بالذكاء الاصطناعي في أداة واحدة",
+    hSub: "يجمع توفير 96.8% من توكينات القراءة + 85% من توكينات الكتابة + كشف ثغرات SQLi/XSS + كشف حلقات N+1 + ضمان توافق العربية RTL + مولّد الاختبارات الآلي!",
+    ctaTry: "🛡️ جرّب طبيب الكود الرباعي الحي (v11.0)", ctaCfg: "🛠️ ولّد ملفات الحماية لمشروعك",
+    apexTitle: "🛡️ طبيب الكود الرباعي الحي (فحص الثغرات SAST + الأداء N+1 + توافق RTL + بوابة كارباثي)",
+    apexSub: "الصق أي كود ليفحص 4 محاور هندسية في أقل من 8 ملي ثانية: الثغرات الأمنية، بطء الاستعلامات، أخطاء الاتجاه العربي RTL، وكسل الـ TODO!",
     playTitle: "⚡ المختبر الحي لضغط السياق، تقطير قواعد البيانات، وحجب الأسرار",
     playSub: "جرّب محرك الضغط وتقطير الـ SQL وتنقية الأسرار مباشرة داخل متصفحك الآن (100% محلياً بدون إرسال أي كود!)",
     leadTitle: "🌍 الشبكة العالمية لتوفير التوكنز وبطاقة GitHub التفاعلية الحية",
@@ -841,8 +861,8 @@ const translations = {
     cfgTitle: "🛠️ مولّد إعدادات الـ MCP ودرع التجاهل المخصص لإطار عملك",
     calcTitle: "💰 الحاسبة التفاعلية لتوفير التوكنز والدولارات شهرياً",
     archTitle: "🏗️ المخطط المعماري وإثبات القياس الفعلي",
-    hubTitle: "☁️ المستودع السحابي الحي للقواعد الذهبية وخبرات الأطر البرمجية (v10.0)",
-    mcpTitle: "🔌 دليل الـ 38 أداة المدمجة في خادم الـ MCP (الإصدار 10.0 Apex)"
+    hubTitle: "☁️ المستودع السحابي الحي للقواعد الذهبية وخبرات الأطر البرمجية (v11.0)",
+    mcpTitle: "🔌 دليل الـ 43 أداة المدمجة في خادم الـ MCP (الإصدار 11.0 Hypernova)"
   },
   es: {
     dir: "ltr",

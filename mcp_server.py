@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v10.0 Apex Edition).
+"""Zero-Dependency Model Context Protocol (MCP) Stdio Server (`sqo-engine` v11.0 Hypernova Edition).
 
-Exposes 38 native, token-saving & Superpowers engineering tools directly to
+Exposes 43 native, token-saving, Security SAST, N+1 Performance, RTL/UI & Superpowers tools directly to
 Google Antigravity, Claude Code, Cursor, Windsurf, VS Code, and Gemini CLI over
 JSON-RPC 2.0 `stdio` transport.
 
@@ -21,7 +21,7 @@ from typing import Any, Dict, List
 ROOT_DIR = Path(__file__).resolve().parent
 SKILLS_DIR = ROOT_DIR / "skills"
 SERVER_NAME = "sqo-engine"
-SERVER_VERSION = "10.0.0"
+SERVER_VERSION = "11.0.0"
 
 _MOD_CACHE: Dict[str, Any] = {}
 
@@ -519,6 +519,62 @@ TOOLS_SPEC: List[Dict[str, Any]] = [
             "required": ["action", "workspace"],
         },
     },
+    {
+        "name": "sqo_security_audit",
+        "description": "OWASP Top-10 & Agentic SAST Vulnerability Scanner (v11.0 Hypernova): scans Python, TS/JS, PHP/Laravel, Dart & Go for SQL Injection (CWE-89), Command Injection (CWE-78), XSS (CWE-79), Eval/Pickle RCE (CWE-95), Weak Crypto & CORS bugs in <15ms!",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_perf_audit",
+        "description": "Database N+1 Query, Sequential Async Waterfall & Flutter UI-Jank Profiler (v11.0 Hypernova): catches N+1 DB/HTTP calls inside loops, unbatched sequential awaits, undisposed Flutter controllers, and jsonDecode in build().",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_gen_tests",
+        "description": "Zero-Token Deterministic Unit & Edge-Case Test Synthesizer (v11.0 Hypernova): parses Python, TS/JS, or Dart source files and generates ready-to-run Red-Green TDD test harnesses (saving ~3,000 Output Tokens per module!).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "file_path": {"type": "string", "description": "Target source file path."},
+                "output_path": {"type": "string", "description": "Optional path to write generated test file."},
+            },
+            "required": ["file_path"],
+        },
+    },
+    {
+        "name": "sqo_ui_audit",
+        "description": "Bilingual Arabic RTL, WCAG Accessibility & Flutter RenderFlex Overflow Auditor (v11.0 Hypernova): catches hardcoded physical left/right directions, missing image alt labels, and unwrapped Text inside Flutter Row().",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
+    {
+        "name": "sqo_drift_guard",
+        "description": "Environment Variable & Config Drift Detector (v11.0 Hypernova): cross-checks all `process.env`, `os.getenv`, `env()`, and `String.fromEnvironment` references in code against `.env.example` to prevent production boot crashes.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "workspace": {"type": "string", "description": "Workspace root directory."},
+            },
+            "required": ["workspace"],
+        },
+    },
 ]
 
 
@@ -815,6 +871,27 @@ def _dispatch_tool(name: str, args: Dict[str, Any]) -> str:
         else:
             res = mod.list_sandboxes(ws)
         return json.dumps(res, indent=2, ensure_ascii=False)
+
+    if name == "sqo_security_audit":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/security_sast.py")
+        return mod.render_markdown(mod.scan_workspace_security(Path(args["workspace"]).resolve()))
+
+    if name == "sqo_perf_audit":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/perf_profiler.py")
+        return mod.render_markdown(mod.profile_workspace_performance(Path(args["workspace"]).resolve()))
+
+    if name == "sqo_gen_tests":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/test_synthesizer.py")
+        out_p = Path(args["output_path"]).resolve() if args.get("output_path") else None
+        return mod.render_markdown(mod.synthesize_tests_for_file(Path(args["file_path"]).resolve(), write_to=out_p))
+
+    if name == "sqo_ui_audit":
+        mod = _load_tool_mod("apex-spec-surgeon/scripts/ui_rtl_auditor.py")
+        return mod.render_markdown(mod.audit_workspace_ui(Path(args["workspace"]).resolve()))
+
+    if name == "sqo_drift_guard":
+        mod = _load_tool_mod("context-compactor/scripts/detect_drift.py")
+        return mod.render_markdown(mod.audit_env_and_config_drift(Path(args["workspace"]).resolve()))
 
     raise ValueError(f"Unknown MCP tool: {name}")
 

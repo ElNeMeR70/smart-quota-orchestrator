@@ -9,13 +9,13 @@
 
 <img src="./assets/hero-banner.jpg" alt="Smart Quota & Swarm Orchestrator v7.0 Hero Banner" width="100%" />
 
-# ⚡ Smart Quota & Superpowers OS (`v10.0` Apex God-Mode Edition)
+# ⚡ Smart Quota & Superpowers OS (`v11.0` Hypernova Edition)
 
-### Uniting the Top 6 Highest-Starred AI Engineering Paradigms in 1 Zero-Dependency Engine: **38 Native MCP Tools**, **52 CLI Commands**, Surgical AST Symbol Editing (`-85%` Output Tokens), Karpathy Diff Gatekeeper, Spec-Driven DAG, Auto-Captured Memory Graph, Live SDK Deprecation Radar & 3-Stage Quota Firewall
+### The Complete Autonomous AI Software Engineering OS: **43 Native MCP Tools**, **57 CLI Commands**, OWASP Agentic SAST, Database N+1 & Async Profiler, Zero-Token Test Synthesizer, Bilingual RTL/a11y Auditor, Surgical AST Symbol Editing (`-85%` Output Tokens), Karpathy Gatekeeper & 3-Stage Quota Firewall (`-96.8%` Input Tokens)
 
 [![Live Site](https://img.shields.io/badge/Live_Playground-sqo.elnemer--ai.com-EC4899?style=for-the-badge)](https://sqo.elnemer-ai.com)
-[![Release](https://img.shields.io/badge/Release-v10.0.0_Apex-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
-[![MCP Tools](https://img.shields.io/badge/MCP_Server-38_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
+[![Release](https://img.shields.io/badge/Release-v11.0.0_Hypernova-6366F1?style=for-the-badge)](https://github.com/ElNeMeR70/smart-quota-orchestrator)
+[![MCP Tools](https://img.shields.io/badge/MCP_Server-43_Native_Tools-10B981?style=for-the-badge)](./mcp_server.py)
 [![Token Savings](https://img.shields.io/badge/Verified_Compression-96.8%25_In_%7C_85%25_Out-F59E0B?style=for-the-badge)](./assets/benchmark-comparison.svg)
 [![Zero Dependencies](https://img.shields.io/badge/Python_3.8%2B_%7C_npx-Zero_Dependencies-38BDF8?style=for-the-badge)](./package.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-A855F7?style=for-the-badge)](./LICENSE)
@@ -36,6 +36,10 @@
 | **4. Auto-Captured Memory Graph** | `claude-mem` + `Graphiti` | `sqo_memory_graph` / `sqo graph-mem` | `PostToolUse` hook silently records file co-edits & `test failed -> edit -> passed` bugfix edges + Mermaid export |
 | **5. Live SDK Deprecation Radar** | `upstash/context7` | `sqo_sdk_radar` / `sqo sdk-radar` | Reads pinned versions & flags deprecated calls (`WillPopScope`, `.withOpacity`, legacy `google-generativeai`, Next 15 sync `params`) |
 | **6. Worktree Experiment Sandbox** | `obra/superpowers` | `sqo_worktree_sandbox` / `sqo sandbox` | Zero-risk isolated Git worktree / snapshot sandboxes with 1-click diff, promote & cleanup |
+| **7. OWASP Agentic Security SAST** | `v11.0 Hypernova` | `sqo_security_audit` / `sqo sec-audit` | `<15ms` multi-language scanner for SQLi (`CWE-89`), CMDi (`CWE-78`), XSS (`CWE-79`), Eval RCE & Weak Crypto |
+| **8. N+1 & UI-Jank Perf Profiler** | `v11.0 Hypernova` | `sqo_perf_audit` / `sqo perf-audit` | Detects DB/HTTP N+1 loops, sequential `await` waterfalls, undisposed Flutter controllers & `jsonDecode` in `build()` |
+| **9. Zero-Token Test Synthesizer** | `v11.0 Hypernova` | `sqo_gen_tests` / `sqo gen-tests` | Deterministically generates Python `unittest`, TS `vitest` & Dart `flutter_test` harnesses (**-3,000 Output Tokens!**) |
+| **10. RTL, a11y & Drift Guards** | `v11.0 Hypernova` | `sqo_ui_audit` & `sqo_drift_guard` | Catches Arabic RTL `left/right` bugs, Flutter `Row` overflows & missing `.env.example` boot-crash variables |
 
 [**Why v5.0?**](#-the-7-silent-quota-killers-and-how-v50-eliminates-them) • [**Visual Architecture**](#️-system-architecture-v50) • [**Real-World Dialogues**](#-real-world-developer--agent-dialogues-before-vs-after) • [**16 MCP Tools**](#-16-native-mcp-tools-sqo-engine) • [**Quick Install**](#-1-minute-installation) • [**الملخص بالعربية**](#-الملخص-العربي-السريع)
 

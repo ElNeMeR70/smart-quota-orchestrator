@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "smart-quota-orchestrator"
-version = "10.0.0"
-description = "Autonomous AI Agent Quota, Context-Compression & Multi-Agent OS Layer (v10.0 Apex: 38 MCP tools, 52 CLI commands, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Memo Cache, Hive-Mind, Schema Distiller & Live $USD ROI Ledger)."
+version = "11.0.0"
+description = "Autonomous AI Agent Quota, Context-Compression & Multi-Agent OS Layer (v11.0 Hypernova: 43 MCP tools, 57 CLI commands, Anti-Hallucination Dependency Verifier, i18n Drift Matrix, SHA-256 Memo Cache, Hive-Mind, Schema Distiller & Live $USD ROI Ledger)."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
