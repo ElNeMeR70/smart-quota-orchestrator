@@ -232,6 +232,7 @@
       <a href="#" class="brand">⚡ Smart Quota OS <span class="pill">v13.0 Zenith</span></a>
       <div class="nav-links">
         <a href="#why-sqo" data-i18n="navWhy">Why SQO?</a>
+        <a href="#quota-hud" data-i18n="navHud">⚡ Live Quota HUD</a>
         <a href="#apex-radar" data-i18n="navApex">8-Gate Code Doctor</a>
         <a href="#rules-studio" data-i18n="navRules">CLAUDE.md Studio</a>
         <a href="#deep-guide" data-i18n="navGuide">Deep Guide</a>
@@ -308,6 +309,70 @@
 
       <img src="./assets/hero-banner.jpg" alt="Smart Quota OS Aurora Daylight Core" class="hero-banner" />
     </section>
+
+    <!-- NEW SECTION: REAL-TIME SMART QUOTA HUD & SIDECAR -->
+    <h2 class="section-title" id="quota-hud" data-i18n="hudTitle">⚡ Real-Time Smart Quota HUD (Aux Side Panel &amp; Sidecar)</h2>
+    <p class="section-sub" data-i18n="hudSub">Never get surprised by quota exhaustion or midnight rate limits. The live floating HUD docks into Antigravity Aux Pane, VS Code Sidebar, or runs locally at <code>http://127.0.0.1:7899</code>:</p>
+    <div class="card" style="margin-bottom:30px; border:2px solid var(--border-strong);">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; align-items:center;">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,0.12);color:var(--emerald);padding:4px 12px;border-radius:999px;font-size:0.82rem;font-weight:700;margin-bottom:12px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald);"></span>
+            Live Real-Time Telemetry &bull; Zero Polling Overhead
+          </div>
+          <h3 style="margin:0 0 10px;font-size:1.35rem;color:var(--text);" data-i18n="hudCardTitle">Always-On Fuel Gauge For Your AI Coding Agents</h3>
+          <p style="color:var(--muted);font-size:0.92rem;line-height:1.6;" data-i18n="hudCardDesc">
+            Tracks shared vs. sovereign failover reserve pools (Google Gemini, Anthropic Claude, OpenAI), counts down hours to quota reset, and visualizes token &amp; $USD savings intercepted by <code>&lt;15ms</code> hooks in real time.
+          </p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+            <a href="sidecar://smart-quota-hud" class="btn primary" style="text-decoration:none;">🧩 Open Antigravity Sidecar</a>
+            <a href="http://127.0.0.1:7899" target="_blank" class="btn" style="text-decoration:none;">🌐 Open Local Web HUD (Port 7899)</a>
+          </div>
+        </div>
+        <div style="background:#070b19;border:1px solid rgba(56,189,248,0.3);border-radius:14px;padding:16px;color:#f8fafc;box-shadow:0 12px 30px rgba(0,0,0,0.25);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">
+            <span style="font-weight:800;color:var(--cyan);font-size:0.9rem;">⚡ Smart Quota HUD Preview</span>
+            <span style="font-size:0.75rem;color:#10b981;font-weight:700;">● LIVE 3s SYNC</span>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:8px 10px;margin-bottom:8px;">
+            <div style="display:flex;justify-content:space-between;font-weight:700;font-size:0.82rem;">
+              <span>Google Gemini Pool (Shared)</span>
+              <span style="color:#ef4444;font-family:monospace;">14%</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.1);height:6px;border-radius:999px;margin:6px 0;overflow:hidden;">
+              <div style="width:14%;height:100%;background:#ef4444;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#94a3b8;">
+              <span>Status: <strong style="color:#ef4444;">CRITICAL</strong></span>
+              <span>Reset In: <strong>115h 59m</strong></span>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:8px 10px;margin-bottom:10px;">
+            <div style="display:flex;justify-content:space-between;font-weight:700;font-size:0.82rem;">
+              <span>Anthropic Claude Pool (Reserve)</span>
+              <span style="color:#10b981;font-family:monospace;">100%</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.1);height:6px;border-radius:999px;margin:6px 0;overflow:hidden;">
+              <div style="width:100%;height:100%;background:#10b981;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#94a3b8;">
+              <span>Status: <strong style="color:#10b981;">HEALTHY</strong></span>
+              <span>Ready for complex tasks</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center;">
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(56,189,248,0.2);border-radius:8px;padding:6px;">
+              <div style="color:var(--cyan);font-weight:900;font-size:1.1rem;font-family:monospace;">223.2K</div>
+              <div style="font-size:0.68rem;color:#94a3b8;">Tokens Saved Today</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:6px;">
+              <div style="color:#10b981;font-weight:900;font-size:1.1rem;font-family:monospace;">$3.35</div>
+              <div style="font-size:0.68rem;color:#94a3b8;">Frontier USD Saved</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- NEW SECTION: HEAD-TO-HEAD ECOSYSTEM COMPARISON -->
     <h2 class="section-title" id="why-sqo" data-i18n="whyTitle">🔥 Why Smart Quota OS v13.0? (Ecosystem Comparison)</h2>
