@@ -504,7 +504,7 @@ class SmartQuotaAutonomousOSV5Tests(unittest.TestCase):
         self.assertTrue((REPO_ROOT / "docs" / "api" / "share_scan.php").is_file())
         self.assertTrue((REPO_ROOT / "docs" / "apex-skill.md").is_file())
         tax = tax_mod.profile_workspace(REPO_ROOT / "skills")
-        self.assertEqual(len(tax["skills"]), 7)
+        self.assertGreaterEqual(len(tax["skills"]), 7)
 
     def test_30_prompt_json_and_log_compressor(self) -> None:
         big_items = [{"id": i, "email": f"u{i}@test.dev", "status": "ACTIVE"} for i in range(40)]

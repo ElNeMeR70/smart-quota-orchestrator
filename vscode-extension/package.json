@@ -1,7 +1,7 @@
 {
   "name": "smart-quota-orchestrator-vscode",
-  "displayName": "Smart Quota & Swarm Orchestrator — Status Bar & Agent OS",
-  "description": "Live status-bar token/$USD ROI counter, 1-click Live Command Center launcher, Context-Rot monitor, and framework shield bootstrapper for VS Code, Cursor, Antigravity & Windsurf.",
+  "displayName": "Smart Quota & Superpowers OS — Status Bar & Sidebar HUD",
+  "description": "Live status-bar & sidebar webview HUD for monitoring model quota pools, token burn rates, $USD ROI ledger, and 1-click command center for VS Code, Cursor, Antigravity & Windsurf.",
   "version": "13.0.0",
   "publisher": "elnemer",
   "homepage": "https://sqo.elnemer-ai.com",
@@ -22,6 +22,24 @@
   ],
   "main": "./extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sqo-hud-container",
+          "title": "Smart Quota HUD",
+          "icon": "icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "sqo-hud-container": [
+        {
+          "type": "webview",
+          "id": "sqo.hudView",
+          "name": "Live Quota & ROI HUD"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "sqo.openLiveCenter",
@@ -38,6 +56,10 @@
       {
         "command": "sqo.checkContextRot",
         "title": "Smart Quota: Check Session Context-Rot & Copy Handoff Brief"
+      },
+      {
+        "command": "sqo.refreshHud",
+        "title": "Smart Quota: Refresh Live Quota HUD"
       }
     ]
   }
