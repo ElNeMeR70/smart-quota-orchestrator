@@ -2,15 +2,15 @@
 """Smart Quota OS — Antigravity Deep Model Cockpit & Floating Quota HUD.
 
 Features:
-1. Native Antigravity Usage Popover (1:1 visual match to user's screenshot).
+1. Always-Visible Glowing Floating Button (FAB) on screen that toggles the exact Antigravity Usage card.
 2. Deep Per-Model Token Breakdown & Architectural Analytics:
    - Gemini 4 Carbon, Gemini 4 Argon, Gemini 3.8 Flash, Claude Sonnet 5.5, Claude Opus 5.5, GPT-OSS 120B.
    - Input Tokens, Output Tokens, KV-Cache Read/Write, Context Window %, Burn Rate, USD Spent & Saved.
-3. Interactive Failover Priority Chain (Visual DAG).
-4. Real-Time Smart Routing Directives with 1-click switch commands.
-5. Autonomous Token Savings Ledger & Live Interceptions Log.
-6. Light Theme by default (لون فاتح) matching Antigravity native style, with Dark Mode toggle.
-7. 1-Click Launch Desktop Floating Widget (`/api/launch_desktop`).
+3. Interactive Task Quota Burn Simulator & Cost Estimator.
+4. Interactive Model Switcher with 1-Click Copy buttons.
+5. Live Ticking Reset Countdown Clocks (5h Rolling & Weekly).
+6. Universal 1-Click Bookmarklet (Inject Floating Widget on ANY website!).
+7. Light Theme by default (لون فاتح) matching Antigravity native style, with Dark Mode toggle.
 8. Bilingual: English default with instant Arabic toggle.
 """
 
@@ -113,7 +113,7 @@ def get_live_data() -> Dict[str, Any]:
                     "pct": 77,
                     "reset_en": "Resets in 4d 3h",
                     "reset_ar": "يتجدد خلال 4 أيام و 3 ساعات",
-                    "color": "#22c55e",
+                    "color": "#16a34a",
                 },
                 {
                     "name_en": "5h limit",
@@ -121,7 +121,7 @@ def get_live_data() -> Dict[str, Any]:
                     "pct": 47,
                     "reset_en": "Resets in 1h 24m",
                     "reset_ar": "يتجدد خلال ساعة و 24 دقيقة",
-                    "color": "#22c55e",
+                    "color": "#16a34a",
                 },
             ],
         },
@@ -136,7 +136,7 @@ def get_live_data() -> Dict[str, Any]:
                     "pct": 19,
                     "reset_en": "Resets in 1d 20h",
                     "reset_ar": "يتجدد خلال يوم و 20 ساعة",
-                    "color": "#eab308",
+                    "color": "#d97706",
                 },
                 {
                     "name_en": "5h limit",
@@ -144,7 +144,7 @@ def get_live_data() -> Dict[str, Any]:
                     "pct": 100,
                     "reset_en": "Full reserve untouched",
                     "reset_ar": "رصيد كامل 100% جاهز",
-                    "color": "#22c55e",
+                    "color": "#16a34a",
                 },
             ],
         },
@@ -159,7 +159,7 @@ def get_live_data() -> Dict[str, Any]:
                     "pct": 89,
                     "reset_en": "Resets in 6d 21h",
                     "reset_ar": "يتجدد خلال 6 أيام و 21 ساعة",
-                    "color": "#22c55e",
+                    "color": "#16a34a",
                 },
             ],
         },
@@ -187,7 +187,7 @@ def get_live_data() -> Dict[str, Any]:
             "quota_5h_pct": 25,
             "weekly_pct": 14,
             "status": "CRITICAL",
-            "badge_color": "#ef4444",
+            "badge_color": "#dc2626",
             "cost_tier": "Frontier ($3.00/1M)",
             "strengths_en": "Deep architectural design, complex refactors, 1M context reasoning.",
             "strengths_ar": "تصميم المعمارية البرمجية المعقدة، التفكير الاستدلالي العميق، ونافذة سياق 1 مليون توكن.",
@@ -409,7 +409,7 @@ HTML_PAGE = """<!DOCTYPE html>
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding: 24px 16px 80px 16px;
+      padding: 24px 16px 100px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -417,7 +417,7 @@ HTML_PAGE = """<!DOCTYPE html>
     }
     .layout-wrapper {
       width: 100%;
-      max-width: 1120px;
+      max-width: 1140px;
     }
 
     /* TOP HEADER */
@@ -426,7 +426,7 @@ HTML_PAGE = """<!DOCTYPE html>
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      padding-bottom: 12px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--border);
     }
     .hud-title-box {
@@ -437,22 +437,22 @@ HTML_PAGE = """<!DOCTYPE html>
     .hud-logo {
       font-size: 26px;
       background: rgba(2, 132, 199, 0.1);
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid rgba(2, 132, 199, 0.2);
     }
     .hud-title {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--text);
       letter-spacing: -0.3px;
     }
     .hud-subtitle {
-      font-size: 12.5px;
+      font-size: 13px;
       color: var(--muted);
       margin-top: 2px;
     }
@@ -465,9 +465,9 @@ HTML_PAGE = """<!DOCTYPE html>
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text);
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 600;
-      padding: 7px 13px;
+      padding: 7px 14px;
       border-radius: 8px;
       cursor: pointer;
       display: inline-flex;
@@ -498,7 +498,7 @@ HTML_PAGE = """<!DOCTYPE html>
       gap: 20px;
       align-items: start;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 920px) {
       .cockpit-grid { grid-template-columns: 1fr; }
     }
 
@@ -521,7 +521,7 @@ HTML_PAGE = """<!DOCTYPE html>
       border-bottom: 1px solid var(--border);
     }
     .np-title {
-      font-size: 14.5px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text);
     }
@@ -631,6 +631,8 @@ HTML_PAGE = """<!DOCTYPE html>
       padding-top: 8px;
       border-top: 1px solid var(--border);
       font-size: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .cmd-badge {
       background: var(--card-sub);
@@ -640,6 +642,11 @@ HTML_PAGE = """<!DOCTYPE html>
       padding: 3px 8px;
       border-radius: 6px;
       font-weight: 600;
+      cursor: pointer;
+    }
+    .cmd-badge:hover {
+      background: var(--accent);
+      color: #fff;
     }
 
     /* FAILOVER PRIORITY CHAIN */
@@ -689,6 +696,57 @@ HTML_PAGE = """<!DOCTYPE html>
       color: var(--muted);
     }
 
+    /* SIMULATOR CARD */
+    .sim-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+    }
+    .sim-head {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .sim-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .sim-btn {
+      background: var(--card-sub);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .sim-btn:hover, .sim-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(2, 132, 199, 0.08);
+    }
+    .sim-result {
+      background: var(--card-sub);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     /* MODEL ROWS (DEEP TELEMETRY CARDS) */
     .model-card {
       background: var(--card-bg);
@@ -712,9 +770,10 @@ HTML_PAGE = """<!DOCTYPE html>
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
     .mc-name {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--text);
     }
@@ -775,142 +834,159 @@ HTML_PAGE = """<!DOCTYPE html>
       background: rgba(2, 132, 199, 0.04);
       border: 1px solid rgba(2, 132, 199, 0.12);
       border-radius: 6px;
-      padding: 6px 10px;
+      padding: 7px 10px;
     }
 
-    /* RECENT INTERCEPTIONS TABLE */
-    .events-card {
+    /* BOOKMARKLET TOOL CARD */
+    .bmark-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 14px 16px;
       box-shadow: var(--shadow);
-    }
-    .events-title {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
     }
-    .events-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11.5px;
-    }
-    .events-table th {
-      text-align: left;
-      padding: 6px 8px;
-      color: var(--muted);
-      font-weight: 600;
-      border-bottom: 1px solid var(--border);
-    }
-    .events-table td {
-      padding: 7px 8px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    /* FLOATING MINI-WIDGET IN BROWSER (Bottom Right) */
-    .floating-box-widget {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 290px;
-      background: var(--card-bg);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.15), 0 0 0 1px var(--border);
-      padding: 12px 14px;
-      z-index: 99999;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .floating-box-widget:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 24px 50px rgba(0,0,0,0.22), 0 0 0 1.5px var(--accent);
-    }
-    .fbw-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .fbw-title {
-      font-size: 12.5px;
+    .bmark-btn {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      color: #fff;
       font-weight: 700;
-      display: flex;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+      cursor: grab;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
     }
-    .fbw-badge {
-      font-size: 10px;
-      font-weight: 800;
+
+    /* ========================================================
+       ALWAYS-VISIBLE FLOATING BUTTON (FAB) & POPOVER (BROWSER)
+       ======================================================== */
+    .sqo-floating-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1.5px solid var(--accent);
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 0 15px rgba(2, 132, 199, 0.25);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      z-index: 999999;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sqo-floating-fab:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.22), 0 0 20px rgba(2, 132, 199, 0.4);
+    }
+    .fab-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+    }
+    .fab-badge {
       background: rgba(22, 163, 74, 0.12);
       color: var(--green);
-      padding: 1px 6px;
-      border-radius: 4px;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 6px;
     }
-    .fbw-rows {
-      display: flex;
+
+    /* THE FLOATING POPOVER CARD OVERLAY */
+    .sqo-floating-card-overlay {
+      position: fixed;
+      bottom: 74px;
+      right: 24px;
+      width: 320px;
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2), 0 0 0 1px var(--border);
+      padding: 16px;
+      z-index: 999998;
+      display: none;
       flex-direction: column;
-      gap: 3px;
-      font-size: 11.5px;
+      gap: 10px;
+      animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .fbw-row {
+    .sqo-floating-card-overlay.open {
+      display: flex;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .fco-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
     }
-    .fbw-hint {
-      margin-top: 8px;
-      padding-top: 6px;
-      border-top: 1px solid var(--border);
-      font-size: 10.5px;
+    .fco-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .fco-close {
+      cursor: pointer;
+      font-size: 14px;
       color: var(--muted);
-      display: flex;
-      justify-content: space-between;
+      padding: 2px 6px;
+      border-radius: 4px;
     }
+    .fco-close:hover { color: var(--text); background: var(--card-sub); }
   </style>
 </head>
 <body>
 
-  <!-- FLOATING MINI-WIDGET IN BROWSER (Bottom Right Corner) -->
-  <div class="floating-box-widget" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Click to view deep Cockpit & Model Routing">
-    <div class="fbw-header">
-      <div class="fbw-title">
-        <span>⚡ Antigravity Usage</span>
-      </div>
-      <span class="fbw-badge" id="fbw-shield">+488K tok saved</span>
+  <!-- ALWAYS-VISIBLE FLOATING BUTTON (FAB) -->
+  <button id="sqo-hud-fab" class="sqo-floating-fab" onclick="toggleFloatingCard()" title="Toggle Antigravity Usage Card">
+    <span class="fab-pulse"></span>
+    <span>⚡</span>
+    <span><strong>47%</strong> Quota Left</span>
+    <span class="fab-badge" id="fab-top-target">Argon 89%</span>
+  </button>
+
+  <!-- FLOATING POPOVER CARD OVERLAY -->
+  <div id="sqo-popover" class="sqo-floating-card-overlay">
+    <div class="fco-header">
+      <div class="fco-title">⚡ Antigravity Usage</div>
+      <div class="fco-close" onclick="toggleFloatingCard()">✕</div>
     </div>
-    <div class="fbw-rows">
-      <div class="fbw-row">
-        <span>Gemini 5h limit:</span>
-        <strong id="fbw-g5h" style="color:var(--green)">47% left</strong>
-      </div>
-      <div class="fbw-row">
-        <span>Gemini Carbon (High):</span>
-        <strong id="fbw-gcarb" style="color:var(--red)">14% left</strong>
-      </div>
-      <div class="fbw-row">
-        <span>Gemini Argon (Med):</span>
-        <strong id="fbw-garg" style="color:var(--green)">89% left</strong>
-      </div>
-      <div class="fbw-row">
-        <span>Claude 5h limit:</span>
-        <strong id="fbw-c5h" style="color:var(--green)">100% left</strong>
-      </div>
+    <div id="floating-cats"></div>
+    <div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:8px;padding:8px;font-size:11px;">
+      <strong style="color:var(--red);">⚠️ Directive:</strong> Carbon is at 14%. Use <strong>Argon (89%)</strong>.
     </div>
-    <div class="fbw-hint">
-      <span>Smart Quota Orchestrator</span>
-      <span style="color:var(--accent); font-weight:600;">Details ↗</span>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px;border-top:1px solid var(--border);font-size:11px;">
+      <span style="color:var(--green);font-weight:700;">+488K tok saved</span>
+      <a href="#cockpit-top" onclick="toggleFloatingCard()" style="color:var(--accent);text-decoration:none;font-weight:600;">Deep Cockpit ↗</a>
     </div>
   </div>
 
-  <div class="layout-wrapper">
+  <div class="layout-wrapper" id="cockpit-top">
     
     <!-- Top HUD Navigation -->
     <header class="hud-header">
@@ -922,8 +998,8 @@ HTML_PAGE = """<!DOCTYPE html>
         </div>
       </div>
       <div class="header-actions">
-        <button class="btn-action primary" onclick="launchDesktopWidget()" title="Spawn floating card on your Windows desktop over ANY program">
-          🖥️ Desktop Floating Widget
+        <button class="btn-action primary" onclick="copySwitchCmd('agy --model gemini-4-argon')" title="Switch model now">
+          ⚡ Switch: Argon (89%)
         </button>
         <button class="btn-action" onclick="toggleTheme()" id="btn-theme">🌓 Theme (Dark)</button>
         <button class="btn-action" onclick="toggleLang()" id="btn-lang">🌐 عربي</button>
@@ -962,8 +1038,29 @@ HTML_PAGE = """<!DOCTYPE html>
             Loading real-time smart routing advice...
           </div>
           <div class="directive-action-bar">
-            <span>Recommended Model: <strong id="dir-target" style="color:var(--accent);">Gemini 4 Argon (89%)</strong></span>
-            <span>CLI Switch: <code class="cmd-badge" id="dir-cmd">agy --model gemini-4-argon</code></span>
+            <span>Recommended Target: <strong id="dir-target" style="color:var(--accent);">Gemini 4 Argon (89%)</strong></span>
+            <span onclick="copySwitchCmd('agy --model gemini-4-argon')" title="Click to copy command">
+              CLI Switch: <code class="cmd-badge" id="dir-cmd">agy --model gemini-4-argon</code>
+            </span>
+          </div>
+        </div>
+
+        <!-- Task Quota Burn Simulator -->
+        <div class="sim-card">
+          <div class="sim-head">
+            <span>🧮 Interactive Task Quota Burn &amp; Cost Simulator</span>
+            <span style="font-size:11px;color:var(--muted);">Select Task Scope</span>
+          </div>
+          <div class="sim-controls">
+            <button class="sim-btn active" onclick="runSim('small', this)">Small Bugfix (1 File)</button>
+            <button class="sim-btn" onclick="runSim('medium', this)">Feature (5 Files)</button>
+            <button class="sim-btn" onclick="runSim('large', this)">Refactor (20 Files)</button>
+            <button class="sim-btn" onclick="runSim('swarm', this)">Multi-Agent Swarm</button>
+          </div>
+          <div class="sim-result" id="sim-output">
+            <span>Estimated Tokens: <strong>~18.5K tokens</strong></span>
+            <span>Argon Quota Impact: <strong style="color:var(--green)">-1.7% (SAFE ✓)</strong></span>
+            <span>Carbon Quota Impact: <strong style="color:var(--red)">-12.1% (RISKY ⚠️)</strong></span>
           </div>
         </div>
 
@@ -979,24 +1076,15 @@ HTML_PAGE = """<!DOCTYPE html>
         <!-- Models Breakdown List -->
         <div id="models-container" style="display:flex; flex-direction:column; gap:12px;"></div>
 
-        <!-- Recent Interceptions & Deduplication Events -->
-        <div class="events-card">
-          <div class="events-title">
-            <span id="t-events-title">🛡️ Recent Autonomous Shield Interceptions (Live Ledger)</span>
-            <span style="color:var(--accent); font-family:Consolas, monospace;" id="events-total-val">+488.3K saved</span>
+        <!-- Universal Bookmarklet Card -->
+        <div class="bmark-card">
+          <div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:3px;">⚡ Universal Browser Floating Widget (Bookmarklet)</div>
+            <div style="font-size:12px;color:var(--muted);">Drag this button to your Chrome/Edge bookmarks bar to inject the Floating HUD on <strong>ANY website</strong> (GitHub, Claude, Google, etc.):</div>
           </div>
-          <table class="events-table">
-            <thead>
-              <tr>
-                <th>Time (UTC)</th>
-                <th>Shield / Hook</th>
-                <th>Target Artifact</th>
-                <th>Tokens Prevented</th>
-                <th>Model Protected</th>
-              </tr>
-            </thead>
-            <tbody id="events-tbody"></tbody>
-          </table>
+          <a class="bmark-btn" href="javascript:(function(){if(document.getElementById('sqo-injected-hud'))return;var s=document.createElement('script');s.src='http://127.0.0.1:7899/widget.js';document.body.appendChild(s);})();">
+            ⚡ Drag to Bookmarks: SQO HUD
+          </a>
         </div>
 
       </main>
@@ -1007,6 +1095,33 @@ HTML_PAGE = """<!DOCTYPE html>
 
   <script>
     let currentLang = 'en';
+
+    function toggleFloatingCard() {
+      const el = document.getElementById('sqo-popover');
+      el.classList.toggle('open');
+    }
+
+    function copySwitchCmd(cmd) {
+      navigator.clipboard.writeText(cmd).then(() => {
+        alert('Copied to clipboard: ' + cmd);
+      });
+    }
+
+    function runSim(size, btn) {
+      document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const out = document.getElementById('sim-output');
+
+      if (size === 'small') {
+        out.innerHTML = `<span>Estimated Tokens: <strong>~18.5K tok</strong></span><span>Argon Impact: <strong style="color:var(--green)">-1.7% (SAFE ✓)</strong></span><span>Carbon Impact: <strong style="color:var(--red)">-12.1% (RISKY ⚠️)</strong></span>`;
+      } else if (size === 'medium') {
+        out.innerHTML = `<span>Estimated Tokens: <strong>~82.4K tok</strong></span><span>Argon Impact: <strong style="color:var(--green)">-7.8% (SAFE ✓)</strong></span><span>Carbon Impact: <strong style="color:var(--red)">-55.3% (CRITICAL DEPLETION ❌)</strong></span>`;
+      } else if (size === 'large') {
+        out.innerHTML = `<span>Estimated Tokens: <strong>~245K tok</strong></span><span>Argon Impact: <strong style="color:var(--green)">-23.2% (SAFE ✓)</strong></span><span>Carbon Impact: <strong style="color:var(--red)">OUTAGE TRIGGERED ❌</strong></span>`;
+      } else if (size === 'swarm') {
+        out.innerHTML = `<span>Estimated Tokens: <strong>~720K tok</strong></span><span>Argon Impact: <strong style="color:var(--amber)">-68.5% (MONITOR ⚠️)</strong></span><span>Sonnet 5h Reserve: <strong style="color:var(--green)">-32% (TOP CHOICE ✓)</strong></span>`;
+      }
+    }
 
     function renderRing(pct, color) {
       const radius = 7;
@@ -1020,25 +1135,17 @@ HTML_PAGE = """<!DOCTYPE html>
       `;
     }
 
-    async function launchDesktopWidget() {
-      try {
-        const res = await fetch('/api/launch_desktop');
-        const json = await res.json();
-        alert(currentLang === 'ar' ? 'تم تشغيل الودجت العائم على سطح المكتب بنجاح!' : 'Desktop Floating Widget launched on screen!');
-      } catch (e) {
-        alert('Launched via local runner.');
-      }
-    }
-
     async function updateTelemetry() {
       try {
         const res = await fetch('/api/telemetry?t=' + Date.now());
         if (!res.ok) return;
         const data = await res.json();
 
-        // 1. Render Left Column Native Categories (Exact 1:1 match)
+        // 1. Render Left Column & Floating Popover Categories
         const catBox = document.getElementById('popover-categories');
-        catBox.innerHTML = data.categories.map(c => {
+        const floatBox = document.getElementById('floating-cats');
+
+        const catHtml = data.categories.map(c => {
           const title = currentLang === 'ar' ? c.title_ar : c.title_en;
           const rows = c.limits.map(l => {
             const name = currentLang === 'ar' ? l.name_ar : l.name_en;
@@ -1062,6 +1169,9 @@ HTML_PAGE = """<!DOCTYPE html>
             ${rows}
           `;
         }).join('');
+
+        catBox.innerHTML = catHtml;
+        if (floatBox) floatBox.innerHTML = catHtml;
 
         // 2. Render Smart Directive Banner
         document.getElementById('dir-headline').textContent = currentLang === 'ar' ? data.advice.headline_ar : data.advice.headline_en;
@@ -1138,24 +1248,8 @@ HTML_PAGE = """<!DOCTYPE html>
           `;
         }).join('');
 
-        // 5. Render Recent Events Table
-        if (data.roi && data.roi.recent_events) {
-          const tbody = document.getElementById('events-tbody');
-          tbody.innerHTML = data.roi.recent_events.map(ev => `
-            <tr>
-              <td><code>${ev.time}</code></td>
-              <td><strong>${ev.tool}</strong></td>
-              <td><code>${ev.target}</code></td>
-              <td style="color:var(--green); font-weight:700; font-family:Consolas, monospace;">${ev.saved}</td>
-              <td>${ev.model}</td>
-            </tr>
-          `).join('');
-        }
-
-        // 6. Update Footnotes & Floating Mini-Widget
+        // 5. Update Footnotes
         document.getElementById('t-shield-saved').textContent = '+' + (data.roi.total_tokens_saved / 1000).toFixed(1) + 'K saved';
-        document.getElementById('fbw-shield').textContent = '+' + (data.roi.total_tokens_saved / 1000).toFixed(0) + 'K saved';
-        document.getElementById('events-total-val').textContent = '+' + (data.roi.total_tokens_saved / 1000).toFixed(1) + 'K saved ($' + data.roi.saved_usd_frontier.toFixed(2) + ' USD)';
 
       } catch (err) {
         console.error(err);
@@ -1179,7 +1273,6 @@ HTML_PAGE = """<!DOCTYPE html>
       document.getElementById('t-shield-lbl').textContent = currentLang === 'ar' ? 'درع التوفير التلقائي' : 'Autonomous Shield';
       document.getElementById('t-dir-title').textContent = currentLang === 'ar' ? 'توجيه التوجيه الذكي اللحظي' : 'Real-Time Routing Directive';
       document.getElementById('t-chain-title').textContent = currentLang === 'ar' ? 'شجرة التوجيه التلقائي البديلة (DAG)' : 'Automatic Failover Routing Chain (DAG)';
-      document.getElementById('t-events-title').textContent = currentLang === 'ar' ? '🛡️ أحدث عمليات درع التوفير التلقائي (السجل الحي)' : '🛡️ Recent Autonomous Shield Interceptions (Live Ledger)';
 
       updateTelemetry();
     }
@@ -1197,6 +1290,55 @@ HTML_PAGE = """<!DOCTYPE html>
 """
 
 
+WIDGET_JS = """(function() {
+  if (document.getElementById('sqo-injected-hud')) return;
+  const wrap = document.createElement('div');
+  wrap.id = 'sqo-injected-hud';
+  wrap.innerHTML = `
+    <style>
+      #sqo-injected-hud * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .sqo-injected-fab {
+        position: fixed; bottom: 24px; right: 24px; z-index: 2147483647;
+        background: #ffffff; color: #0f172a; border: 1.5px solid #0284c7;
+        border-radius: 999px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        padding: 8px 16px; display: flex; align-items: center; gap: 8px;
+        cursor: pointer; font-size: 12px; font-weight: 700;
+      }
+      .sqo-injected-card {
+        position: fixed; bottom: 74px; right: 24px; z-index: 2147483647;
+        width: 310px; background: #ffffff; color: #0f172a; border: 1px solid #cbd5e1;
+        border-radius: 12px; box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+        padding: 14px; display: none; flex-direction: column; gap: 8px;
+      }
+      .sqo-injected-card.open { display: flex; }
+      .sqo-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; }
+    </style>
+    <div class="sqo-injected-card" id="sqo-inj-card">
+      <div style="display:flex;justify-content:space-between;font-weight:700;font-size:13px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;">
+        <span>⚡ Antigravity Usage</span>
+        <span style="cursor:pointer;" onclick="document.getElementById('sqo-inj-card').classList.remove('open')">✕</span>
+      </div>
+      <div style="font-weight:600;font-size:12px;margin-top:4px;">Gemini Models</div>
+      <div class="sqo-row"><span>5h limit (47% left):</span><strong style="color:#16a34a;">47%</strong></div>
+      <div class="sqo-row"><span>Weekly limit (77% left):</span><strong style="color:#16a34a;">77%</strong></div>
+      <div style="font-weight:600;font-size:12px;margin-top:4px;">Claude and GPT models</div>
+      <div class="sqo-row"><span>Weekly limit:</span><strong style="color:#d97706;">19%</strong></div>
+      <div class="sqo-row"><span>5h limit:</span><strong style="color:#16a34a;">100%</strong></div>
+      <div style="font-weight:600;font-size:12px;margin-top:4px;">Gemini 4 Argon</div>
+      <div class="sqo-row"><span>Weekly limit:</span><strong style="color:#16a34a;">89%</strong></div>
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:6px;font-size:11px;color:#991b1b;margin-top:4px;">
+        ⚠️ Carbon is at 14%. Route tasks to <strong>Argon (89%)</strong>.
+      </div>
+    </div>
+    <button class="sqo-injected-fab" onclick="document.getElementById('sqo-inj-card').classList.toggle('open')">
+      <span style="color:#16a34a;">●</span> <span>⚡ Antigravity 47%</span>
+    </button>
+  `;
+  document.body.appendChild(wrap);
+})();
+"""
+
+
 class CockpitHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         p = self.path.split("?")[0]
@@ -1209,17 +1351,11 @@ class CockpitHandler(BaseHTTPRequestHandler):
             self.send_header("Cache-Control", "no-cache, no-store")
             self.end_headers()
             self.wfile.write(payload)
-        elif p == "/api/launch_desktop":
-            # Spawn the desktop floating widget
-            try:
-                widget_script = Path(__file__).parent / "desktop_widget.py"
-                subprocess.Popen(["pythonw", str(widget_script)])
-                res = {"status": "ok", "message": "Desktop widget spawned"}
-            except Exception as e:
-                res = {"status": "error", "message": str(e)}
-            payload = json.dumps(res).encode("utf-8")
+        elif p == "/widget.js":
+            payload = WIDGET_JS.encode("utf-8")
             self.send_response(200)
-            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Type", "application/javascript; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             self.wfile.write(payload)
         elif p in ("/", "/index.html", "/ui.html"):
