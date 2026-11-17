@@ -25,6 +25,8 @@ Provides 67 deterministic, zero-dependency commands for AI coding agents and dev
   - sdk-radar       : Context7-Class Live Version-Pinned SDK Idioms & Deprecation Scanner
   - sandbox         : Superpowers Isolated Git Worktree / Snapshot Experiment Runner
   - serve           : Launch the Real-Time Localhost Web Command Center (http://127.0.0.1:7890)
+  - hud             : Launch the Real-Time Antigravity Quota & Model Cockpit (http://127.0.0.1:7899)
+  - hud-desktop     : Launch the Native Windows Always-On-Top Floating HUD Widget over ANY program!
   - init            : Auto-detect stack (Flutter/Next.js/Laravel/Python/Go/Rust) & bootstrap shields
   - verify-deps     : Anti-Hallucination Dependency & Phantom Import Verifier (Python/JS/TS/Dart)
   - i18n            : Universal Flutter .arb & JSON Localization Drift & Placeholder Auditor
@@ -148,6 +150,8 @@ COMMAND_MAP: Dict[str, Tuple[Path, List[str]]] = {
     "slice": (SKILLS_DIR / "parallel-slice-architect" / "scripts" / "partition_parallel_slices.py", []),
     "prompt-tax": (SKILLS_DIR / "prompt-tax-profiler" / "scripts" / "optimize_prompt_rules.py", []),
     "cache-audit": (SKILLS_DIR / "prompt-tax-profiler" / "scripts" / "audit_cache_stability.py", []),
+    "hud": (ROOT_DIR / "sidecars" / "quota_hud" / "server.py", []),
+    "hud-desktop": (ROOT_DIR / "sidecars" / "quota_hud" / "desktop_widget.py", []),
     "mcp": (ROOT_DIR / "mcp_server.py", []),
 }
 

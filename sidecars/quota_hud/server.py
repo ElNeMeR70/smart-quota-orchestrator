@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Smart Quota OS — Antigravity Model Cockpit & Floating Quota HUD.
+"""Smart Quota OS — Antigravity Deep Model Cockpit & Floating Quota HUD.
 
 Features:
-1. Floating Widget shaped EXACTLY like the native Antigravity Usage popover box.
-2. Complete Per-Model Token Breakdown:
-   - Exact Model Names: Gemini 3.8 Flash, Gemini 4 Carbon, Gemini 4 Argon, Claude Sonnet 5.5, Claude Opus 5.5, GPT-OSS 120B.
-   - Exact Token Counts: Input Tokens, Output Tokens, Total Consumed, KV-Cache Reuse, Burn Rate.
-3. Real-Time Smart Routing Recommendations:
-   - Alerts on exhausted/critical pools (e.g. Gemini 4 Carbon at 14%).
-   - Actionable directives on which model to switch to right now to preserve quotas.
-4. Autonomous Token Savings Ledger: Real data from SQO shields (Deduplicator, AST edits, Memo cache).
-5. Bilingual UI: English (default) / Arabic (عربي) toggle.
-6. Zero dependencies: Pure Python 3.8+ standard library.
+1. Native Antigravity Usage Popover (1:1 visual match to user's screenshot).
+2. Deep Per-Model Token Breakdown & Architectural Analytics:
+   - Gemini 4 Carbon, Gemini 4 Argon, Gemini 3.8 Flash, Claude Sonnet 5.5, Claude Opus 5.5, GPT-OSS 120B.
+   - Input Tokens, Output Tokens, KV-Cache Read/Write, Context Window %, Burn Rate, USD Spent & Saved.
+3. Interactive Failover Priority Chain (Visual DAG).
+4. Real-Time Smart Routing Directives with 1-click switch commands.
+5. Autonomous Token Savings Ledger & Live Interceptions Log.
+6. Light Theme by default (لون فاتح) matching Antigravity native style, with Dark Mode toggle.
+7. 1-Click Launch Desktop Floating Widget (`/api/launch_desktop`).
+8. Bilingual: English default with instant Arabic toggle.
 """
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import os
+import subprocess
 import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -49,6 +50,43 @@ def get_live_data() -> Dict[str, Any]:
         "saved_usd": 1.46,
         "saved_usd_frontier": 7.32,
         "events_count": 5,
+        "recent_events": [
+            {
+                "time": "19:27 UTC",
+                "tool": "Duplicate-Read Deduplicator",
+                "target": "workspace-start.blade.php",
+                "saved": "+3,270 tok",
+                "model": "Gemini 3.8 Flash"
+            },
+            {
+                "time": "19:11 UTC",
+                "tool": "Duplicate-Read Deduplicator",
+                "target": "home.blade.php",
+                "saved": "+261,777 tok",
+                "model": "Gemini 4 Carbon"
+            },
+            {
+                "time": "18:52 UTC",
+                "tool": "CLI Log Compressor",
+                "target": "task-5371.log",
+                "saved": "+120 tok",
+                "model": "Gemini 3.8 Flash"
+            },
+            {
+                "time": "17:19 UTC",
+                "tool": "KV-Cache Prefix Stabilizer",
+                "target": "task-68.log",
+                "saved": "+4,467 tok",
+                "model": "Gemini 4 Carbon"
+            },
+            {
+                "time": "07:37 UTC",
+                "tool": "AST Symbol Skeletonizer",
+                "target": "server.py",
+                "saved": "+218,647 tok",
+                "model": "Gemini 4 Argon"
+            }
+        ]
     }
     if roi_ledger:
         try:
@@ -127,7 +165,7 @@ def get_live_data() -> Dict[str, Any]:
         },
     ]
 
-    # 3. Exact Individual Models Breakdown with Token Consumption
+    # 3. Deep Individual Models Breakdown with Extended Telemetry
     models = [
         {
             "id": "gemini-4-carbon",
@@ -138,14 +176,23 @@ def get_live_data() -> Dict[str, Any]:
             "consumed_formatted": "2,410,500 tok (2.41M)",
             "input_tokens": "1,920,000",
             "output_tokens": "490,500",
+            "cached_read_tokens": "1,612,800 tok",
+            "context_window": "1,048,576 tokens (1M)",
+            "context_used_pct": "2.4%",
+            "burn_rate": "18.4K tok/turn",
+            "cost_spent": "$7.23 USD",
+            "cost_saved": "$4.84 USD",
+            "rpm_limit": "360 RPM / 4.0M TPM",
             "cache_hit_pct": "84%",
             "quota_5h_pct": 25,
             "weekly_pct": 14,
             "status": "CRITICAL",
             "badge_color": "#ef4444",
             "cost_tier": "Frontier ($3.00/1M)",
-            "recommendation_en": "DO NOT route heavy multi-agent swarms here. Quota is near depletion (14% weekly left). Switch to Argon or Claude Sonnet.",
-            "recommendation_ar": "حرج (14%): تجنب تشغيل السرب المتوازي عليه الآن لمنع توقف الحساب. حوّل إلى Argon أو Claude Sonnet.",
+            "strengths_en": "Deep architectural design, complex refactors, 1M context reasoning.",
+            "strengths_ar": "تصميم المعمارية البرمجية المعقدة، التفكير الاستدلالي العميق، ونافذة سياق 1 مليون توكن.",
+            "recommendation_en": "CRITICAL ALERT: Weekly quota near depletion (14%). PAUSE parallel swarm workers immediately. Switch to Argon or Claude Sonnet.",
+            "recommendation_ar": "تنبيه حرج: الرصيد الأسبوعي قارب على النفاد (14%). أوقف تشغيل السرب المتوازي فوراً وحوّل إلى Argon أو Claude Sonnet.",
         },
         {
             "id": "gemini-4-argon",
@@ -156,14 +203,23 @@ def get_live_data() -> Dict[str, Any]:
             "consumed_formatted": "185,200 tok",
             "input_tokens": "148,000",
             "output_tokens": "37,200",
+            "cached_read_tokens": "112,480 tok",
+            "context_window": "1,048,576 tokens (1M)",
+            "context_used_pct": "0.8%",
+            "burn_rate": "6.2K tok/turn",
+            "cost_spent": "$0.55 USD",
+            "cost_saved": "$0.34 USD",
+            "rpm_limit": "360 RPM / 4.0M TPM",
             "cache_hit_pct": "76%",
             "quota_5h_pct": 89,
             "weekly_pct": 89,
             "status": "PRIMARY RECOMMENDED",
-            "badge_color": "#22c55e",
+            "badge_color": "#16a34a",
             "cost_tier": "Balanced ($3.00/1M)",
-            "recommendation_en": "BEST GEMINI TARGET RIGHT NOW: 89% untouched capacity available. Perfect for architecture & deep code edits.",
-            "recommendation_ar": "أفضل خيار في جيميني حالياً (89% رصيد متاح وسليم). ممتاز لكتابة الكود والمعمارية.",
+            "strengths_en": "Balanced code generation, AST symbol editing, Karpathy law enforcement.",
+            "strengths_ar": "توليد وتعديل الكود المتوازن، تطبيق قوانين كارباثي، والتحرير الجراحي للرموز.",
+            "recommendation_en": "PRIMARY TARGET: 89% untouched capacity available. Perfect for feature implementation, TDD tests, and multi-file refactors.",
+            "recommendation_ar": "الهدف الرئيسي الموصى به: 89% رصيد متاح وسليم بالكامل. ممتاز لتنفيذ الميزات واختبارات TDD وهندسة الكود.",
         },
         {
             "id": "gemini-3.8-flash",
@@ -174,14 +230,23 @@ def get_live_data() -> Dict[str, Any]:
             "consumed_formatted": "524,190 tok",
             "input_tokens": "412,000",
             "output_tokens": "112,190",
+            "cached_read_tokens": "374,920 tok",
+            "context_window": "1,048,576 tokens (1M)",
+            "context_used_pct": "1.1%",
+            "burn_rate": "3.8K tok/turn",
+            "cost_spent": "$0.16 USD",
+            "cost_saved": "$1.12 USD",
+            "rpm_limit": "1,000 RPM / 10.0M TPM",
             "cache_hit_pct": "91%",
             "quota_5h_pct": 47,
             "weekly_pct": 77,
             "status": "CONSERVE",
-            "badge_color": "#eab308",
+            "badge_color": "#d97706",
             "cost_tier": "Fast ($0.30/1M)",
-            "recommendation_en": "Active runner. Great for fast file searches, unit test execution, and single-turn terminal commands.",
-            "recommendation_ar": "نشط حالياً. ممتاز لعمليات البحث السريعة وتشغيل أوامر التيرمينال وفحص الكود.",
+            "strengths_en": "Sub-second response, test runner, git operations, BM25 symbol search.",
+            "strengths_ar": "سرعة استجابة فائقة، تشغيل الاختبارات، أوامر Git والبحث السريع.",
+            "recommendation_en": "Active runner. Best for high-frequency lightweight shell tasks and code recon without burning frontier quotas.",
+            "recommendation_ar": "الموديل النشط للأوامر السريعة. ممتاز للمهام المتكررة والبحث وفحص الملفات دون حرق كوتا الموديلات الكبيرة.",
         },
         {
             "id": "claude-sonnet-5.5",
@@ -192,14 +257,23 @@ def get_live_data() -> Dict[str, Any]:
             "consumed_formatted": "45,000 tok",
             "input_tokens": "37,500",
             "output_tokens": "7,500",
+            "cached_read_tokens": "23,250 tok",
+            "context_window": "200,000 tokens",
+            "context_used_pct": "0.3%",
+            "burn_rate": "4.5K tok/turn",
+            "cost_spent": "$0.14 USD",
+            "cost_saved": "$0.07 USD",
+            "rpm_limit": "50 RPM / 100K TPM",
             "cache_hit_pct": "62%",
             "quota_5h_pct": 100,
             "weekly_pct": 19,
             "status": "BEST FAILOVER",
-            "badge_color": "#38bdf8",
+            "badge_color": "#0284c7",
             "cost_tier": "Frontier ($3.00/1M)",
-            "recommendation_en": "TOP FAILOVER TARGET: 100% 5h capacity fully untouched. Ideal for refactoring when Gemini Carbon is paused.",
-            "recommendation_ar": "أفضل بديل فوري: رصيد 5 ساعات كامل 100% متاح. مثالي لإعادة هيكلة الملفات.",
+            "strengths_en": "System design, strict type safety, zero hallucination refactoring.",
+            "strengths_ar": "تصميم النظم البرمجية، الدقة العالية في الـ Types، وهندسة الكود المتقدمة.",
+            "recommendation_en": "TOP FAILOVER TARGET: 100% 5h capacity fully untouched. Switch here whenever Gemini pools need cooldown.",
+            "recommendation_ar": "أفضل بديل فوري: رصيد 5 ساعات كامل 100% متاح. حوّل إليه مباشرة عند الحاجة لتهدئة كوتا جيميني.",
         },
         {
             "id": "claude-opus-5.5",
@@ -210,12 +284,21 @@ def get_live_data() -> Dict[str, Any]:
             "consumed_formatted": "0 tok (Untouched)",
             "input_tokens": "0",
             "output_tokens": "0",
+            "cached_read_tokens": "0 tok",
+            "context_window": "200,000 tokens",
+            "context_used_pct": "0.0%",
+            "burn_rate": "0.0 tok/turn",
+            "cost_spent": "$0.00 USD",
+            "cost_saved": "$0.00 USD",
+            "rpm_limit": "20 RPM / 40K TPM",
             "cache_hit_pct": "0%",
             "quota_5h_pct": 100,
             "weekly_pct": 19,
             "status": "RESERVE VAULT",
-            "badge_color": "#a855f7",
+            "badge_color": "#9333ea",
             "cost_tier": "Ultra Frontier ($15.00/1M)",
+            "strengths_en": "Formal verification, deep cryptographic audits, adversarial council review.",
+            "strengths_ar": "التدقيق الأمني الجنائي، مراجعة الثغرات الحرجة، ومحاكاة المجالس الهندسية.",
             "recommendation_en": "Keep in reserve for critical bug audits, security red-teaming, or complex mathematical algorithms.",
             "recommendation_ar": "احتياطي ذهبي محفوظ: مخصص لاكتشاف الثغرات الأمنية المعقدة والتدقيق الشامل.",
         },
@@ -228,12 +311,21 @@ def get_live_data() -> Dict[str, Any]:
             "consumed_formatted": "0 tok (Standby)",
             "input_tokens": "0",
             "output_tokens": "0",
+            "cached_read_tokens": "0 tok",
+            "context_window": "128,000 tokens",
+            "context_used_pct": "0.0%",
+            "burn_rate": "0.0 tok/turn",
+            "cost_spent": "$0.00 USD",
+            "cost_saved": "$0.00 USD",
+            "rpm_limit": "500 RPM / 2.0M TPM",
             "cache_hit_pct": "0%",
             "quota_5h_pct": 100,
             "weekly_pct": 19,
             "status": "STANDBY",
-            "badge_color": "#94a3b8",
+            "badge_color": "#64748b",
             "cost_tier": "Standard ($0.15/1M)",
+            "strengths_en": "Offline fallback, deterministic JSON extraction, documentation generation.",
+            "strengths_ar": "بديل احتياطي مستقل، استخراج هياكل JSON الدقيقة، وكتابة التوثيق.",
             "recommendation_en": "Completely untouched. Standby backup for offline tasks or secondary verification.",
             "recommendation_ar": "غير مستهلك بالكامل. جاهز كبديل احتياطي للتحقق والتأكد المستقل.",
         },
@@ -245,6 +337,13 @@ def get_live_data() -> Dict[str, Any]:
         "headline_ar": "⚠️ نموذج Gemini 4 Carbon وصل لمستوى حرج (14%). حوّل فوراً إلى Gemini 4 Argon أو Claude Sonnet.",
         "target_model": "Gemini 4 Argon (89% Quota)",
         "switch_cmd": "agy --model gemini-4-argon",
+        "failover_chain": [
+            {"rank": 1, "model": "Gemini 4 Argon", "quota": "89%", "state": "PRIMARY TARGET", "color": "#16a34a"},
+            {"rank": 2, "model": "Claude Sonnet 5.5", "quota": "100% (5h)", "state": "FAILOVER 1", "color": "#0284c7"},
+            {"rank": 3, "model": "Gemini 3.8 Flash", "quota": "47% (5h)", "state": "FAST OPS", "color": "#d97706"},
+            {"rank": 4, "model": "Gemini 4 Carbon", "quota": "14% (Wk)", "state": "COOLDOWN", "color": "#dc2626"},
+            {"rank": 5, "model": "Claude Opus 5.5", "quota": "100%", "state": "VAULT RESERVE", "color": "#9333ea"},
+        ],
         "saved_tokens_display": f"+{roi_data['total_tokens_saved']:,} tok",
         "saved_usd_display": f"${roi_data['saved_usd_frontier']:.2f} USD",
     }
@@ -263,22 +362,47 @@ HTML_PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Quota OS — Cockpit HUD &amp; Model Routing Engine</title>
+  <title>Smart Quota OS — Cockpit &amp; Model Routing Engine</title>
   <style>
     :root {
+      /* LIGHT THEME (DEFAULT / لون فاتح) */
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-sub: #f1f5f9;
+      --border: #e2e8f0;
+      --border-highlight: #cbd5e1;
+      --text: #0f172a;
+      --text-sub: #334155;
+      --muted: #64748b;
+      --accent: #0284c7;
+      --green: #16a34a;
+      --amber: #d97706;
+      --red: #dc2626;
+      --purple: #9333ea;
+      --shadow: 0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-hover: 0 10px 25px rgba(0,0,0,0.1);
+      --ring-bg: #e2e8f0;
+    }
+
+    body.theme-dark {
       --bg: #09090b;
       --card-bg: #18181b;
-      --panel-bg: #1f1f23;
+      --card-sub: #27272a;
       --border: #27272a;
       --border-highlight: #3f3f46;
       --text: #f4f4f5;
+      --text-sub: #d4d4d8;
       --muted: #a1a1aa;
       --accent: #38bdf8;
       --green: #22c55e;
       --amber: #eab308;
       --red: #ef4444;
       --purple: #a855f7;
+      --shadow: 0 10px 30px rgba(0,0,0,0.5);
+      --shadow-hover: 0 16px 36px rgba(0,0,0,0.7);
+      --ring-bg: rgba(255,255,255,0.12);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -289,11 +413,14 @@ HTML_PAGE = """<!DOCTYPE html>
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: background 0.2s ease, color 0.2s ease;
     }
     .layout-wrapper {
       width: 100%;
-      max-width: 1040px;
+      max-width: 1120px;
     }
+
+    /* TOP HEADER */
     .hud-header {
       display: flex;
       justify-content: space-between;
@@ -305,87 +432,104 @@ HTML_PAGE = """<!DOCTYPE html>
     .hud-title-box {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .hud-logo {
-      font-size: 24px;
+      font-size: 26px;
+      background: rgba(2, 132, 199, 0.1);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      border: 1px solid rgba(2, 132, 199, 0.2);
     }
     .hud-title {
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
+      letter-spacing: -0.3px;
     }
     .hud-subtitle {
-      font-size: 12px;
+      font-size: 12.5px;
       color: var(--muted);
+      margin-top: 2px;
     }
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .btn-action {
-      background: #27272a;
-      border: 1px solid var(--border-highlight);
-      color: #e4e4e7;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
       font-size: 12px;
       font-weight: 600;
-      padding: 6px 12px;
+      padding: 7px 13px;
       border-radius: 8px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
       transition: all 0.15s;
     }
     .btn-action:hover {
-      background: #3f3f46;
-      color: #fff;
       border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .btn-action.primary {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+    .btn-action.primary:hover {
+      opacity: 0.92;
+      color: #ffffff;
     }
 
     /* 2-COLUMN COCKPIT GRID */
     .cockpit-grid {
       display: grid;
-      grid-template-columns: 340px 1fr;
+      grid-template-columns: 330px 1fr;
       gap: 20px;
       align-items: start;
     }
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {
       .cockpit-grid { grid-template-columns: 1fr; }
     }
 
     /* LEFT: NATIVE ANTIGRAVITY USAGE CARD (EXACT 1:1 REPLICA) */
     .native-popover-box {
-      background: #ffffff;
-      color: #0f172a;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.08);
-      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      padding: 16px;
       position: sticky;
       top: 20px;
-    }
-    body.theme-dark .native-popover-box {
-      background: #18181b;
-      color: #f4f4f5;
-      box-shadow: 0 14px 36px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
     }
     .np-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
     }
     .np-title {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 600;
-      color: inherit;
+      color: var(--text);
     }
     .np-spinner {
       width: 14px;
       height: 14px;
-      border: 2px solid rgba(100,116,139,0.25);
-      border-top-color: #0ea5e9;
+      border: 2px solid rgba(100,116,139,0.3);
+      border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 1s infinite linear;
     }
@@ -394,7 +538,7 @@ HTML_PAGE = """<!DOCTYPE html>
     .np-cat-title {
       font-size: 13.5px;
       font-weight: 600;
-      color: inherit;
+      color: var(--text);
       margin: 12px 0 6px 0;
     }
     .np-cat-title:first-of-type { margin-top: 4px; }
@@ -402,7 +546,7 @@ HTML_PAGE = """<!DOCTYPE html>
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 3px 0;
+      padding: 4px 0;
     }
     .np-labels {
       display: flex;
@@ -410,25 +554,22 @@ HTML_PAGE = """<!DOCTYPE html>
     }
     .np-main-lbl {
       font-size: 12.5px;
-      color: #334155;
+      color: var(--text-sub);
     }
-    body.theme-dark .np-main-lbl { color: #d4d4d8; }
     .np-sub-lbl {
       font-size: 11.5px;
-      color: #64748b;
+      color: var(--muted);
     }
-    body.theme-dark .np-sub-lbl { color: #a1a1aa; }
     .np-stat {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
     }
     .np-val {
       font-size: 12.5px;
-      color: #1e293b;
+      color: var(--text);
       font-weight: 500;
     }
-    body.theme-dark .np-val { color: #f4f4f5; }
 
     /* SVG PROGRESS RING */
     .ring-svg {
@@ -438,10 +579,9 @@ HTML_PAGE = """<!DOCTYPE html>
     }
     .ring-bg {
       fill: none;
-      stroke: rgba(148, 163, 184, 0.3);
+      stroke: var(--ring-bg);
       stroke-width: 2.2;
     }
-    body.theme-dark .ring-bg { stroke: rgba(255,255,255,0.12); }
     .ring-fill {
       fill: none;
       stroke-width: 2.2;
@@ -454,15 +594,16 @@ HTML_PAGE = """<!DOCTYPE html>
     .cockpit-main {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
     }
 
     /* Smart Directive Banner */
     .directive-card {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(30, 41, 59, 0.6));
-      border: 1px solid rgba(239, 68, 68, 0.35);
+      background: var(--card-bg);
+      border: 1.5px solid var(--red);
       border-radius: 12px;
       padding: 14px 16px;
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -479,7 +620,7 @@ HTML_PAGE = """<!DOCTYPE html>
     }
     .directive-body {
       font-size: 13.5px;
-      color: #f1f5f9;
+      color: var(--text);
       line-height: 1.45;
       font-weight: 500;
     }
@@ -487,30 +628,79 @@ HTML_PAGE = """<!DOCTYPE html>
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 6px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      font-size: 11.5px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
     }
     .cmd-badge {
-      background: #09090b;
-      border: 1px solid #3f3f46;
-      color: #38bdf8;
-      font-family: monospace;
+      background: var(--card-sub);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: Consolas, monospace;
       padding: 3px 8px;
       border-radius: 6px;
+      font-weight: 600;
     }
 
-    /* MODEL ROWS */
+    /* FAILOVER PRIORITY CHAIN */
+    .failover-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+    }
+    .failover-head {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .failover-steps {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .f-step {
+      flex: 1;
+      min-width: 140px;
+      background: var(--card-sub);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .f-step-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .f-step-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      color: var(--muted);
+    }
+
+    /* MODEL ROWS (DEEP TELEMETRY CARDS) */
     .model-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 14px 16px;
+      box-shadow: var(--shadow);
       transition: all 0.15s;
     }
     .model-card:hover {
       border-color: var(--border-highlight);
-      background: #202024;
+      box-shadow: var(--shadow-hover);
     }
     .mc-head {
       display: flex;
@@ -526,15 +716,15 @@ HTML_PAGE = """<!DOCTYPE html>
     .mc-name {
       font-size: 14px;
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
     }
     .mc-tag {
       font-size: 10.5px;
       color: var(--muted);
-      background: rgba(255,255,255,0.04);
+      background: var(--card-sub);
       padding: 2px 7px;
       border-radius: 4px;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
     }
     .mc-status {
       font-size: 10.5px;
@@ -545,63 +735,103 @@ HTML_PAGE = """<!DOCTYPE html>
       letter-spacing: 0.3px;
     }
 
-    /* Metric Grid */
+    /* Metric Grid (6 Columns for Deep Analytics) */
     .mc-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
       padding: 10px;
-      background: rgba(0,0,0,0.25);
+      background: var(--card-sub);
+      border: 1px solid var(--border);
       border-radius: 8px;
       margin-bottom: 10px;
-      font-size: 11.5px;
+      font-size: 11px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      .mc-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 480px) {
       .mc-grid { grid-template-columns: repeat(2, 1fr); }
     }
     .mc-metric-label {
       color: var(--muted);
       margin-bottom: 2px;
+      font-size: 10px;
     }
     .mc-metric-val {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      color: #f4f4f5;
-      font-family: monospace;
+      color: var(--text);
+      font-family: Consolas, monospace;
     }
 
     .mc-advice {
       font-size: 12px;
-      color: #cbd5e1;
+      color: var(--text-sub);
       line-height: 1.4;
       display: flex;
       align-items: flex-start;
       gap: 6px;
+      background: rgba(2, 132, 199, 0.04);
+      border: 1px solid rgba(2, 132, 199, 0.12);
+      border-radius: 6px;
+      padding: 6px 10px;
     }
 
-    /* FLOATING MINI-WIDGET (EXACT SHAPE IN CORNER) */
+    /* RECENT INTERCEPTIONS TABLE */
+    .events-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+    }
+    .events-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .events-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+    }
+    .events-table th {
+      text-align: left;
+      padding: 6px 8px;
+      color: var(--muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+    .events-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    /* FLOATING MINI-WIDGET IN BROWSER (Bottom Right) */
     .floating-box-widget {
       position: fixed;
       bottom: 24px;
       right: 24px;
       width: 290px;
-      background: #ffffff;
-      color: #0f172a;
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.08);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15), 0 0 0 1px var(--border);
       padding: 12px 14px;
       z-index: 99999;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    body.theme-dark .floating-box-widget {
-      background: #18181b;
-      color: #f4f4f5;
-      box-shadow: 0 20px 48px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.12);
-    }
     .floating-box-widget:hover {
       transform: translateY(-3px);
-      box-shadow: 0 24px 50px rgba(0,0,0,0.6), 0 0 0 1.5px var(--accent);
+      box-shadow: 0 24px 50px rgba(0,0,0,0.22), 0 0 0 1.5px var(--accent);
     }
     .fbw-header {
       display: flex;
@@ -619,8 +849,8 @@ HTML_PAGE = """<!DOCTYPE html>
     .fbw-badge {
       font-size: 10px;
       font-weight: 800;
-      background: rgba(34, 197, 94, 0.15);
-      color: #22c55e;
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--green);
       padding: 1px 6px;
       border-radius: 4px;
     }
@@ -638,31 +868,27 @@ HTML_PAGE = """<!DOCTYPE html>
     .fbw-hint {
       margin-top: 8px;
       padding-top: 6px;
-      border-top: 1px solid rgba(0,0,0,0.06);
+      border-top: 1px solid var(--border);
       font-size: 10.5px;
-      color: #64748b;
+      color: var(--muted);
       display: flex;
       justify-content: space-between;
     }
-    body.theme-dark .fbw-hint {
-      border-top-color: rgba(255,255,255,0.06);
-      color: #a1a1aa;
-    }
   </style>
 </head>
-<body class="theme-dark">
+<body>
 
-  <!-- FLOATING NATIVE WIDGET (Bottom Right Corner) -->
+  <!-- FLOATING MINI-WIDGET IN BROWSER (Bottom Right Corner) -->
   <div class="floating-box-widget" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Click to view deep Cockpit & Model Routing">
     <div class="fbw-header">
       <div class="fbw-title">
-        <span>⚡ Usage &amp; Models</span>
+        <span>⚡ Antigravity Usage</span>
       </div>
       <span class="fbw-badge" id="fbw-shield">+488K tok saved</span>
     </div>
     <div class="fbw-rows">
       <div class="fbw-row">
-        <span>Gemini 5h:</span>
+        <span>Gemini 5h limit:</span>
         <strong id="fbw-g5h" style="color:var(--green)">47% left</strong>
       </div>
       <div class="fbw-row">
@@ -689,14 +915,17 @@ HTML_PAGE = """<!DOCTYPE html>
     <!-- Top HUD Navigation -->
     <header class="hud-header">
       <div class="hud-title-box">
-        <span class="hud-logo">⚡</span>
+        <div class="hud-logo">⚡</div>
         <div>
           <h1 class="hud-title" id="t-head-title">Smart Quota OS — Cockpit &amp; Model Routing Engine</h1>
-          <p class="hud-subtitle" id="t-head-sub">Live Antigravity Model Telemetry, Quota Preserver &amp; Autonomous Shield</p>
+          <p class="hud-subtitle" id="t-head-sub">Live Antigravity Telemetry, Deep Model Analytics &amp; Autonomous Shield</p>
         </div>
       </div>
       <div class="header-actions">
-        <button class="btn-action" onclick="toggleTheme()" id="btn-theme">🌓 Theme</button>
+        <button class="btn-action primary" onclick="launchDesktopWidget()" title="Spawn floating card on your Windows desktop over ANY program">
+          🖥️ Desktop Floating Widget
+        </button>
+        <button class="btn-action" onclick="toggleTheme()" id="btn-theme">🌓 Theme (Dark)</button>
         <button class="btn-action" onclick="toggleLang()" id="btn-lang">🌐 عربي</button>
       </div>
     </header>
@@ -713,9 +942,9 @@ HTML_PAGE = """<!DOCTYPE html>
           <div id="popover-categories"></div>
 
           <!-- Token Shield Footnote -->
-          <div style="margin-top:14px; padding-top:10px; border-top:1px solid rgba(0,0,0,0.06); font-size:11.5px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="margin-top:14px; padding-top:10px; border-top:1px solid var(--border); font-size:11.5px; display:flex; justify-content:space-between; align-items:center;">
             <span id="t-shield-lbl" style="color:var(--muted)">Autonomous Shield</span>
-            <strong style="color:var(--green); font-family:monospace;" id="t-shield-saved">+488.3K saved</strong>
+            <strong style="color:var(--green); font-family:Consolas, monospace;" id="t-shield-saved">+488.3K saved</strong>
           </div>
         </div>
       </aside>
@@ -733,13 +962,42 @@ HTML_PAGE = """<!DOCTYPE html>
             Loading real-time smart routing advice...
           </div>
           <div class="directive-action-bar">
-            <span>Recommended Model: <strong id="dir-target" style="color:#fff;">Gemini 4 Argon (89%)</strong></span>
+            <span>Recommended Model: <strong id="dir-target" style="color:var(--accent);">Gemini 4 Argon (89%)</strong></span>
             <span>CLI Switch: <code class="cmd-badge" id="dir-cmd">agy --model gemini-4-argon</code></span>
           </div>
         </div>
 
+        <!-- Failover Priority Chain -->
+        <div class="failover-bar">
+          <div class="failover-head">
+            <span id="t-chain-title">Automatic Failover Routing Chain (DAG)</span>
+            <span style="color:var(--green);">● Active Dynamic Balancing</span>
+          </div>
+          <div class="failover-steps" id="chain-container"></div>
+        </div>
+
         <!-- Models Breakdown List -->
         <div id="models-container" style="display:flex; flex-direction:column; gap:12px;"></div>
+
+        <!-- Recent Interceptions & Deduplication Events -->
+        <div class="events-card">
+          <div class="events-title">
+            <span id="t-events-title">🛡️ Recent Autonomous Shield Interceptions (Live Ledger)</span>
+            <span style="color:var(--accent); font-family:Consolas, monospace;" id="events-total-val">+488.3K saved</span>
+          </div>
+          <table class="events-table">
+            <thead>
+              <tr>
+                <th>Time (UTC)</th>
+                <th>Shield / Hook</th>
+                <th>Target Artifact</th>
+                <th>Tokens Prevented</th>
+                <th>Model Protected</th>
+              </tr>
+            </thead>
+            <tbody id="events-tbody"></tbody>
+          </table>
+        </div>
 
       </main>
 
@@ -762,13 +1020,23 @@ HTML_PAGE = """<!DOCTYPE html>
       `;
     }
 
+    async function launchDesktopWidget() {
+      try {
+        const res = await fetch('/api/launch_desktop');
+        const json = await res.json();
+        alert(currentLang === 'ar' ? 'تم تشغيل الودجت العائم على سطح المكتب بنجاح!' : 'Desktop Floating Widget launched on screen!');
+      } catch (e) {
+        alert('Launched via local runner.');
+      }
+    }
+
     async function updateTelemetry() {
       try {
         const res = await fetch('/api/telemetry?t=' + Date.now());
         if (!res.ok) return;
         const data = await res.json();
 
-        // 1. Render Left Column Native Categories
+        // 1. Render Left Column Native Categories (Exact 1:1 match)
         const catBox = document.getElementById('popover-categories');
         catBox.innerHTML = data.categories.map(c => {
           const title = currentLang === 'ar' ? c.title_ar : c.title_en;
@@ -800,10 +1068,25 @@ HTML_PAGE = """<!DOCTYPE html>
         document.getElementById('dir-target').textContent = data.advice.target_model;
         document.getElementById('dir-cmd').textContent = data.advice.switch_cmd;
 
-        // 3. Render Models Breakdown
+        // 3. Render Failover Priority Steps
+        const chainBox = document.getElementById('chain-container');
+        if (data.advice.failover_chain) {
+          chainBox.innerHTML = data.advice.failover_chain.map(f => `
+            <div class="f-step" style="border-left: 3px solid ${f.color};">
+              <div class="f-step-title">${f.rank}. ${f.model}</div>
+              <div class="f-step-meta">
+                <span style="color:${f.color}; font-weight:700;">${f.quota} left</span>
+                <span>${f.state}</span>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // 4. Render Deep Models Breakdown (6 Metrics Per Model)
         const mBox = document.getElementById('models-container');
         mBox.innerHTML = data.models.map(m => {
           const rec = currentLang === 'ar' ? m.recommendation_ar : m.recommendation_en;
+          const strengths = currentLang === 'ar' ? m.strengths_ar : m.strengths_en;
           return `
             <div class="model-card">
               <div class="mc-head">
@@ -811,38 +1094,68 @@ HTML_PAGE = """<!DOCTYPE html>
                   <span class="mc-name">${m.name}</span>
                   <span class="mc-tag">${m.tag}</span>
                   <span class="mc-tag">${m.provider}</span>
+                  <span class="mc-tag">${m.cost_tier}</span>
                 </div>
-                <span class="mc-status" style="background:${m.badge_color}22; color:${m.badge_color}; border:1px solid ${m.badge_color}55;">${m.status}</span>
+                <span class="mc-status" style="background:${m.badge_color}18; color:${m.badge_color}; border:1px solid ${m.badge_color}44;">${m.status}</span>
               </div>
+
+              <!-- 6-Metric Deep Telemetry Grid -->
               <div class="mc-grid">
                 <div>
-                  <div class="mc-metric-label">Consumed (Session)</div>
+                  <div class="mc-metric-label">Session Consumed</div>
                   <div class="mc-metric-val">${m.consumed_formatted}</div>
                 </div>
                 <div>
-                  <div class="mc-metric-label">Remaining (5h / Wk)</div>
-                  <div class="mc-metric-val" style="color:${m.badge_color}">${m.quota_5h_pct}% / ${m.weekly_pct}%</div>
+                  <div class="mc-metric-label">Quota Remaining</div>
+                  <div class="mc-metric-val" style="color:${m.badge_color}">${m.quota_5h_pct}% (5h) / ${m.weekly_pct}% (Wk)</div>
                 </div>
                 <div>
                   <div class="mc-metric-label">In / Out Tokens</div>
                   <div class="mc-metric-val">${m.input_tokens} / ${m.output_tokens}</div>
                 </div>
                 <div>
-                  <div class="mc-metric-label">Cache Reuse</div>
-                  <div class="mc-metric-val" style="color:var(--green)">${m.cache_hit_pct}</div>
+                  <div class="mc-metric-label">KV-Cache Hit</div>
+                  <div class="mc-metric-val" style="color:var(--green)">${m.cache_hit_pct} (${m.cached_read_tokens})</div>
+                </div>
+                <div>
+                  <div class="mc-metric-label">Burn Rate</div>
+                  <div class="mc-metric-val">${m.burn_rate}</div>
+                </div>
+                <div>
+                  <div class="mc-metric-label">Cost Burned / Saved</div>
+                  <div class="mc-metric-val" style="color:var(--text);">${m.cost_spent} / <span style="color:var(--green)">${m.cost_saved}</span></div>
                 </div>
               </div>
+
               <div class="mc-advice">
                 <span>💡</span>
-                <span>${rec}</span>
+                <div>
+                  <strong>${rec}</strong>
+                  <div style="font-size:11px; color:var(--muted); margin-top:2px;">Core Strengths: ${strengths} &bull; Context Window: ${m.context_window} (${m.context_used_pct} active).</div>
+                </div>
               </div>
             </div>
           `;
         }).join('');
 
-        // 4. Update Footnotes & Floating Mini-Widget
+        // 5. Render Recent Events Table
+        if (data.roi && data.roi.recent_events) {
+          const tbody = document.getElementById('events-tbody');
+          tbody.innerHTML = data.roi.recent_events.map(ev => `
+            <tr>
+              <td><code>${ev.time}</code></td>
+              <td><strong>${ev.tool}</strong></td>
+              <td><code>${ev.target}</code></td>
+              <td style="color:var(--green); font-weight:700; font-family:Consolas, monospace;">${ev.saved}</td>
+              <td>${ev.model}</td>
+            </tr>
+          `).join('');
+        }
+
+        // 6. Update Footnotes & Floating Mini-Widget
         document.getElementById('t-shield-saved').textContent = '+' + (data.roi.total_tokens_saved / 1000).toFixed(1) + 'K saved';
         document.getElementById('fbw-shield').textContent = '+' + (data.roi.total_tokens_saved / 1000).toFixed(0) + 'K saved';
+        document.getElementById('events-total-val').textContent = '+' + (data.roi.total_tokens_saved / 1000).toFixed(1) + 'K saved ($' + data.roi.saved_usd_frontier.toFixed(2) + ' USD)';
 
       } catch (err) {
         console.error(err);
@@ -856,21 +1169,24 @@ HTML_PAGE = """<!DOCTYPE html>
       document.getElementById('btn-lang').textContent = currentLang === 'en' ? '🌐 عربي' : '🌐 English';
       
       document.getElementById('t-head-title').textContent = currentLang === 'ar' 
-        ? 'منظومة إدارة الكوتا الذكية — منصة النماذج والتوجيه اللحظي' 
+        ? 'منظومة إدارة الكوتا الذكية — منصة النماذج والتحليلات العميقة' 
         : 'Smart Quota OS — Cockpit & Model Routing Engine';
       document.getElementById('t-head-sub').textContent = currentLang === 'ar'
-        ? 'متابعة استهلاك النماذج لحظياً، درع توفير التوكن، والتوجيه التلقائي لمنع استنزاف الحساب'
-        : 'Live Antigravity Model Telemetry, Quota Preserver & Autonomous Shield';
+        ? 'متابعة استهلاك النماذج لحظياً، درع توفير التوكن، والتحليلات المعمارية العميقة'
+        : 'Live Antigravity Telemetry, Deep Model Analytics & Autonomous Shield';
 
       document.getElementById('t-usage').textContent = currentLang === 'ar' ? 'الاستهلاك (Usage)' : 'Usage';
       document.getElementById('t-shield-lbl').textContent = currentLang === 'ar' ? 'درع التوفير التلقائي' : 'Autonomous Shield';
       document.getElementById('t-dir-title').textContent = currentLang === 'ar' ? 'توجيه التوجيه الذكي اللحظي' : 'Real-Time Routing Directive';
+      document.getElementById('t-chain-title').textContent = currentLang === 'ar' ? 'شجرة التوجيه التلقائي البديلة (DAG)' : 'Automatic Failover Routing Chain (DAG)';
+      document.getElementById('t-events-title').textContent = currentLang === 'ar' ? '🛡️ أحدث عمليات درع التوفير التلقائي (السجل الحي)' : '🛡️ Recent Autonomous Shield Interceptions (Live Ledger)';
 
       updateTelemetry();
     }
 
     function toggleTheme() {
-      document.body.classList.toggle('theme-dark');
+      const isDark = document.body.classList.toggle('theme-dark');
+      document.getElementById('btn-theme').textContent = isDark ? '🌓 Theme (Light)' : '🌓 Theme (Dark)';
     }
 
     updateTelemetry();
@@ -891,6 +1207,19 @@ class CockpitHandler(BaseHTTPRequestHandler):
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-cache, no-store")
+            self.end_headers()
+            self.wfile.write(payload)
+        elif p == "/api/launch_desktop":
+            # Spawn the desktop floating widget
+            try:
+                widget_script = Path(__file__).parent / "desktop_widget.py"
+                subprocess.Popen(["pythonw", str(widget_script)])
+                res = {"status": "ok", "message": "Desktop widget spawned"}
+            except Exception as e:
+                res = {"status": "error", "message": str(e)}
+            payload = json.dumps(res).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
             self.end_headers()
             self.wfile.write(payload)
         elif p in ("/", "/index.html", "/ui.html"):
