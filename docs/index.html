@@ -338,23 +338,23 @@
           <!-- Native Card Rings Preview -->
           <div style="background:#18181b;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;margin-bottom:10px;">
             <div style="font-size:0.8rem;font-weight:700;margin-bottom:6px;display:flex;justify-content:space-between;">
-              <span>Gemini Models</span>
-              <span style="color:#22c55e;">47% (5h) &bull; 77% (Wk)</span>
+              <span>Gemini Models (Flash/Hydrogen)</span>
+              <span style="color:#22c55e;">62% left &bull; Resets in ~2h</span>
             </div>
             <div style="font-size:0.8rem;font-weight:700;margin-bottom:6px;display:flex;justify-content:space-between;">
               <span>Claude &amp; GPT Models</span>
-              <span style="color:#eab308;">100% (5h) &bull; 19% (Wk)</span>
+              <span style="color:#ef4444;">0% left &bull; Resets in 1d 12h</span>
             </div>
             <div style="font-size:0.8rem;font-weight:700;display:flex;justify-content:space-between;">
               <span>Gemini 4 Argon</span>
-              <span style="color:#22c55e;">89% left</span>
+              <span style="color:#ef4444;">0% left &bull; Resets in 6d 12h</span>
             </div>
           </div>
 
           <!-- Smart Directive Alert -->
-          <div style="background:rgba(2,132,199,0.12);border:1px solid rgba(2,132,199,0.3);border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:0.78rem;">
-            <div style="color:#38bdf8;font-weight:800;margin-bottom:2px;">💡 ACTIVE ROUTING DIRECTIVE:</div>
-            <div style="color:#f1f5f9;">Gemini 4 Argon has <strong>89% untouched capacity</strong>. Active Gemini 3.8 Flash is at <strong>47% (5h) / 77% (Wk)</strong>. Preserve Claude (<strong>19% Wk</strong>).</div>
+          <div style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:0.78rem;">
+            <div style="color:#ef4444;font-weight:800;margin-bottom:2px;">🚨 ACTIVE ROUTING DIRECTIVE:</div>
+            <div style="color:#f1f5f9;">Argon &amp; Claude pools are <strong>0% (Depleted)</strong>. Active turns running on <strong>Gemini 3.8 Flash (62% capacity)</strong>.</div>
           </div>
 
           <!-- Savings Counters -->
@@ -1466,8 +1466,8 @@ checkSharedScanQuery();
 
 <button class="sqo-site-fab" onclick="document.getElementById('sqo-site-card').classList.toggle('open')" title="Toggle Antigravity Usage Card">
   <span class="fab-pulse"></span>
-  <span>⚡ Antigravity Usage: <strong>47%</strong></span>
-  <span class="fab-badge">Argon 89%</span>
+  <span>⚡ Antigravity Usage: <strong>62%</strong></span>
+  <span class="fab-badge" style="background:rgba(16,185,129,0.2);color:#10b981;">Flash 62%</span>
 </button>
 
 <div id="sqo-site-card" class="sqo-site-popover">
@@ -1479,36 +1479,28 @@ checkSharedScanQuery();
     <span style="cursor:pointer;color:#64748b;font-weight:bold;font-size:14px;" onclick="document.getElementById('sqo-site-card').classList.remove('open')">✕</span>
   </div>
   <div>
-    <div style="font-weight:700;margin-bottom:4px;color:#334155;">Gemini Models</div>
+    <div style="font-weight:700;margin-bottom:4px;color:#334155;">Gemini Models (Flash/Hydrogen)</div>
     <div class="s-row">
-      <span>5h limit (Resets in 1h 24m)</span>
-      <span style="font-weight:700;display:flex;align-items:center;gap:5px;">47% left <span class="s-ring"></span></span>
-    </div>
-    <div class="s-row">
-      <span>Weekly limit (Resets in 4d 3h)</span>
-      <span style="font-weight:700;display:flex;align-items:center;gap:5px;">77% left <span class="s-ring"></span></span>
+      <span>Active Rolling limit (Resets in ~2h)</span>
+      <span style="font-weight:700;display:flex;align-items:center;gap:5px;color:#16a34a;">62% left <span class="s-ring"></span></span>
     </div>
   </div>
   <div>
     <div style="font-weight:700;margin-bottom:4px;color:#334155;">Claude &amp; GPT models</div>
     <div class="s-row">
-      <span>Weekly limit (Resets in 1d 20h)</span>
-      <span style="font-weight:700;display:flex;align-items:center;gap:5px;">19% left <span class="s-ring s-ring-warn"></span></span>
-    </div>
-    <div class="s-row">
-      <span>5h limit (Full reserve)</span>
-      <span style="font-weight:700;display:flex;align-items:center;gap:5px;">100% left <span class="s-ring"></span></span>
+      <span>Weekly limit (Resets in 1d 12h)</span>
+      <span style="font-weight:700;display:flex;align-items:center;gap:5px;color:#dc2626;">0% left <span class="s-ring s-ring-warn"></span></span>
     </div>
   </div>
   <div>
     <div style="font-weight:700;margin-bottom:4px;color:#334155;">Gemini 4 Argon</div>
     <div class="s-row">
-      <span>Weekly limit (Resets in 6d 21h)</span>
-      <span style="font-weight:700;display:flex;align-items:center;gap:5px;">89% left <span class="s-ring"></span></span>
+      <span>Weekly limit (Resets in 6d 12h)</span>
+      <span style="font-weight:700;display:flex;align-items:center;gap:5px;color:#dc2626;">0% left <span class="s-ring s-ring-warn"></span></span>
     </div>
   </div>
-  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:8px;font-size:11.5px;color:#166534;">
-    <strong>💡 Directive:</strong> <strong>Argon (89%)</strong> is top reserve. Active Flash: 47% (5h) / 77% (Wk). Claude: 19% (Wk).
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:8px;font-size:11.5px;color:#991b1b;">
+    <strong>🚨 Directive:</strong> Argon &amp; Claude pools are at 0%. Active turns routed to <strong>Gemini 3.8 Flash (62%)</strong>.
   </div>
   <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e2e8f0;padding-top:8px;font-size:11.5px;">
     <span style="color:#16a34a;font-weight:700;">+488.3K tokens saved</span>

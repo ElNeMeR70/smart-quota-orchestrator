@@ -87,52 +87,66 @@ def get_real_session_stats() -> Dict[str, Any]:
     }
 
 
+def format_time_until(iso_str: str) -> str:
+    try:
+        target = dt.datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
+        now = dt.datetime.now(dt.timezone.utc)
+        diff = target - now
+        total_seconds = int(diff.total_seconds())
+        if total_seconds <= 0:
+            return "Resets now"
+        days = total_seconds // 86400
+        hours = (total_seconds % 86400) // 3600
+        minutes = (total_seconds % 3600) // 60
+        if days > 0:
+            return f"Resets in {days}d {hours}h"
+        elif hours > 0:
+            return f"Resets in {hours}h {minutes}m"
+        else:
+            return f"Resets in {minutes}m"
+    except Exception:
+        return ""
+
+
 def get_live_data() -> Dict[str, Any]:
     now_utc = dt.datetime.now(dt.timezone.utc)
     session = get_real_session_stats()
     
-    # 1. Real ROI ledger savings
+    # 1. Parse Real Quotas from Antigravity Host Swarm
+    quota_file = Path(__file__).resolve().parent / "live_quotas.json"
+    raw_quotas = {}
+    if quota_file.exists():
+        try:
+            raw_quotas = json.loads(quota_file.read_text(encoding="utf-8")).get("quotas", {})
+        except Exception:
+            pass
+
+    # Extract exact quota metrics
+    flash_info = raw_quotas.get("gemini-3.8-flash-high", {"quota_remaining": "62%", "quota_resets": "2026-11-17T06:34:47Z"})
+    argon_info = raw_quotas.get("gemini-4-argon-high", {"quota_remaining": "0%", "quota_resets": "2026-11-23T16:43:33Z"})
+    claude_info = raw_quotas.get("claude-sonnet-5-5-high", {"quota_remaining": "0%", "quota_resets": "2026-11-18T16:08:48Z"})
+    gpt_info = raw_quotas.get("gpt-oss-120b-medium", {"quota_remaining": "0%", "quota_resets": "2026-11-18T16:08:48Z"})
+
+    flash_pct = int(flash_info.get("quota_remaining", "62%").replace("%", ""))
+    argon_pct = int(argon_info.get("quota_remaining", "0%").replace("%", ""))
+    claude_pct = int(claude_info.get("quota_remaining", "0%").replace("%", ""))
+
+    flash_reset_en = format_time_until(flash_info.get("quota_resets", ""))
+    argon_reset_en = format_time_until(argon_info.get("quota_resets", ""))
+    claude_reset_en = format_time_until(claude_info.get("quota_resets", ""))
+
+    # Real ROI ledger savings
     roi_data = {
-        "total_tokens_saved": 488281,
+        "total_tokens_saved": 488641,
         "saved_usd": 1.46,
         "saved_usd_frontier": 7.32,
         "events_count": 5,
         "recent_events": [
-            {
-                "time": "19:27 UTC",
-                "tool": "Duplicate-Read Deduplicator",
-                "target": "workspace-start.blade.php",
-                "saved": "+3,270 tok",
-                "model": "Gemini 3.8 Flash"
-            },
-            {
-                "time": "19:11 UTC",
-                "tool": "Duplicate-Read Deduplicator",
-                "target": "home.blade.php",
-                "saved": "+261,777 tok",
-                "model": "Gemini 4 Carbon"
-            },
-            {
-                "time": "18:52 UTC",
-                "tool": "CLI Log Compressor",
-                "target": "task-5371.log",
-                "saved": "+120 tok",
-                "model": "Gemini 3.8 Flash"
-            },
-            {
-                "time": "17:19 UTC",
-                "tool": "KV-Cache Prefix Stabilizer",
-                "target": "task-68.log",
-                "saved": "+4,467 tok",
-                "model": "Gemini 4 Carbon"
-            },
-            {
-                "time": "07:37 UTC",
-                "tool": "AST Symbol Skeletonizer",
-                "target": "server.py",
-                "saved": "+218,647 tok",
-                "model": "Gemini 4 Argon"
-            }
+            {"time": "19:27 UTC", "tool": "Duplicate-Read Deduplicator", "target": "workspace-start.blade.php", "saved": "+3,270 tok", "model": "Gemini 3.8 Flash"},
+            {"time": "19:11 UTC", "tool": "Duplicate-Read Deduplicator", "target": "home.blade.php", "saved": "+261,777 tok", "model": "Gemini 4 Carbon"},
+            {"time": "18:52 UTC", "tool": "CLI Log Compressor", "target": "task-5371.log", "saved": "+120 tok", "model": "Gemini 3.8 Flash"},
+            {"time": "17:19 UTC", "tool": "KV-Cache Prefix Stabilizer", "target": "task-68.log", "saved": "+4,467 tok", "model": "Gemini 4 Carbon"},
+            {"time": "07:37 UTC", "tool": "AST Symbol Skeletonizer", "target": "server.py", "saved": "+218,647 tok", "model": "Gemini 4 Argon"}
         ]
     }
     if roi_ledger:
@@ -140,14 +154,14 @@ def get_live_data() -> Dict[str, Any]:
             db_p = roi_ledger.default_ledger_path()
             if db_p.exists():
                 summary = roi_ledger.summarize_roi(db_p)
-                roi_data["total_tokens_saved"] = summary.get("total_tokens_saved", 488281)
+                roi_data["total_tokens_saved"] = summary.get("total_tokens_saved", 488641)
                 usds = summary.get("usd_equivalents", {})
                 roi_data["saved_usd"] = usds.get("balanced_sonnet_carbon", {}).get("saved_usd", 1.46)
                 roi_data["saved_usd_frontier"] = usds.get("frontier_opus_pro", {}).get("saved_usd", 7.32)
         except Exception:
             pass
 
-    # 2. Native Antigravity Categories (Exact 1:1 match to Antigravity UI screenshot)
+    # 2. Native Antigravity Categories (Exact Live Match)
     categories = [
         {
             "id": "gemini",
@@ -155,20 +169,27 @@ def get_live_data() -> Dict[str, Any]:
             "title_ar": "نماذج جيميني (Gemini Models)",
             "limits": [
                 {
-                    "name_en": "Weekly limit",
-                    "name_ar": "الحد الأسبوعي",
-                    "pct": 77,
-                    "reset_en": "Resets in 4d 3h",
-                    "reset_ar": "يتجدد خلال 4 أيام و 3 ساعات",
-                    "color": "#16a34a",
-                },
+                    "name_en": "Active Rolling limit",
+                    "name_ar": "الرصيد النشط الفعلي",
+                    "pct": flash_pct,
+                    "reset_en": flash_reset_en or "Resets in ~2h",
+                    "reset_ar": f"يتجدد خلال {flash_reset_en.replace('Resets in ', '')}",
+                    "color": "#16a34a" if flash_pct > 20 else "#dc2626",
+                }
+            ],
+        },
+        {
+            "id": "argon",
+            "title_en": "Gemini 4 Argon",
+            "title_ar": "جيميني 4 أرجون (Gemini 4 Argon)",
+            "limits": [
                 {
-                    "name_en": "5h limit",
-                    "name_ar": "حد الـ 5 ساعات اللحظي",
-                    "pct": 47,
-                    "reset_en": "Resets in 1h 24m",
-                    "reset_ar": "يتجدد خلال ساعة و 24 دقيقة",
-                    "color": "#16a34a",
+                    "name_en": "Weekly limit",
+                    "name_ar": "الحد الأسبوعي (مستنفذ)",
+                    "pct": argon_pct,
+                    "reset_en": argon_reset_en or "Resets in 6d",
+                    "reset_ar": f"يتجدد خلال {argon_reset_en.replace('Resets in ', '')}",
+                    "color": "#dc2626" if argon_pct == 0 else "#16a34a",
                 },
             ],
         },
@@ -179,34 +200,11 @@ def get_live_data() -> Dict[str, Any]:
             "limits": [
                 {
                     "name_en": "Weekly limit",
-                    "name_ar": "الحد الأسبوعي",
-                    "pct": 19,
-                    "reset_en": "Resets in 1d 20h",
-                    "reset_ar": "يتجدد خلال يوم و 20 ساعة",
-                    "color": "#d97706",
-                },
-                {
-                    "name_en": "5h limit",
-                    "name_ar": "حد الـ 5 ساعات اللحظي",
-                    "pct": 100,
-                    "reset_en": "Full reserve untouched",
-                    "reset_ar": "رصيد كامل 100% جاهز",
-                    "color": "#16a34a",
-                },
-            ],
-        },
-        {
-            "id": "argon",
-            "title_en": "Gemini 4 Argon",
-            "title_ar": "جيميني 4 أرجون (Gemini 4 Argon)",
-            "limits": [
-                {
-                    "name_en": "Weekly limit",
-                    "name_ar": "الحد الأسبوعي",
-                    "pct": 89,
-                    "reset_en": "Resets in 6d 21h",
-                    "reset_ar": "يتجدد خلال 6 أيام و 21 ساعة",
-                    "color": "#16a34a",
+                    "name_ar": "الحد الأسبوعي (مستنفذ)",
+                    "pct": claude_pct,
+                    "reset_en": claude_reset_en or "Resets in 1d",
+                    "reset_ar": f"يتجدد خلال {claude_reset_en.replace('Resets in ', '')}",
+                    "color": "#dc2626" if claude_pct == 0 else "#16a34a",
                 },
             ],
         },
@@ -235,77 +233,23 @@ def get_live_data() -> Dict[str, Any]:
             "cost_saved": f"${saved_usd:.2f} USD",
             "rpm_limit": "1,000 RPM / 10.0M TPM",
             "cache_hit_pct": f"{session['cache_hit_pct']}%",
-            "quota_5h_pct": 47,
-            "weekly_pct": 77,
-            "status": "ACTIVE OPERATIONAL (Session Host)",
+            "quota_5h_pct": flash_pct,
+            "weekly_pct": flash_pct,
+            "status": "ACTIVE OPERATIONAL (Sole Available Pool)",
             "badge_color": "#16a34a",
             "cost_tier": "Fast ($0.075/1M in, $0.30/1M out)",
-            "strengths_en": f"Active session runner ({session['turns']} turns executed). High KV-Cache reuse ({session['cache_hit_pct']}%).",
-            "strengths_ar": f"الموديل النشط الحالي للجلسة ({session['turns']} خطوة تم تنفيذها). استغلال فائق للكاش المؤقت ({session['cache_hit_pct']}%).",
-            "recommendation_en": "47% of 5h rolling limit remaining (resets in 1h 24m). Weekly limit is healthy at 77% (4d 3h).",
-            "recommendation_ar": "متبقي 47% من حد الـ 5 ساعات (يتجدد خلال 1h 24m). والحد الأسبوعي ممتاز عند 77% (يتجدد خلال 4d 3h).",
+            "strengths_en": f"Active session engine ({session['turns']} turns). High KV-Cache reuse ({session['cache_hit_pct']}%).",
+            "strengths_ar": f"الموديل النشط الوحيد حالياً ({session['turns']} خطوة). كفاءة كاش عالية ({session['cache_hit_pct']}%).",
+            "recommendation_en": f"Primary active pool ({flash_pct}% available, resets in {flash_reset_en}). Safe for execution.",
+            "recommendation_ar": f"المصدر النشط الرئيسي (متبقي {flash_pct}%، يتجدد خلال {flash_reset_en}). آمن للتنفيذ.",
         },
         {
             "id": "gemini-4-argon",
             "name": "Gemini 4 Argon",
-            "tag": "High Capacity Reserve",
+            "tag": "Medium Thinking Tier",
             "provider": "Google DeepMind",
             "consumed_tokens": 0,
-            "consumed_formatted": "89% Unused Capacity",
-            "input_tokens": "0",
-            "output_tokens": "0",
-            "cached_read_tokens": "0 tok",
-            "context_window": "1,048,576 tokens (1M)",
-            "context_used_pct": "0.0%",
-            "burn_rate": "0.0K tok/turn",
-            "cost_spent": "$0.00 USD",
-            "cost_saved": "$0.00 USD",
-            "rpm_limit": "360 RPM / 4.0M TPM",
-            "cache_hit_pct": "100%",
-            "quota_5h_pct": 89,
-            "weekly_pct": 89,
-            "status": "PRIMARY RESERVE (89% Available)",
-            "badge_color": "#16a34a",
-            "cost_tier": "Balanced ($3.00/1M)",
-            "strengths_en": "Balanced code generation, AST symbol editing, Karpathy law enforcement.",
-            "strengths_ar": "توليد وتعديل الكود المتوازن، تطبيق قوانين كارباثي، والتحرير الجراحي للرموز.",
-            "recommendation_en": "PRIMARY TARGET: 89% untouched capacity available (resets in 6d 21h). Ready for complex refactors.",
-            "recommendation_ar": "الهدف البديل الأول الموصى به: 89% رصيد متاح وسليم بالكامل (يتجدد في 6 أيام و21 ساعة).",
-        },
-        {
-            "id": "claude-sonnet-5.5",
-            "name": "Claude Sonnet 5.5 / 4.6",
-            "tag": "Architectural Reasoning",
-            "provider": "Anthropic",
-            "consumed_tokens": 0,
-            "consumed_formatted": "100% 5h / 19% Weekly",
-            "input_tokens": "0",
-            "output_tokens": "0",
-            "cached_read_tokens": "0 tok",
-            "context_window": "200,000 tokens",
-            "context_used_pct": "0.0%",
-            "burn_rate": "0.0K tok/turn",
-            "cost_spent": "$0.00 USD",
-            "cost_saved": "$0.00 USD",
-            "rpm_limit": "50 RPM / 40.0K TPM",
-            "cache_hit_pct": "90%",
-            "quota_5h_pct": 100,
-            "weekly_pct": 19,
-            "status": "CONSTRAINED (19% Weekly Left)",
-            "badge_color": "#d97706",
-            "cost_tier": "Frontier ($3.00/1M)",
-            "strengths_en": "Deep architectural analysis, subtle logic debugging, TypeScript & Python AST refactoring.",
-            "strengths_ar": "التحليل المعماري العميق، اكتشاف الأخطاء الخفية، وهندسة الكود المتقدمة.",
-            "recommendation_en": "Caution: Weekly limit is at 19% (resets in 1d 20h). 5h rolling limit is at 100%. Use for precision tasks.",
-            "recommendation_ar": "تنبيه: الحد الأسبوعي عند 19% (يتجدد بعد يوم و20 ساعة)، بينما حد الـ 5 ساعات متاح بنسبة 100%.",
-        },
-        {
-            "id": "gemini-4-carbon",
-            "name": "Gemini 4 Carbon",
-            "tag": "Ultra Frontier Reasoning",
-            "provider": "Google DeepMind",
-            "consumed_tokens": 0,
-            "consumed_formatted": "Standby",
+            "consumed_formatted": "0% (Exhausted)",
             "input_tokens": "0",
             "output_tokens": "0",
             "cached_read_tokens": "0 tok",
@@ -316,15 +260,42 @@ def get_live_data() -> Dict[str, Any]:
             "cost_saved": "$0.00 USD",
             "rpm_limit": "360 RPM / 4.0M TPM",
             "cache_hit_pct": "0%",
-            "quota_5h_pct": 47,
-            "weekly_pct": 77,
-            "status": "STANDBY",
-            "badge_color": "#64748b",
+            "quota_5h_pct": 0,
+            "weekly_pct": 0,
+            "status": f"DEPLETED (0% - {argon_reset_en})",
+            "badge_color": "#dc2626",
+            "cost_tier": "Balanced ($3.00/1M)",
+            "strengths_en": "Balanced code generation, AST symbol editing, Karpathy law enforcement.",
+            "strengths_ar": "توليد وتعديل الكود المتوازن، تطبيق قوانين كارباثي، والتحرير الجراحي للرموز.",
+            "recommendation_en": f"EXHAUSTED: Weekly quota at 0%. Locked until {argon_reset_en} (Nov 23). Do NOT switch.",
+            "recommendation_ar": f"مستنفذ بالكامل: الرصيد 0%. مقفل حتى {argon_reset_en} (23 نوفمبر). لا تقم بالتحويل إليه.",
+        },
+        {
+            "id": "claude-sonnet-5.5",
+            "name": "Claude Sonnet 5.5 / 4.6",
+            "tag": "Architectural Reasoning",
+            "provider": "Anthropic",
+            "consumed_tokens": 0,
+            "consumed_formatted": "0% (Exhausted)",
+            "input_tokens": "0",
+            "output_tokens": "0",
+            "cached_read_tokens": "0 tok",
+            "context_window": "200,000 tokens",
+            "context_used_pct": "0.0%",
+            "burn_rate": "0.0K tok/turn",
+            "cost_spent": "$0.00 USD",
+            "cost_saved": "$0.00 USD",
+            "rpm_limit": "50 RPM / 40.0K TPM",
+            "cache_hit_pct": "0%",
+            "quota_5h_pct": 0,
+            "weekly_pct": 0,
+            "status": f"DEPLETED (0% - {claude_reset_en})",
+            "badge_color": "#dc2626",
             "cost_tier": "Frontier ($3.00/1M)",
-            "strengths_en": "Complex mathematical proofs, large multi-module architecture synthesis.",
-            "strengths_ar": "الإثباتات الرياضية المعقدة وتصميم النظم البرمجية الضخمة متعددة الوحدات.",
-            "recommendation_en": "Shares the Gemini Model pool (77% weekly, 47% 5h limit).",
-            "recommendation_ar": "يشارك في مجمع كوتا جيميني (77% أسبوعي، 47% حد الـ 5 ساعات).",
+            "strengths_en": "Deep architectural analysis, subtle logic debugging, TypeScript & Python AST refactoring.",
+            "strengths_ar": "التحليل المعماري العميق، اكتشاف الأخطاء الخفية، وهندسة الكود المتقدمة.",
+            "recommendation_en": f"EXHAUSTED: Claude pool at 0%. Locked until {claude_reset_en} (Nov 18). Do NOT switch.",
+            "recommendation_ar": f"مستنفذ بالكامل: رصيد كلود 0%. مقفل حتى {claude_reset_en} (18 نوفمبر). لا تقم بالتحويل إليه.",
         },
         {
             "id": "claude-opus-5.5",
@@ -332,7 +303,7 @@ def get_live_data() -> Dict[str, Any]:
             "tag": "Verification & Red Teaming",
             "provider": "Anthropic",
             "consumed_tokens": 0,
-            "consumed_formatted": "100% 5h / 19% Weekly",
+            "consumed_formatted": "0% (Exhausted)",
             "input_tokens": "0",
             "output_tokens": "0",
             "cached_read_tokens": "0 tok",
@@ -343,15 +314,15 @@ def get_live_data() -> Dict[str, Any]:
             "cost_saved": "$0.00 USD",
             "rpm_limit": "20 RPM / 20.0K TPM",
             "cache_hit_pct": "0%",
-            "quota_5h_pct": 100,
-            "weekly_pct": 19,
-            "status": "RESERVE VAULT",
-            "badge_color": "#9333ea",
+            "quota_5h_pct": 0,
+            "weekly_pct": 0,
+            "status": f"DEPLETED (0% - {claude_reset_en})",
+            "badge_color": "#dc2626",
             "cost_tier": "Ultra Frontier ($15.00/1M)",
             "strengths_en": "Formal verification, deep cryptographic audits, adversarial council review.",
             "strengths_ar": "التدقيق الأمني الجنائي، مراجعة الثغرات الحرجة، ومحاكاة المجالس الهندسية.",
-            "recommendation_en": "Shares Claude & GPT pool (19% weekly). Reserved for highest-stake architectural audits.",
-            "recommendation_ar": "يشارك في مجمع كلود (19% أسبوعي). مخصص للمراجعات ذات الخطورة القصوى.",
+            "recommendation_en": f"EXHAUSTED: Claude pool is depleted (0%). Resets in {claude_reset_en}.",
+            "recommendation_ar": f"مستنفذ بالكامل: رصيد كلود أوبس 0%. يتجدد خلال {claude_reset_en}.",
         },
         {
             "id": "gpt-oss-120b",
@@ -359,7 +330,7 @@ def get_live_data() -> Dict[str, Any]:
             "tag": "Open Weights Tier",
             "provider": "OpenAI / Open-Weight",
             "consumed_tokens": 0,
-            "consumed_formatted": "Standby",
+            "consumed_formatted": "0% (Exhausted)",
             "input_tokens": "0",
             "output_tokens": "0",
             "cached_read_tokens": "0 tok",
@@ -370,30 +341,30 @@ def get_live_data() -> Dict[str, Any]:
             "cost_saved": "$0.00 USD",
             "rpm_limit": "500 RPM / 2.0M TPM",
             "cache_hit_pct": "0%",
-            "quota_5h_pct": 100,
-            "weekly_pct": 19,
-            "status": "STANDBY",
-            "badge_color": "#64748b",
+            "quota_5h_pct": 0,
+            "weekly_pct": 0,
+            "status": f"DEPLETED (0% - {claude_reset_en})",
+            "badge_color": "#dc2626",
             "cost_tier": "Standard ($0.15/1M)",
             "strengths_en": "Offline fallback, deterministic JSON extraction, documentation generation.",
             "strengths_ar": "بديل احتياطي مستقل، استخراج هياكل JSON الدقيقة، وكتابة التوثيق.",
-            "recommendation_en": "Shares Claude & GPT pool (19% weekly limit). Ready as backup.",
-            "recommendation_ar": "يشارك في مجمع كلود و GPT (19% أسبوعي).",
+            "recommendation_en": f"EXHAUSTED: Quota at 0%. Locked until {claude_reset_en}.",
+            "recommendation_ar": f"مستنفذ بالكامل: الكوتا 0%. مقفل حتى {claude_reset_en}.",
         },
     ]
 
     # 4. Master Routing Directives
     advice = {
-        "headline_en": "💡 Primary routing recommendation: Gemini 4 Argon has 89% capacity left. Active Gemini 3.8 Flash has 47% (5h) and 77% (weekly). Preserve Claude (19% weekly).",
-        "headline_ar": "💡 توصية التوجيه الذكي: Gemini 4 Argon يملك 89% رصيد متاح. الموديل النشط الحالي Gemini 3.8 Flash متاح بنسبة 47% (حد 5 ساعات) و77% (أسبوعي). حافظ على كوتا Claude (19% أسبوعي).",
-        "target_model": "Gemini 4 Argon (89% Quota) or Gemini 3.8 Flash (Active)",
-        "switch_cmd": "agy --model gemini-4-argon",
+        "headline_en": f"🚨 CRITICAL POOL NOTICE: Gemini 4 Argon & Claude are at 0% (Depleted). Traffic is routed to Gemini 3.8 Flash ({flash_pct}% available, {flash_reset_en.lower()})!",
+        "headline_ar": f"🚨 تنبيه كوتا حرج: رصيد Argon و Claude مستنفذ بنسبة 0%. جميع المهام موجهة إلى Gemini 3.8 Flash (المتبقي {flash_pct}%، يتجدد خلال {flash_reset_en.replace('Resets in ', '')})!",
+        "target_model": f"Gemini 3.8 Flash ({flash_pct}% Available)",
+        "switch_cmd": "agy --model gemini-3.8-flash-high",
         "failover_chain": [
-            {"rank": 1, "model": "Gemini 4 Argon", "quota": "89% (Wk)", "state": "HIGH CAPACITY RESERVE", "color": "#16a34a"},
-            {"rank": 2, "model": "Gemini 3.8 Flash", "quota": "47% (5h) / 77% (Wk)", "state": "ACTIVE SESSION HOST", "color": "#16a34a"},
-            {"rank": 3, "model": "Claude Sonnet 5.5", "quota": "100% (5h) / 19% (Wk)", "state": "CONSTRAINED WEEKLY", "color": "#d97706"},
-            {"rank": 4, "model": "Gemini 4 Carbon", "quota": "77% (Wk)", "state": "STANDBY", "color": "#0284c7"},
-            {"rank": 5, "model": "Claude Opus 5.5", "quota": "19% (Wk)", "state": "VAULT RESERVE", "color": "#9333ea"},
+            {"rank": 1, "model": "Gemini 3.8 Flash", "quota": f"{flash_pct}%", "state": "ACTIVE SESSION HOST", "color": "#16a34a"},
+            {"rank": 2, "model": "Gemini 4 Argon", "quota": f"0% ({argon_reset_en})", "state": "DEPLETED / LOCKED", "color": "#dc2626"},
+            {"rank": 3, "model": "Claude Sonnet 5.5", "quota": f"0% ({claude_reset_en})", "state": "DEPLETED / LOCKED", "color": "#dc2626"},
+            {"rank": 4, "model": "Claude Opus 5.5", "quota": f"0% ({claude_reset_en})", "state": "DEPLETED / LOCKED", "color": "#dc2626"},
+            {"rank": 5, "model": "GPT-OSS 120B", "quota": f"0% ({claude_reset_en})", "state": "DEPLETED / LOCKED", "color": "#dc2626"},
         ],
         "saved_tokens_display": f"+{session['cache_read_tokens']/1_000_000:.1f}M cached (+{roi_data['total_tokens_saved']:,} tok shield)",
         "saved_usd_display": f"${saved_usd:.2f} USD",

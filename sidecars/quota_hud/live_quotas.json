@@ -1,0 +1,33 @@
+{
+  "updated_at": "2026-11-17T04:01:00Z",
+  "quotas": {
+    "claude-opus-5-5-high": {
+      "quota_remaining": "0%",
+      "quota_resets": "2026-11-18T16:08:48Z"
+    },
+    "claude-sonnet-5-5-high": {
+      "quota_remaining": "0%",
+      "quota_resets": "2026-11-18T16:08:48Z"
+    },
+    "gemini-3.8-flash-high": {
+      "quota_remaining": "62%",
+      "quota_resets": "2026-11-17T06:34:47Z"
+    },
+    "gemini-4-argon-high": {
+      "quota_remaining": "0%",
+      "quota_resets": "2026-11-23T16:43:33Z"
+    },
+    "gemini-4-hydrogen-high": {
+      "quota_remaining": "62%",
+      "quota_resets": "2026-11-17T06:34:47Z"
+    },
+    "gemini-pro-orchestrator-g1-pro": {
+      "quota_remaining": "0%",
+      "quota_resets": "2026-11-23T16:43:33Z"
+    },
+    "gpt-oss-120b-medium": {
+      "quota_remaining": "0%",
+      "quota_resets": "2026-11-18T16:08:48Z"
+    }
+  }
+}
